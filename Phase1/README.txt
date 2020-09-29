@@ -18,66 +18,66 @@
 
 2. Attribute
  (1) Attribute of MOVIE
-  - Title : 영화의 제목에 대한 정보를 알려준다.
-  - Director : 영화감독이 누구인지 알려준다.
-  - Runtime : 영화 상영 시간
-  - Production_year : 제작연도
-  - Viewing_class : 관람등급
-  - Country : 상영국가
+  - Title : 영화의 제목에 대한 정보를 알려준다. | VARCHAR(20)
+  - Director : 영화감독이 누구인지 알려준다.   | VARCHAR(10)
+  - Runtime : 영화 상영 시간		| VARCHAR(10)
+  - Production_year : 제작연도		| INTEGER
+  - Viewing_class : 관람등급 	| VARCHAR(10)
+  - Country : 상영국가	| VARCHAR(20)
 
  (2) Attribute of GENRE
-  - Category : multivalued 형태의 장르 (ex) 액션/스릴러, 범죄/스릴러, 범죄/액션 ...
+  - Category : multivalued 형태의 장르 (ex) 액션/스릴러, 범죄/스릴러, 범죄/액션 ... | VARCHAR(20)
  
  (3) Attribute of EPISODE
-  - Season_num : 영화의 에피소드가 포함된 시즌 정보를 나타낸다.
-  - Episode_num : 영화의 에피소드 중 몇 번째 에피소드인지 알려준다.
-  - Series : 에피소드가 포함된 시리즈의 정보를 나타낸다.
-  - Round : 에피소드 내에 포함된 회차 수를 나타낸다.
-  - Episode_title : 에피소드 제목을 의미한다.
+  - Season_num : 영화의 에피소드가 포함된 시즌 정보를 나타낸다. | INTEGER
+  - Episode_num : 영화의 에피소드 중 몇 번째 에피소드인지 알려준다. | INTEGER
+  - Series : 에피소드가 포함된 시리즈의 정보를 나타낸다. | VARCHAR(20)
+  - Round : 에피소드 내에 포함된 회차 수를 나타낸다. | VARCHAR(10)
+  - Episode_title : 에피소드 제목을 의미한다. | VARCHAR(20)
 
  (4) Attribute of ACTOR
-  - Actor_num : 배우 정보를 구분하기 위한 번호를 의미한다.
-  - Name : 배우의 이름을 의미한다.
-  - Birth_date : 배우의 생년월일을 의미한다.
-  - Age : 배우의 나이를 의미한다.
+  - Actor_num : 배우 정보를 구분하기 위한 번호를 의미한다. | INTEGER
+  - Name : 배우의 이름을 의미한다. | VARCHAR(20)
+  - Birth_date : 배우의 생년월일을 의미한다. | VARCHAR(20)
+  - Age : 배우의 나이를 의미한다. | INTEGER
   - Character : 배우가 맡은 극 중 캐릭터를 의미한다.
-  - C_name : 배우가 맡은 극 중 캐릭터의 의름을 의미한다.
-  - C_role : 배우가 맡은 극 중 캐릭터의 역할을 의미한다.
-  - C_introduction : 배우가 맡은 극 중 캐릭터의 인물 소개를 의미한다.
+  - C_name : 배우가 맡은 극 중 캐릭터의 의름을 의미한다. | VARCHAR(20)
+  - C_role : 배우가 맡은 극 중 캐릭터의 역할을 의미한다. | VARCHAR(20)
+  - C_introduction : 배우가 맡은 극 중 캐릭터의 인물 소개를 의미한다. | VARCHAR(100)
 
  (5) Attribute of VERSION
-  - Title_ID : 버전 정보를 구분하기 위한 번호를 의미힌다.
-  - Region : 해당 버전이 배포된 국가를 의미한다.
-  - Language : 해당 버전에서 사용되는 언어를 의미한다.
-  - Sub_title : 해당 버전에 각색된 영화의 부제목을 의미한다.
-  - Title : 해당 버전에 각색된 영화의 제목을 의미한다.
+  - Title_ID : 버전 정보를 구분하기 위한 번호를 의미한다. | VARCHAR(10)
+  - Region : 해당 버전이 배포된 국가를 의미한다. | VARCHAR(10)
+  - Language : 해당 버전에서 사용되는 언어를 의미한다. | VARCHAR(20)
+  - Sub_title : 해당 버전에 각색된 영화의 부제목을 의미한다. | VARCHAR(10)
+  - Title : 해당 버전에 각색된 영화의 제목을 의미한다. | VARCHAR(20)
 
  (6) Attribute of RATING
-  - Rating_num : 평가 정보를 구분하기 위한 번호를 의미한다.
-  - Expert_rate : 영화 전문가, 평론가의 평가를 나타낸다.
-  - Common_rate : 일반인 평가를 나타낸다.
-  - Count_of_vote : 총 등록된 평가의 수를 의미한다.
+  - Rating_num : 평가 정보를 구분하기 위한 번호를 의미한다. | INTEGER
+  - Expert_rate : 영화 전문가, 평론가의 평가를 나타낸다. | INTEGER
+  - Common_rate : 일반인 평가를 나타낸다. | INTEGER
+  - Count_of_vote : 총 등록된 평가의 수를 의미한다. | INTEGER
 
  (7) Attribute of ACCOUNT
-  - ID : 계정 아이디를 의미한다.
-  - Password : 계정 비밀번호를 의미한다.
-  - Age : 계정 소유자의 나이를 의미한다.
-  - Birth_date : 계정 소유자의 생년월일을 의미한다.
-  - Name : 계정 소유자의 이름을 의미한다.
-  - Gender : 계정 소유자의 성별을 의미한다.
-  - Phone_num : 계정 소유자의 휴대전화 번호를 의미한다.
-  - Job : 계정 소유자의 직업을 의미한다.
+  - ID : 계정 아이디를 의미한다. | VARCHAR(10)
+  - Password : 계정 비밀번호를 의미한다. | VARCHAR(10)
+  - Age : 계정 소유자의 나이를 의미한다. | INTEGER
+  - Birth_date : 계정 소유자의 생년월일을 의미한다. | INTEGER
+  - Name : 계정 소유자의 이름을 의미한다. | VARCHAR(10)
+  - Gender : 계정 소유자의 성별을 의미한다. | VARCHAR(5)
+  - Phone_num : 계정 소유자의 휴대전화 번호를 의미한다. | VARCHAR(20)
+  - Job : 계정 소유자의 직업을 의미한다. | VARCHAR(10)
 
  (8) Attribute of ADMIN
-  - Admin_id : 관리자 계정을 구분하기 위한 번호를 의미한다.
-  - Count_of_register : 관리자 계정이 게시한 영상물의 개수를 의미한다.
+  - Admin_id : 관리자 계정을 구분하기 위한 번호를 의미한다. | INTEGER
+  - Count_of_register : 관리자 계정이 게시한 영상물의 개수를 의미한다. | INTEGER
 
  (9) Attribute of CUSTOMER
-  - Customer_id : 고객 계정을 구분하기 위한 번호를 의미한다.
+  - Customer_id : 고객 계정을 구분하기 위한 번호를 의미한다. | INTEGER
   - Membership : 고객 계정의 멤버쉽 가입 정보를 의미하는 Composite attribute 이다.
-  - M_type : 멤버쉽 유형을 의미한다.
-  - M_start_date : 멤버쉽 가입 시작일을 나타낸다.
-  - M_end_date : 멤버쉽 유효기간 종료일을 나타낸다.
+  - M_type : 멤버쉽 유형을 의미한다. | VARCHAR(15)
+  - M_start_date : 멤버쉽 가입 시작일을 나타낸다. | INTEGER
+  - M_end_date : 멤버쉽 유효기간 종료일을 나타낸다. | INTEGER
 
 3. Relationship
  (1) CONTAIN : MOVIE entity와 VERSION entity 가 참여하는 관계 유형으로, 하나의 MOVIE는 여러 개의 VERSION을 가질 수 있으며, 여러 개의 VERSION은 하나의 MOVIE에 포함되어 1:N 관계가 보장된다.

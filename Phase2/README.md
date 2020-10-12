@@ -1,6 +1,8 @@
 # PostgreSQL Study
-> version : postgreSQL 11
+> version : postgreSQL 11 <br>
 > Used GUI Toolkit : pgAdmin4
+
+<hr>
 
 [PostgreSQL Download & Setting](https://computingforgeeks.com/how-to-install-pgadmin-4-on-ubuntu/)
 

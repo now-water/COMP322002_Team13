@@ -1,0 +1,23 @@
+CREATE TABLE "knuMovie"."RATING"
+(
+    m_title text COLLATE pg_catalog."default" NOT NULL,
+    account_id text COLLATE pg_catalog."default" NOT NULL,
+    num_vote integer,
+    CONSTRAINT "RATING_pkey" PRIMARY KEY (m_title, account_id),
+    CONSTRAINT "RATING_m_title_fkey" FOREIGN KEY (m_title)
+        REFERENCES "knuMovie"."MOVIE" (title) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "knuMovie"."RATING"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE "knuMovie"."RATING" TO postgres;
+
+GRANT ALL ON TABLE "knuMovie"."RATING" TO team13;

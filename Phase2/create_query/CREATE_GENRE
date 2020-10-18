@@ -1,0 +1,17 @@
+CREATE TABLE "knuMovie"."GENRE"
+(
+    seq integer NOT NULL,
+    category text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "GENRE_pkey" PRIMARY KEY (seq)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "knuMovie"."GENRE"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE "knuMovie"."GENRE" TO postgres;
+
+GRANT ALL ON TABLE "knuMovie"."GENRE" TO team13;

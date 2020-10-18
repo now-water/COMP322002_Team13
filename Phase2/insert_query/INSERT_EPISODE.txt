@@ -1,101 +1,101 @@
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('BORN IDENTITY','Born identity',20)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('BORN IDENTITY','Born legacy',44)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('BORN IDENTITY','Born supremacy',42)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('BORN IDENTITY','Born ultimate',48)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('BORN IDENTITY','Jason born',44)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Dessinateur','Dessinateur express',30)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Dessinateur','Dessinateur: Chamberlain',30)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Dessinateur','Dessinateur: Reine Victoria',32)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Dessinateur','Dessinateur: Von Bismark',48)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Dessinateur','Dessinateur: Dinosaur',40)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Database','Database: Beginning of nightmare',29)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Database','Database: War of lab',28)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Database','Database: Start with professor Suh',21)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Database','Database: Mad night project',30)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Database','Database: Toward a data expert',35)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rip's Toast','Rip's Toast: Apple toast',47)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rip's Toast','Rip's Toast: Banana toast',46)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rip's Toast','Rip's Toast: Tomato toast',46)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rip's Toast','Rip's Toast: Prof.suh toast',44)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rip's Toast','Rip's Toast: Please don???eat toast',48)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rescue on the River','Rescue on the River: apple',48)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rescue on the River','Rescue on the River: banana',37)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rescue on the River','Rescue on the River: cicly',43)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rescue on the River','Rescue on the River: pass',48)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rescue on the River','Rescue on the River: lms',27)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Buffalo Bill's Show Parade','Buffalo Bill's Show Parade: Run',38)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Buffalo Bill's Show Parade','Buffalo Bill's Show Parade: Walk',21)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Buffalo Bill's Show Parade','Buffalo Bill's Show Parade: Haunt',22)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Buffalo Bill's Show Parade','Buffalo Bill's Show Parade: Shit',48)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Buffalo Bill's Show Parade','Buffalo Bill's Show Parade: Jejus',37)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apart','Apart: first',25)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apart','Apart: second',28)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apart','Apart: third',25)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apart','Apart: fourth',27)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apart','Apart: fifth',20)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('House','House: 1',33)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('House','House: 2',35)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('House','House: 3',25)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('House','House: 4',25)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('House','House: 5',39)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Flower','Flower: 1',21)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Flower','Flower: 2',39)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Flower','Flower: 3',25)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Flower','Flower: 4',42)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Flower','Flower: 5',35)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Mouse','Mouse: 1',40)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Mouse','Mouse: 2',32)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Mouse','Mouse: 3',48)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Mouse','Mouse: 4',24)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Mouse','Mouse: 5',47)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Cellphone','Cellphone: 1',34)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Cellphone','Cellphone: 2',24)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Cellphone','Cellphone: 3',32)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Cellphone','Cellphone: 4',48)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Cellphone','Cellphone: 5',49)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Computer','Computer: 1',41)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Computer','Computer: 2',41)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Computer','Computer: 3',37)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Computer','Computer: 4',30)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Computer','Computer: 5',48)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Speaker','Speaker: 1',46)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Speaker','Speaker: 2',36)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Speaker','Speaker: 3',24)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Speaker','Speaker: 4',49)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Speaker','Speaker: 5',36)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Keyboard','Keyboard: 1',43)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Keyboard','Keyboard: 2',31)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Keyboard','Keyboard: 3',33)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Keyboard','Keyboard: 4',29)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Keyboard','Keyboard: 5',23)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apple','Apple: Macbook',20)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apple','Apple: Ipad',30)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apple','Apple: Iphone',31)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apple','Apple: Air',36)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apple','Apple: Mac Donalds',22)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Toward a developer','toward a developer : backend',45)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Toward a developer','toward a developer : frontend',30)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Toward a developer','toward a developer : database',28)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Toward a developer','toward a developer : cloud',41)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Toward a developer','toward a developer : Android',20)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Toward a developer','toward a developer : ios',34)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('University','univ : seoul',42)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('University','univ : pusan',27)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('University','univ : kyoungpook',33)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('University','univ : kaist',45)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('University','univ : postech',36)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('USA','USA : LA',27)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('USA','USA : Silicon valley',23)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('USA','USA : NewYork',45)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('USA','USA : Texas',33)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('USA','USA : Washington',31)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Company','Company : Kakao',42)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Company','Company : Naver',26)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Company','Company : Coopang',37)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Company','Company : Samsung',25)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Company','Company : LG',30)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('OS','OS : webOS',49)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('OS','OS : window',31)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('OS','OS : macOS',26)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('OS','OS : android',40)
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('OS','OS : raspbian',40)
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('BORN IDENTITY','Born identity',20);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('BORN IDENTITY','Born legacy',44);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('BORN IDENTITY','Born supremacy',42);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('BORN IDENTITY','Born ultimate',48);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('BORN IDENTITY','Jason born',44);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Dessinateur','Dessinateur express',30);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Dessinateur','Dessinateur: Chamberlain',30);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Dessinateur','Dessinateur: Reine Victoria',32);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Dessinateur','Dessinateur: Von Bismark',48);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Dessinateur','Dessinateur: Dinosaur',40);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Database','Database: Beginning of nightmare',29);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Database','Database: War of lab',28);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Database','Database: Start with professor Suh',21);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Database','Database: Mad night project',30);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Database','Database: Toward a data expert',35);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rips Toast','Rips Toast: Apple toast',47);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rips Toast','Rips Toast: Banana toast',46);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rips Toast','Rips Toast: Tomato toast',46);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rips Toast','Rip's Toast: Prof.suh toast',44);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rips Toast','Rips Toast: Please don???eat toast',48);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rescue on the River','Rescue on the River: apple',48);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rescue on the River','Rescue on the River: banana',37);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rescue on the River','Rescue on the River: cicly',43);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rescue on the River','Rescue on the River: pass',48);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rescue on the River','Rescue on the River: lms',27);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Buffalo Bills Show Parade','Buffalo Bills Show Parade: Run',38);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Buffalo Bills Show Parade','Buffalo Bills Show Parade: Walk',21);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Buffalo Bills Show Parade','Buffalo Bills Show Parade: Haunt',22);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Buffalo Bills Show Parade','Buffalo Bills Show Parade: Shit',48);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Buffalo Bills Show Parade','Buffalo Bills Show Parade: Jejus',37);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apart','Apart: first',25);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apart','Apart: second',28);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apart','Apart: third',25);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apart','Apart: fourth',27);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apart','Apart: fifth',20);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('House','House: 1',33);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('House','House: 2',35);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('House','House: 3',25);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('House','House: 4',25);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('House','House: 5',39);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Flower','Flower: 1',21);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Flower','Flower: 2',39);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Flower','Flower: 3',25);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Flower','Flower: 4',42);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Flower','Flower: 5',35);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Mouse','Mouse: 1',40);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Mouse','Mouse: 2',32);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Mouse','Mouse: 3',48);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Mouse','Mouse: 4',24);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Mouse','Mouse: 5',47);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Cellphone','Cellphone: 1',34);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Cellphone','Cellphone: 2',24);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Cellphone','Cellphone: 3',32);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Cellphone','Cellphone: 4',48);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Cellphone','Cellphone: 5',49);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Computer','Computer: 1',41);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Computer','Computer: 2',41);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Computer','Computer: 3',37);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Computer','Computer: 4',30);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Computer','Computer: 5',48);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Speaker','Speaker: 1',46);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Speaker','Speaker: 2',36);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Speaker','Speaker: 3',24);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Speaker','Speaker: 4',49);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Speaker','Speaker: 5',36);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Keyboard','Keyboard: 1',43);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Keyboard','Keyboard: 2',31);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Keyboard','Keyboard: 3',33);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Keyboard','Keyboard: 4',29);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Keyboard','Keyboard: 5',23);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apple','Apple: Macbook',20);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apple','Apple: Ipad',30);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apple','Apple: Iphone',31);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apple','Apple: Air',36);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Apple','Apple: Mac Donalds',22);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Toward a developer','toward a developer : backend',45);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Toward a developer','toward a developer : frontend',30);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Toward a developer','toward a developer : database',28);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Toward a developer','toward a developer : cloud',41);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Toward a developer','toward a developer : Android',20);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Toward a developer','toward a developer : ios',34);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('University','univ : seoul',42);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('University','univ : pusan',27);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('University','univ : kyoungpook',33);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('University','univ : kaist',45);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('University','univ : postech',36);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('USA','USA : LA',27);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('USA','USA : Silicon valley',23);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('USA','USA : NewYork',45);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('USA','USA : Texas',33);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('USA','USA : Washington',31);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Company','Company : Kakao',42);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Company','Company : Naver',26);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Company','Company : Coopang',37);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Company','Company : Samsung',25);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Company','Company : LG',30);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('OS','OS : webOS',49);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('OS','OS : window',31);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('OS','OS : macOS',26);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('OS','OS : android',40);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('OS','OS : raspbian',40);

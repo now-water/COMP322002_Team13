@@ -1,0 +1,5 @@
+INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (1, 'ACTION');
+INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (2, 'SF');
+INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (3, 'COMEDY');
+INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (4, 'THRILLER');
+INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (5, 'ROMANCE');

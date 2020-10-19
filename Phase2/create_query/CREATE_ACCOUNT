@@ -1,0 +1,24 @@
+CREATE TABLE "knuMovie"."ACCOUNT"
+(
+    acc_id text COLLATE pg_catalog."default" NOT NULL,
+    acc_pw text COLLATE pg_catalog."default",
+    user_name text COLLATE pg_catalog."default",
+    phone_num text COLLATE pg_catalog."default",
+    birth_date date,
+    age integer,
+    gender text COLLATE pg_catalog."default",
+    mem_type text COLLATE pg_catalog."default",
+    manager text COLLATE pg_catalog."default",
+    CONSTRAINT "ACCOUNT_pkey" PRIMARY KEY (acc_id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "knuMovie"."ACCOUNT"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE "knuMovie"."ACCOUNT" TO postgres;
+
+GRANT ALL ON TABLE "knuMovie"."ACCOUNT" TO team13;

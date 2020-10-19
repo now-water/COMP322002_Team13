@@ -1,0 +1,24 @@
+CREATE TABLE "knuMovie"."VERSION"
+(
+    m_title text COLLATE pg_catalog."default" NOT NULL,
+    ver_title text COLLATE pg_catalog."default" NOT NULL,
+    region text COLLATE pg_catalog."default" NOT NULL,
+    language text COLLATE pg_catalog."default",
+    sub_title text COLLATE pg_catalog."default",
+    CONSTRAINT "VERSION_pkey" PRIMARY KEY (m_title, ver_title, region),
+    CONSTRAINT m_title FOREIGN KEY (m_title)
+        REFERENCES "knuMovie"."MOVIE" (title) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "knuMovie"."VERSION"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE "knuMovie"."VERSION" TO postgres;
+
+GRANT ALL ON TABLE "knuMovie"."VERSION" TO team13;

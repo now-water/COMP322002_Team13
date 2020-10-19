@@ -1,0 +1,23 @@
+CREATE TABLE "knuMovie"."EPISODE"
+(
+    m_title text COLLATE pg_catalog."default" NOT NULL,
+    episode_title text COLLATE pg_catalog."default" NOT NULL,
+    round integer NOT NULL,
+    CONSTRAINT "EPISODE_pkey" PRIMARY KEY (episode_title),
+    CONSTRAINT m_title FOREIGN KEY (m_title)
+        REFERENCES "knuMovie"."MOVIE" (title) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "knuMovie"."EPISODE"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE "knuMovie"."EPISODE" TO postgres;
+
+GRANT ALL ON TABLE "knuMovie"."EPISODE" TO team13;

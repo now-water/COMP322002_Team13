@@ -1,0 +1,151 @@
+CREATE TABLE "knuMovie"."GENRE"
+(
+    seq integer NOT NULL,
+    category text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "GENRE_pkey" PRIMARY KEY (seq)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "knuMovie"."GENRE"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE "knuMovie"."GENRE" TO postgres;
+
+GRANT ALL ON TABLE "knuMovie"."GENRE" TO team13;
+
+CREATE TABLE "knuMovie"."ACCOUNT"
+(
+    acc_id text COLLATE pg_catalog."default" NOT NULL,
+    acc_pw text COLLATE pg_catalog."default",
+    user_name text COLLATE pg_catalog."default",
+    phone_num text COLLATE pg_catalog."default",
+    birth_date date,
+    age integer,
+    gender text COLLATE pg_catalog."default",
+    address text COLLATE pg_catalog."default",
+    mem_type text COLLATE pg_catalog."default",
+    manager boolean,
+    CONSTRAINT "ACCOUNT_pkey" PRIMARY KEY (acc_id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "knuMovie"."ACCOUNT"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE "knuMovie"."ACCOUNT" TO postgres;
+
+GRANT ALL ON TABLE "knuMovie"."ACCOUNT" TO team13;
+
+
+CREATE TABLE "knuMovie"."MOVIE"
+(
+    title text COLLATE pg_catalog."default" NOT NULL,
+    type text COLLATE pg_catalog."default" NOT NULL,
+    runtime integer NOT NULL,
+    start_year text COLLATE pg_catalog."default" NOT NULL,
+    genre integer,
+    rating double precision,
+    viewing_class text COLLATE pg_catalog."default",
+    account_id text COLLATE pg_catalog."default",
+    CONSTRAINT "MOVIE_pkey" PRIMARY KEY (title),
+    CONSTRAINT account_fk FOREIGN KEY (account_id)
+        REFERENCES "knuMovie"."ACCOUNT" (acc_id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+    CONSTRAINT genre_fk FOREIGN KEY (genre)
+        REFERENCES "knuMovie"."GENRE" (seq) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "knuMovie"."MOVIE"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE "knuMovie"."MOVIE" TO team13;
+
+GRANT ALL ON TABLE "knuMovie"."MOVIE" TO postgres;
+
+
+CREATE TABLE "knuMovie"."RATING"
+(
+    m_title text COLLATE pg_catalog."default" NOT NULL,
+    account_id text COLLATE pg_catalog."default" NOT NULL,
+    num_vote integer,
+    CONSTRAINT "RATING_pkey" PRIMARY KEY (m_title, account_id),
+    CONSTRAINT account_id FOREIGN KEY (account_id)
+        REFERENCES "knuMovie"."ACCOUNT" (acc_id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        NOT VALID,
+    CONSTRAINT m_title FOREIGN KEY (m_title)
+        REFERENCES "knuMovie"."MOVIE" (title) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "knuMovie"."RATING"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE "knuMovie"."RATING" TO postgres;
+
+GRANT ALL ON TABLE "knuMovie"."RATING" TO team13;
+
+CREATE TABLE "knuMovie"."ACTOR"
+(
+    name text COLLATE pg_catalog."default" NOT NULL,
+    c_name text COLLATE pg_catalog."default",
+    c_role text COLLATE pg_catalog."default",
+    m_title text COLLATE pg_catalog."default",
+    CONSTRAINT "ACTOR_pkey" PRIMARY KEY (name)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "knuMovie"."ACTOR"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE "knuMovie"."ACTOR" TO postgres;
+
+GRANT ALL ON TABLE "knuMovie"."ACTOR" TO team13;
+
+CREATE TABLE "knuMovie"."VERSION"
+(
+    m_title text COLLATE pg_catalog."default" NOT NULL,
+    ver_title text COLLATE pg_catalog."default" NOT NULL,
+    region text COLLATE pg_catalog."default" NOT NULL,
+    language text COLLATE pg_catalog."default",
+    sub_title text COLLATE pg_catalog."default",
+    CONSTRAINT "VERSION_pkey" PRIMARY KEY (m_title, ver_title, region),
+    CONSTRAINT m_title FOREIGN KEY (m_title)
+        REFERENCES "knuMovie"."MOVIE" (title) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "knuMovie"."VERSION"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE "knuMovie"."VERSION" TO postgres;
+
+GRANT ALL ON TABLE "knuMovie"."VERSION" TO team13;

@@ -4,12 +4,7 @@ CREATE TABLE "knuMovie"."ACTOR"
     c_name text COLLATE pg_catalog."default",
     c_role text COLLATE pg_catalog."default",
     m_title text COLLATE pg_catalog."default",
-    CONSTRAINT "ACTOR_pkey" PRIMARY KEY (name),
-    CONSTRAINT mtitle_pk FOREIGN KEY (m_title)
-        REFERENCES "knuMovie"."MOVIE" (title) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID
+    CONSTRAINT "ACTOR_pkey" PRIMARY KEY (name)
 )
 WITH (
     OIDS = FALSE

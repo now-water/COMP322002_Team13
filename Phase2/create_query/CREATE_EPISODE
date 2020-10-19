@@ -6,8 +6,8 @@ CREATE TABLE "knuMovie"."EPISODE"
     CONSTRAINT "EPISODE_pkey" PRIMARY KEY (episode_title),
     CONSTRAINT m_title FOREIGN KEY (m_title)
         REFERENCES "knuMovie"."MOVIE" (title) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
         NOT VALID
 )
 WITH (

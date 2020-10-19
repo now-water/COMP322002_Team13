@@ -4,10 +4,15 @@ CREATE TABLE "knuMovie"."RATING"
     account_id text COLLATE pg_catalog."default" NOT NULL,
     num_vote integer,
     CONSTRAINT "RATING_pkey" PRIMARY KEY (m_title, account_id),
-    CONSTRAINT "RATING_m_title_fkey" FOREIGN KEY (m_title)
+    CONSTRAINT account_id FOREIGN KEY (account_id)
+        REFERENCES "knuMovie"."ACCOUNT" (acc_id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        NOT VALID,
+    CONSTRAINT m_title FOREIGN KEY (m_title)
         REFERENCES "knuMovie"."MOVIE" (title) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
         NOT VALID
 )
 WITH (

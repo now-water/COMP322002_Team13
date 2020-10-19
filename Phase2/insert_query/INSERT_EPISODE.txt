@@ -16,8 +16,8 @@ INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Databas
 INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rips Toast','Rips Toast: Apple toast',47);
 INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rips Toast','Rips Toast: Banana toast',46);
 INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rips Toast','Rips Toast: Tomato toast',46);
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rips Toast','Rip's Toast: Prof.suh toast',44);
-INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rips Toast','Rips Toast: Please don???eat toast',48);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rips Toast','Rips Toast: Prof.suh toast',44);
+INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rips Toast','Rips Toast: Please dont eat toast',48);
 INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rescue on the River','Rescue on the River: apple',48);
 INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rescue on the River','Rescue on the River: banana',37);
 INSERT INTO "knuMovie"."EPISODE" (m_title, episode_title, round) VALUES('Rescue on the River','Rescue on the River: cicly',43);

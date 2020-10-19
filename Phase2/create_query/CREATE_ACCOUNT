@@ -7,8 +7,9 @@ CREATE TABLE "knuMovie"."ACCOUNT"
     birth_date date,
     age integer,
     gender text COLLATE pg_catalog."default",
+    address text COLLATE pg_catalog."default",
     mem_type text COLLATE pg_catalog."default",
-    manager text COLLATE pg_catalog."default",
+    manager boolean,
     CONSTRAINT "ACCOUNT_pkey" PRIMARY KEY (acc_id)
 )
 WITH (

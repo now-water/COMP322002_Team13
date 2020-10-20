@@ -14,7 +14,7 @@ ALTER TABLE "knuMovie"."GENRE"
 
 GRANT ALL ON TABLE "knuMovie"."GENRE" TO postgres;
 
-GRANT ALL ON TABLE "knuMovie"."GENRE" TO team13;
+
 
 CREATE TABLE "knuMovie"."ACCOUNT"
 (
@@ -41,7 +41,7 @@ ALTER TABLE "knuMovie"."ACCOUNT"
 
 GRANT ALL ON TABLE "knuMovie"."ACCOUNT" TO postgres;
 
-GRANT ALL ON TABLE "knuMovie"."ACCOUNT" TO team13;
+
 
 
 CREATE TABLE "knuMovie"."MOVIE"
@@ -72,9 +72,9 @@ TABLESPACE pg_default;
 ALTER TABLE "knuMovie"."MOVIE"
     OWNER to postgres;
 
-GRANT ALL ON TABLE "knuMovie"."MOVIE" TO team13;
-
 GRANT ALL ON TABLE "knuMovie"."MOVIE" TO postgres;
+
+
 
 
 CREATE TABLE "knuMovie"."RATING"
@@ -86,13 +86,11 @@ CREATE TABLE "knuMovie"."RATING"
     CONSTRAINT account_id FOREIGN KEY (account_id)
         REFERENCES "knuMovie"."ACCOUNT" (acc_id) MATCH SIMPLE
         ON UPDATE CASCADE
-        ON DELETE CASCADE
-        NOT VALID,
+        ON DELETE CASCADE,
     CONSTRAINT m_title FOREIGN KEY (m_title)
         REFERENCES "knuMovie"."MOVIE" (title) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
-        NOT VALID
 )
 WITH (
     OIDS = FALSE
@@ -104,7 +102,7 @@ ALTER TABLE "knuMovie"."RATING"
 
 GRANT ALL ON TABLE "knuMovie"."RATING" TO postgres;
 
-GRANT ALL ON TABLE "knuMovie"."RATING" TO team13;
+
 
 CREATE TABLE "knuMovie"."ACTOR"
 (
@@ -124,7 +122,7 @@ ALTER TABLE "knuMovie"."ACTOR"
 
 GRANT ALL ON TABLE "knuMovie"."ACTOR" TO postgres;
 
-GRANT ALL ON TABLE "knuMovie"."ACTOR" TO team13;
+
 
 CREATE TABLE "knuMovie"."VERSION"
 (
@@ -149,8 +147,6 @@ ALTER TABLE "knuMovie"."VERSION"
 
 GRANT ALL ON TABLE "knuMovie"."VERSION" TO postgres;
 
-GRANT ALL ON TABLE "knuMovie"."VERSION" TO team13;
-
 
 
 CREATE TABLE "knuMovie"."EPISODE"
@@ -163,7 +159,6 @@ CREATE TABLE "knuMovie"."EPISODE"
         REFERENCES "knuMovie"."MOVIE" (title) MATCH SIMPLE
         ON UPDATE CASCADE
         ON DELETE CASCADE
-        NOT VALID
 )
 WITH (
     OIDS = FALSE
@@ -175,4 +170,3 @@ ALTER TABLE "knuMovie"."EPISODE"
 
 GRANT ALL ON TABLE "knuMovie"."EPISODE" TO postgres;
 
-GRANT ALL ON TABLE "knuMovie"."EPISODE" TO team13;

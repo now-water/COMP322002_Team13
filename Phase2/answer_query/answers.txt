@@ -1,0 +1,264 @@
+--  Q1. 
+  SELECT COUNT(*)
+  FROM "knuMovie"."ACCOUNT";
+
+--  Q2.
+  SELECT ACC.user_name, ACC.address
+  FROM "knuMovie"."ACCOUNT" AS ACC
+  WHERE ACC.manager = TRUE;
+
+--  Q3.
+  SELECT COUNT(*) AS COUNT_5
+  FROM (SELECT COUNT(*) AS VALUE
+  		FROM "knuMovie"."RATING" AS R, "knuMovie"."ACCOUNT" AS ACC
+  		WHERE R.account_id = ACC.acc_id
+  		GROUP BY R.account_id
+  		HAVING COUNT(*) >= 5
+  	  ) AS DUMMY;
+	  
+--  Q4.
+  SELECT COUNT(*) AS COUNT_2020
+  FROM (SELECT title
+  	 	FROM "knuMovie"."MOVIE" AS M, "knuMovie"."GENRE" AS G
+  	  	WHERE M.genre = G.seq
+  	  	AND G.category = 'Romance'
+  	  	AND EXTRACT(YEAR FROM M.start_year) = 2020
+  	 ) AS DUMMY;
+
+--  Q5.
+  SELECT M.title
+  FROM "knuMovie"."MOVIE" AS M
+  WHERE M.start_year::timestamp >= '2018-10-07'::timestamp
+  AND M.start_year <= '2018-10-07'::timestamp + '2 years'::interval;
+
+
+--  Q6.
+  SELECT M.title
+  FROM "knuMovie"."MOVIE" AS M
+  WHERE  '2020-10-07'::timestamp >= M.start_year::timestamp
+  AND M.start_year >= '2020-10-07'::timestamp - '5 years'::interval;
+
+
+--  Q7.
+  WITH TEMP AS
+  (SELECT M.title
+  FROM "knuMovie"."MOVIE" AS M
+  WHERE M.runtime >= 100)
+  SELECT COUNT(*)
+  FROM TEMP;
+
+--  Q8.
+  WITH SPEC_MOVIE AS(
+  SELECT MAX(M.rating) AS MAX_VAL
+  FROM "knuMovie"."MOVIE" AS M, "knuMovie"."GENRE" AS G
+  WHERE M.genre = G.seq
+  AND G.category = 'Action' OR G.category = 'Comedy'
+   	)
+  SELECT M.title
+  FROM "knuMovie"."MOVIE" AS M, SPEC_MOVIE AS SM
+  WHERE M.rating = SM.MAX_VAL;
+
+--  Q9.
+  SELECT COUNT(EP.episode_title)
+  FROM "knuMovie"."MOVIE" AS M, "knuMovie"."EPISODE" AS EP
+  WHERE M.type = 'tv series'
+  AND M.title = EP.m_title
+  GROUP BY EP.m_title, EP.episode_title
+  HAVING COUNT(EP.episode_title) >= 10;
+
+--  Q10.
+  SELECT ACC.user_name, ACC.age
+  FROM "knuMovie"."ACCOUNT" AS ACC
+  WHERE ACC.acc_id IN (SELECT R.account_id
+  								FROM "knuMovie"."RATING" AS R
+  							);
+
+	  
+	  
+--  Q11.
+  WITH LIST AS
+  (SELECT R.account_id, COUNT(R.num_vote)
+  FROM "knuMovie"."ACCOUNT" AS ACC, "knuMovie"."RATING" AS R
+  WHERE ACC.acc_id = R.account_id
+  AND ACC.job IS NOT NULL
+  GROUP BY R.account_id
+  HAVING COUNT(R.num_vote) = 1
+   )
+   SELECT COUNT(account_id)
+   FROM LIST;
+
+--  Q12.
+  SELECT A.name
+  FROM "knuMovie"."MOVIE" AS M ,"knuMovie"."ACTOR" AS A
+  WHERE M.TITLE = A.M_TITLE
+  GROUP BY A.name
+  HAVING AVG(M.RATING) >= 8;
+
+
+--  Q13.
+  SELECT A.NAME, M.TITLE
+  FROM "knuMovie"."ACTOR" AS A, "knuMovie"."GENRE" AS G, "knuMovie"."MOVIE" AS M
+  WHERE G.CATEGORY <> 'Action'
+  AND M.RATING < 6
+  AND EXTRACT(YEAR FROM START_YEAR) >= 2010
+  AND M.TYPE = 'movie'
+  AND A.m_title = M.title
+  AND M.genre = G.seq
+  GROUP BY A.name, M.title;
+
+
+
+--  Q14.
+ WITH
+MIN_MEM AS(
+ 			SELECT MIN(ACC.age) AS MIN_AGE
+			FROM "knuMovie"."ACCOUNT" AS ACC, "knuMovie"."MOVIE" AS M
+ 			WHERE ACC.mem_type = 'prime'
+ 			)	
+SELECT COUNT(M.title)
+ FROM "knuMovie"."MOVIE" AS M
+WHERE EXTRACT(YEAR FROM M.start_year) 
+ IN(
+ 	SELECT EXTRACT(YEAR FROM ACC.birth_date) --, ACC.age--, COUNT(M.title)
+	FROM "knuMovie"."ACCOUNT" AS ACC, MIN_MEM AS MM
+ 	WHERE MM.MIN_AGE = ACC.age			
+ );
+
+--  Q15.
+  WITH LIST AS
+  (SELECT ACC.acc_id, ACC.mem_type
+  FROM "knuMovie"."ACCOUNT" AS ACC, "knuMovie"."RATING" AS R
+  WHERE ACC.acc_id = R.account_id
+  GROUP BY ACC.acc_id
+  HAVING COUNT(ACC.user_name) >= 10
+  )
+  SELECT MAX(M.start_year) AS RECENT_MOVIE_START_YEAR
+  FROM "knuMovie"."RATING" AS R, "knuMovie"."MOVIE" AS M, "knuMovie"."ACCOUNT" AS ACC
+  WHERE ACC.acc_id IN(
+  				SELECT acc_id
+  				FROM LIST 
+  				WHERE LIST.mem_type = 'premium'
+  				)
+  AND ACC.acc_id = R.account_id
+  AND R.m_title = M.title
+  AND M.type <> 'tv series'
+  AND M.rating < 8;
+
+--  Q16.
+  WITH MAX_RATE AS
+  (
+  	SELECT MAX(M.rating) AS MAX_VAL
+  	FROM "knuMovie"."MOVIE" AS M
+   ),
+   MAX_ADDR AS
+   (
+   	SELECT MAX(LENGTH(ACC.address)) AS MAX_LEN
+  	 FROM "knuMovie"."ACCOUNT" AS ACC
+   )
+   SELECT ACC.phone_num
+   FROM "knuMovie"."ACCOUNT" AS ACC, "knuMovie"."RATING" AS R, "knuMovie"."MOVIE" AS M, MAX_RATE, MAX_ADDR
+   WHERE ACC.acc_id = R.account_id
+   AND   M.title = R.m_title
+   AND   ACC.address IS NOT NULL
+   AND   LENGTH(ACC.address) = MAX_ADDR.MAX_LEN
+   AND   M.rating = MAX_RATE.MAX_VAL
+   GROUP BY ACC.phone_num;
+
+
+-- Q17.
+ WITH SCORE AS(
+ 	WITH TOP3 AS
+ 	(
+ 		SELECT A.name
+		FROM "knuMovie"."ACTOR" AS A, "knuMovie"."MOVIE" AS M
+		WHERE A.m_title = M.title
+		GROUP BY A.name
+		ORDER BY COUNT(A.m_title) DESC
+		LIMIT 3
+ 	)
+ 	SELECT M.rating
+		FROM "knuMovie"."MOVIE" AS M
+		WHERE M.rating = (
+			SELECT MIN(EXTRACT(YEAR FROM M.start_year))
+			FROM "knuMovie"."ACTOR" AS A, "knuMovie"."MOVIE" AS M
+			WHERE A.name IN (
+				SELECT TOP3.name
+ 				FROM TOP3
+ 				ORDER BY TOP3.name ASC
+				LIMIT 1
+				)
+ 			AND A.m_title = M.title
+		)
+)
+SELECT COUNT(M.title)
+FROM "knuMovie"."MOVIE" AS M, SCORE
+WHERE M.rating = SCORE.rating - 1
+AND M.rating = SCORE.rating + 1;
+
+--  Q18.
+  SELECT AVG(SCORE.rating)
+  FROM (SELECT M.rating 
+  		FROM "knuMovie"."MOVIE" AS M, "knuMovie"."ACTOR" AS A
+  		WHERE M.title IN ( SELECT M.title
+  				FROM "knuMovie"."MOVIE" AS M, "knuMovie"."VERSION" AS V
+  				WHERE M.title = V.m_title
+  				AND (M.type = 'tv series' OR M.type = 'movie')
+  				GROUP BY M.title
+  				HAVING COUNT(M.title) >= 5 AND COUNT(M.title) <= 10
+  				)
+  		AND A.m_title = M.title
+  		GROUP BY M.title
+  		HAVING COUNT(A.name) <= 5
+  	  ) AS SCORE;
+
+
+--  Q19.
+ WITH MAX_RATE AS(
+ SELECT MAX(M.RATING) AS MAX_VAL
+ FROM "knuMovie"."MOVIE" AS M
+ )
+
+ SELECT M.title
+ FROM "knuMovie"."MOVIE" AS M
+ WHERE M.TITLE IN (
+					SELECT M.TITLE
+					FROM "knuMovie"."ACTOR" AS A , "knuMovie"."MOVIE" AS M, MAX_RATE
+					WHERE A.M_TITLE = M.TITLE
+					AND MAX_RATE.MAX_VAL = M.RATING
+
+					ORDER BY M.RATING DESC
+					LIMIT 2 OFFSET 0
+				 )
+
+ORDER BY M.RATING ASC
+LIMIT 1 OFFSET 0
+
+
+-- Q20.
+WITH WSCORE AS(SELECT R.m_title AS BTITLE
+				FROM "knuMovie"."RATING" AS R
+				WHERE R.num_vote IN (SELECT MAX(R.num_vote)
+										FROM (	SELECT M.title
+												FROM "knuMovie"."ACCOUNT" AS ACC, "knuMovie"."MOVIE" AS M, "knuMovie"."RATING" AS R
+												WHERE ACC.gender = 'woman'
+												AND ACC.acc_id = R.account_id
+												AND M.title = R.m_title
+											  ) AS WOMAN, "knuMovie"."RATING" AS R
+										WHERE WOMAN.title = R.m_title
+									 )
+				)
+SELECT ACC.user_name
+FROM "knuMovie"."RATING" AS R, "knuMovie"."MOVIE" AS M, "knuMovie"."ACCOUNT" AS ACC
+WHERE R.num_vote IN (SELECT MIN(R.num_vote)
+						FROM "knuMovie"."MOVIE" AS 	M, "knuMovie"."RATING" AS R
+						WHERE M.genre IN (SELECT M.genre
+											FROM "knuMovie"."RATING" AS R, "knuMovie"."MOVIE" AS M
+											WHERE R.num_vote IN (SELECT R.num_vote
+																	FROM "knuMovie"."ACCOUNT" AS ACC, "knuMovie"."MOVIE" AS M, "knuMovie"."RATING" AS R, WSCORE
+																	WHERE ACC.gender = 'man'
+																	AND ACC.acc_id = R.account_id
+																	AND R.m_title = WSCORE.BTITLE
+																)
+															)	
+ 					)
+AND EXTRACT(YEAR FROM M.start_year) = EXTRACT(YEAR FROM ACC.birth_date);

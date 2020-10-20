@@ -3,7 +3,7 @@ CREATE TABLE "knuMovie"."MOVIE"
     title text COLLATE pg_catalog."default" NOT NULL,
     type text COLLATE pg_catalog."default" NOT NULL,
     runtime integer NOT NULL,
-    start_year text COLLATE pg_catalog."default" NOT NULL,
+    start_year date NOT NULL,
     genre integer,
     rating double precision,
     viewing_class text COLLATE pg_catalog."default",

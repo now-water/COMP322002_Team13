@@ -1,5 +1,5 @@
-INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (1, 'ACTION');
-INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (2, 'SF');
-INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (3, 'COMEDY');
-INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (4, 'THRILLER');
-INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (5, 'ROMANCE');
+INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (1, 'Action');
+INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (2, 'Sf');
+INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (3, 'Comedy');
+INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (4, 'Thriller');
+INSERT INTO "knuMovie"."GENRE"(seq, category) VALUES (5, 'Romance');

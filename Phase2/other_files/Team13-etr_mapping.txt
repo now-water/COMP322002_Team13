@@ -18,21 +18,22 @@ VERSION relation은 MOVIE relation과 N:1로 CONTAIN relationship을 가지며 V
 (1) MOVIE
 - COUNTRY, DIRECTOR 속성은 불필요하다고 판단하였음.
 - PRODUCTION_YEAR를 과제의 제약조건인 Start_year 로 변경하였음.
+- ACCOUNT_ID를 추가하여 관리자가 등록한 MOVIE를 알 수 있게 함
 
 (2) GENRE
 - GENRE의 SEQ로 각 CATEGORY를 구분하여 MOVIE(genre)가 GENRE(seq)를 참조하면 해당 MOVIE(genre)의 값을 GENRE(category)로 알 수 있다.
-- GENRE의 multivalued CATEGORY 를 5개 카테고리의 simple attribute로 판단하여 변경하였다.
+
 
 (3) RATING
 - M_TITLE과 ACCOUNT_ID를 둘 다 PK로 두는 이유 : M_TITLE과 ACCOUT_ID 은 단일값으로는 중복될 수 있지만, 두 값을 모두 중복해서 갖는 경우는 존재하지 않으므로 이 두 값을 PK로 설정하였다.
-- Expert_rate 와 Common_rate 와 Count_of_vote 와 Rating_num
+- Expert rate과 common_rate를 구분하여 account의 직업이 영화평론가이면 expert rate으로, 아니면 common_rate로 평가하려고 했으나, 각 account의 평가정보를 받지 않고 총 투표갯수만 알 수 있으면 되므로 삭제
 
 (4) CUSTOMER 삭제
 - 모든 ACCOUNT 는 기본적으로 CUSTOMER 이며, 그 중 관리자 권한을 가진 계정이 존재하는 것이다. 따라서 CUSTOMER entity type과 ADMIN entity type은 삭제하고 ACCOUNT entity type으로 통일하였다
 - WISH_LIST, IN_RATED_LIST, IN_REG_LIST 도 RATING에 포함되므로 불필요하다고 판단하여 삭제하였다.
 
 (5) ACCOUNT
-- Job 은 영화 관람 사이트에서 필요하지 않은 정보여서 삭제하였다.
+- address, manager, mem_type attribute를 추가로 두어 제약조건에 맞게 사용자의 주소, 관리자 여부, 등급 등을 알 수 있게 함
 
 (6) ACTOR
 - 영화에 출연하는 배우의 생년월일과 나이, 인물소개, surogate key인 Actor_num은 영화 관람에 필요하지 않은 정보여서 삭제하였다. Key 값으로는 배우의 이름으로 설정하였다.

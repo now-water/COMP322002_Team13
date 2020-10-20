@@ -19,18 +19,19 @@ Servers -----(서버)
 
 [실행 순서]
 (1) Table 생성
-	- GENRE Table 생성
-	- ACCOUNT Table 생성
-	- Movie Table 생성
-	- Rating Table 생성
-	- Actor Table 생성
-	- Version Table 생성
+	- CREATE GENRE Table
+	- CREATE ACCOUNT Table
+	- CREATE Movie Table
+	- CREATE Rating Table
+	- CREATE Actor Table
+	- CREATE Version Table
+
 
 (2) Data population
-	- GENRE Table 삽입
-	- ACCOUNT Table 삽입
-	- Movie Table 삽입
-	- Rating Table 삽입
-	- Actor Table 삽입
-	- Version Table 삽입
+	- INSERT GENRE Table
+	- INSERT ACCOUNT Table
+	- INSERT Movie Table
+	- INSERT Rating Table
+	- INSERT Actor Table
+	- INSERT Version Table
 

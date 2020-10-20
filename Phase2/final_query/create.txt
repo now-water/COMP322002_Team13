@@ -26,6 +26,7 @@ CREATE TABLE "knuMovie"."ACCOUNT"
     age integer,
     gender text COLLATE pg_catalog."default",
     address text COLLATE pg_catalog."default",
+    job text COLLATE pg_catalog."default",
     mem_type text COLLATE pg_catalog."default",
     manager boolean,
     CONSTRAINT "ACCOUNT_pkey" PRIMARY KEY (acc_id)
@@ -48,7 +49,7 @@ CREATE TABLE "knuMovie"."MOVIE"
     title text COLLATE pg_catalog."default" NOT NULL,
     type text COLLATE pg_catalog."default" NOT NULL,
     runtime integer NOT NULL,
-    start_year text COLLATE pg_catalog."default" NOT NULL,
+    start_year date NOT NULL,
     genre integer,
     rating double precision,
     viewing_class text COLLATE pg_catalog."default",
@@ -149,3 +150,29 @@ ALTER TABLE "knuMovie"."VERSION"
 GRANT ALL ON TABLE "knuMovie"."VERSION" TO postgres;
 
 GRANT ALL ON TABLE "knuMovie"."VERSION" TO team13;
+
+
+
+CREATE TABLE "knuMovie"."EPISODE"
+(
+    m_title text COLLATE pg_catalog."default" NOT NULL,
+    episode_title text COLLATE pg_catalog."default" NOT NULL,
+    round integer NOT NULL,
+    CONSTRAINT "EPISODE_pkey" PRIMARY KEY (episode_title),
+    CONSTRAINT m_title FOREIGN KEY (m_title)
+        REFERENCES "knuMovie"."MOVIE" (title) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+        NOT VALID
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE "knuMovie"."EPISODE"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE "knuMovie"."EPISODE" TO postgres;
+
+GRANT ALL ON TABLE "knuMovie"."EPISODE" TO team13;

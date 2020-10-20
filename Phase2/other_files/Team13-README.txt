@@ -1,6 +1,6 @@
 [개발환경]
 OS : Linux 18.04.5 LTS
-Version : PostgreSQL 11
+Version : PostgreSQL 11.9
 Used GUI Toolkit : pgAdmin4
 
 [계층구초]
@@ -15,7 +15,9 @@ Servers -----(서버)
 				MOVIE
 				RATING
 				VERSION
-			
+				EPISODE
+
+
 
 [실행 순서]
 (1) Table 생성
@@ -25,8 +27,8 @@ Servers -----(서버)
 	- CREATE Rating Table
 	- CREATE Actor Table
 	- CREATE Version Table
-
-
+	- CREATE Episode Table
+	
 (2) Data population
 	- INSERT GENRE Table
 	- INSERT ACCOUNT Table
@@ -34,4 +36,4 @@ Servers -----(서버)
 	- INSERT Rating Table
 	- INSERT Actor Table
 	- INSERT Version Table
-
+	- INSERT Episode Table

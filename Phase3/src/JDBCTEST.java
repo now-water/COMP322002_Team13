@@ -7,8 +7,7 @@ public class JDBCTEST {
         Statement st = null;
         ResultSet rs = null;
 
-
-        String url = "jdbc:postgresql://localhost/phase2";
+        String url = "jdbc:postgresql://localhost/phase3";
         String user = "postgres";
         String password = "kwon0879";
 

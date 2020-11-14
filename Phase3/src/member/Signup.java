@@ -22,6 +22,7 @@ public class Signup {
         }
         return false;
     }
+
     public static void dbUpdate(Statement st) throws SQLException {
         String query = "INSERT INTO \"knuMovie\".\"ACCOUNT\"" +
                 "VALUES( \'" + acc.getAcc_id() + "\', \'" + acc.getAcc_pw() + "\', \'" + acc.getUser_name() + "\', \'" + acc.getPhone_num() + "\', TO_DATE(\'" +

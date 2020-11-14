@@ -20,7 +20,6 @@ public class main {
      * */
     static Connection conn = null;
     static Statement st = null;
-    static ResultSet rs = null;
 
     static String url = "jdbc:postgresql://localhost/phase2";
     static String user = "postgres";
@@ -40,7 +39,7 @@ public class main {
 
         Account account = Account.getInstance(); // Singleton pattern
         // 가장 처음에 애플리케이션 시작 시 login 실행
-        menu.start(conn,st,rs);
+        menu.start(st);
 
         System.out.println(account.getAcc_id());
     // oHm184U1

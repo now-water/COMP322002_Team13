@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Signin {
@@ -25,7 +26,7 @@ public class Signin {
     public Signin(Account acc){
         this.acc = acc;
     }
-    public boolean canLogin(Connection conn, Statement st, ResultSet rs){
+    public boolean canLogin(Statement st){
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("--- Id와 Pw를 입력하세요 --");
@@ -35,7 +36,7 @@ public class Signin {
         String isId = "SELECT * " +
                 "FROM \"knuMovie\".\"ACCOUNT\"";
         try {
-            rs = st.executeQuery(isId);
+            ResultSet rs = st.executeQuery(isId);
 
             while (rs.next()) {
                 if (rs.getString(1).equals(id)) {
@@ -72,16 +73,20 @@ public class Signin {
 
 
     public void printInfo() {
-        System.out.println(acc.getAcc_id());
-        System.out.println(acc.getAcc_pw());
-        System.out.println(acc.getUser_name());
-        System.out.println(acc.getPhone_num());
-        System.out.println(acc.getBirth_date());
-        System.out.println(acc.getAcc_pw());
-        System.out.println(acc.getGender());
-        System.out.println(acc.getAddress());
-        System.out.println(acc.getJob());
-        System.out.println(acc.getMem_type());
-        System.out.println(acc.isManager());
+        LinkedList list = new LinkedList();
+
+        list.add(acc.getAcc_id());
+        list.add(acc.getAcc_pw());
+        list.add(acc.getUser_name());
+        list.add(acc.getPhone_num());
+        list.add(acc.getBirth_date());
+        list.add(acc.getAcc_pw());
+        list.add(acc.getGender());
+        list.add(acc.getAddress());
+        list.add(acc.getJob());
+        list.add(acc.getMem_type());
+        list.add(acc.isManager());
+
+        System.out.println(list.toString());
     }
 }

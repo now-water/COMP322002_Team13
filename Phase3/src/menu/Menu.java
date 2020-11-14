@@ -23,6 +23,7 @@ public class Menu {
         up.signUp(st);
     }
 
+//    반복조건 필요할듯..
     public static void start(Statement st) throws SQLException {
         System.out.println("---knuMOVIE 에 오신걸 환영합니다.---");
         while (true) {
@@ -36,15 +37,7 @@ public class Menu {
 //                    sign.printInfo();
                     //일반 로그인 완료 - 1
                     videoMenu(st);
-/*
-* 1. 영상물 전체 출력
-* 2. 영상물 제목 검색
-* 3. 영상물 조건 검색
-*   -> 검색 이후 영상물의 정보를 출력, 영상물 평가 가능(평가 하시겠습니까? Y/N)
-*       -> 평가한 영상물은 검색대상에서 제외
-*
-* */
-//            완료 이후 기능
+
                 }
                 break;
             } // sin.canLogin();
@@ -60,7 +53,6 @@ public class Menu {
         System.out.println("1. 영상물 전체 출력");
         System.out.println("2. 영상물 제목 검색");
         System.out.println("3. 영상물 조건 검색");
-//        반복문 추가해야될듯? 뒤로가기같은??
 
         int menu = sc.nextInt();
         Video video = new Video(Movie.getInstance());

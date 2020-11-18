@@ -7,12 +7,13 @@ import java.util.Scanner;
 import member.Account;
 import member.Signin;
 import member.Signup;
+import rating.Rate;
 import video.Movie;
 import video.Video;
 
 public class Menu {
 
-    private Account acc;
+    private static Account acc;
     public static Scanner sc = new Scanner(System.in);
 
     public Menu(Account acc) {
@@ -27,9 +28,13 @@ public class Menu {
     //    반복조건 필요할듯..
     public static void start(Statement st) throws SQLException {
         System.out.println("---knuMOVIE 에 오신걸 환영합니다.---");
+        boolean loginStatus = false;
         while (true) {
-            System.out.println("1. 회원 로그인");
-            System.out.println("2. 회원 가입");
+            if(loginStatus == false)
+            {
+                System.out.println("1. 로그인");
+                System.out.println("2. 회원 가입");
+            }
 
             int menu = sc.nextInt();
             if (menu == 1) {
@@ -37,7 +42,7 @@ public class Menu {
                 if (sign.canLogin(st)) {
                     System.out.println("1. 회원 관련 기능");
                     System.out.println("2. 영상물 관련 기능");
-
+                    System.out.println("3. 평가 관련 기능");
 //                    영상물 검색 및 출력
                     switch (sc.nextInt()) {
                         case 1:
@@ -59,8 +64,10 @@ public class Menu {
                             videoMenu(st);
 
                             break;
-
+                        case 3: // 평가 관련 기능
+                            rateMenu(st);
                         default:
+
                     }
 
                 }
@@ -80,7 +87,7 @@ public class Menu {
         System.out.println("3. 영상물 조건 검색");
         System.out.println("4. 뒤로가기");
         int menu = sc.nextInt();
-        Video video = new Video(Movie.getInstance());
+        Video video = new Video(Movie.getInstance(), st, acc.getAcc_id());
 
         switch (menu) {
             case 1:
@@ -101,6 +108,8 @@ public class Menu {
             default:
                 return;
         }
+        // 영상물 평가할지 묻는 메서드
+        rate(st);
     }
 
     public static void retreive() {
@@ -148,6 +157,34 @@ public class Menu {
         int menu = sc.nextInt();
         switch (menu) {
 
+        }
+    }
+
+    public static void rateMenu(Statement st) {
+        //System.out.println("메뉴를 선택해 주세요.");
+        Rate rate = new Rate(acc);
+        if(acc.isManager()) // 관리자
+        {
+            System.out.println("----< 모든 영상물 평가 내역 >----");
+            rate.checkAllRatings(st);
+        }
+        else // 일반 회원
+        {
+            System.out.println("----< 나의 영상물 평가 내역 >----");
+            rate.checkMyRatings(st);
+        }
+
+    }
+    public static void rate(Statement st) {
+        System.out.println("메뉴를 선택하세요.");
+        System.out.println("1. 뒤로가기");
+        System.out.println("2. 평가하기");
+        int menu = sc.nextInt();
+        if(menu == 2){
+            Rate r = new Rate(acc);
+            System.out.println("평가할 영상물의 이름을 입력하세요");
+            String title = sc.next();
+            r.rateMovie(acc, st, title);
         }
     }
 }

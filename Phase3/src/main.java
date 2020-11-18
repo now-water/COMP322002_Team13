@@ -21,9 +21,9 @@ public class main {
     static Connection conn = null;
     static Statement st = null;
 
-    static String url = "jdbc:postgresql://localhost/phase2";
+    static String url = "jdbc:postgresql://localhost/phase3";
     static String user = "postgres";
-    static String password = "dlwjdduf1!";
+    static String password = "kwon0879";
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) throws SQLException {
@@ -40,7 +40,7 @@ public class main {
         // 가장 처음에 애플리케이션 시작 시 login 실행
         menu.start(st);
 
-        System.out.println(account.getAcc_id());
+
     // oHm184U1
 
 //        rs = st.executeQuery("SELECT * FROM \"knuMovie\".\"ACCOUNT\"");

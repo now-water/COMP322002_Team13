@@ -3,14 +3,33 @@ package video;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.*;
 
 public class Video {
     private static Movie movie;
+    public static ArrayList<String> ratedMovie = new ArrayList<String>();
+    //private static Map<String, ArrayList<String>> allMovies = new HashMap<>();
+    public Video(Movie movie, Statement st, String acc_id){
 
-    public Video(Movie movie) {
         this.movie = movie;
+        String query = "SELECT R.m_title FROM \"knuMovie\".\"RATING\" AS R " +
+                "WHERE R.account_id = \'" + acc_id + "\'";
+        try{
+            ResultSet rs = st.executeQuery(query);
+            boolean flag = true;
+            while(rs.next())
+            {
+                flag =false;
+                ratedMovie.add(rs.getString(1));
+            }
+            if(flag)
+            {
+                //System.out.println("평가한 영상물이 존재하지 않습니다.");
+            }
+
+        } catch(SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void allVidoeInfo(Statement st) {
@@ -41,14 +60,17 @@ public class Video {
     public void printInfo() {
         LinkedList list = new LinkedList();
 
-        list.add(movie.getTitle());
-        list.add(movie.getType());
-        list.add(movie.getRuntime());
-        list.add(movie.getStart_year());
-        list.add(movie.getGenre());
-        list.add(movie.getRating());
-        list.add(movie.getViewing_class());
-        list.add(movie.getAccount_id());
+        String title = movie.getTitle();
+        if(ratedMovie.contains(title)) return;
+
+        list.add("제목 : " + movie.getTitle());
+        list.add("타입 : " + movie.getType());
+        list.add("상영시간 : " + movie.getRuntime());
+        list.add("상영년도 : " + movie.getStart_year());
+        list.add("장르 : " + movie.getGenre());
+        list.add("평점 : " + movie.getRating());
+        list.add("관람등급 : " + movie.getViewing_class());
+        list.add("업로더 : " + movie.getAccount_id());
 
         System.out.println(list.toString());
     }

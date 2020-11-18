@@ -84,7 +84,7 @@ public class Signin {
                 "SET acc_pw = " + "\'" + passwd + "\'" +
                 "WHERE acc_pw = " + "\'" + acc.getAcc_pw() + "\'";
 
-        st.executeQuery(update);     //얘가 왜 안먹지?? 쿼리를 날려야 DB에도 저장이 될 거 아니야!
+        st.executeUpdate(update);     //얘가 왜 안먹지?? 쿼리를 날려야 DB에도 저장이 될 거 아니야!
         ResultSet rs = st.executeQuery(query);      //DB에 저장된 내역을 받아서 acc객체에도 저장..
 
         if (rs.next())
@@ -199,7 +199,7 @@ public class Signin {
 
             }
 
-            st.executeQuery(update);     //얘가 왜 안먹지?? 쿼리를 날려야 DB에도 저장이 될 거 아니야!
+            st.executeUpdate(update);     //얘가 왜 안먹지?? 쿼리를 날려야 DB에도 저장이 될 거 아니야!
             ResultSet rs = st.executeQuery(query);      //DB에 저장된 내역을 받아서 acc객체에도 저장..
 
             if (rs.next()) {
@@ -235,3 +235,4 @@ public class Signin {
         System.out.println(list.toString());
     }
 }
+

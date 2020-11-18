@@ -37,8 +37,10 @@ public class Menu {
                 if (sign.canLogin(st)) {
                     System.out.println("1. 회원 관련 기능");
                     System.out.println("2. 영상물 관련 기능");
+                    System.out.println("9. 뒤로 가기");
 
 //                    영상물 검색 및 출력
+
                     switch (sc.nextInt()) {
                         case 1:
                             System.out.println("1. 회원정보 수정");
@@ -51,6 +53,7 @@ public class Menu {
                                     break;
                                 case 2:
                                     sign.modifyPasswd(st);
+
                                     break;
                             }
 
@@ -59,11 +62,10 @@ public class Menu {
                             videoMenu(st);
 
                             break;
-
-                        default:
                     }
-
                 }
+
+
                 break;
             } // sin.canLogin();
             else if (menu == 2) {

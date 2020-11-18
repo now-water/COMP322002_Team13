@@ -1,6 +1,5 @@
 package video;
 
-import member.Account;
 
 public class Movie {
     private static Movie movie = null;

@@ -33,7 +33,6 @@ public class main {
 
         /* signIn object */
         Signin sin = new Signin(Account.getInstance());
-
         /* menu interface object */
         Menu menu = new Menu(Account.getInstance());
 

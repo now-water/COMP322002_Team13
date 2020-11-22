@@ -56,6 +56,18 @@ public class Rate{
     }
     public void rateMovie(Account acc, Statement st, String title, Video video){//, Video video){
         //Video video = new Video(Movie.getInstance(), st, acc.getAcc_id());
+        String query = "SELECT * FROM \"knuMovie\".\"MOVIE\" WHERE title = " + "\'" + title + "\' ";
+        try {
+            ResultSet rs = st.executeQuery(query);
+
+            if (!rs.next()) {
+                return;
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         if(video.ratedMovie.contains(title)){
             System.out.println("*** 이미 평가한 영상물입니다. ***");
             return;
@@ -108,7 +120,7 @@ public class Rate{
         String numVoteUpdateQuery = "INSERT INTO \"knuMovie\".\"RATING\" " +
                 "VALUES(\'" + title + "\', \'" + acc.getAcc_id() + "\', " +
                 (maxNumVote + 1) + ")";
-        System.out.println(numVoteUpdateQuery);
+        //System.out.println(numVoteUpdateQuery);
         try{
             st.executeUpdate(numVoteUpdateQuery);
         } catch (SQLException throwables) {
@@ -141,7 +153,7 @@ public class Rate{
         String ratingUpdateQuery = "UPDATE \"knuMovie\".\"MOVIE\" " +
                 "SET rating = " + newRating +
                 " WHERE title = \'" + title + "\' ";
-        System.out.println(ratingUpdateQuery);
+        //System.out.println(ratingUpdateQuery);
         try{
             st.executeUpdate(ratingUpdateQuery);
         } catch (SQLException throwables) {

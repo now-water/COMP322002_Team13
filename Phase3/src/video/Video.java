@@ -9,6 +9,7 @@ public class Video {
     private static Movie movie;
     public static ArrayList<String> ratedMovie = new ArrayList<String>();
     //private static Map<String, ArrayList<String>> allMovies = new HashMap<>();
+    public static Scanner sc= new Scanner(System.in);
 
     public Video(Movie movie, Statement st, String acc_id){
 
@@ -35,26 +36,64 @@ public class Video {
 
     public void allVidoeInfo(Statement st) {
         System.out.println("모든 영상물 정보. ");
-        String query = "SELECT * " +
+        String query = "SELECT title " +
                 "FROM \"knuMovie\".\"MOVIE\"";
 
+        int idx = 0;
+        ArrayList<String> movieList = new ArrayList<>();
         try {
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                movie.setTitle(rs.getString(1));
-                movie.setType(rs.getString(2));
-                movie.setRuntime(rs.getInt(3));
-                movie.setStart_year(rs.getString(4));
-                movie.setGenre(rs.getInt(5));
-                movie.setRating(rs.getDouble(6));
-                movie.setViewing_class(rs.getString(7));
-                movie.setAccount_id(rs.getString(8));
-
-                printInfo();
-
+                String title = rs.getString(1);
+                if(ratedMovie.contains(title))
+                    continue;
+                System.out.println(idx + ": " +title);
+                movieList.add(title);
+                idx +=1;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+        while(true) {
+            System.out.println("--------------------------------");
+            System.out.println("1: 영상물 상세 정보 확인");
+            System.out.println("2: 뒤로 가기");
+
+            int func = sc.nextInt();
+            if (func == 1) {
+                System.out.println("*** 영상물 정보를 확인하려면 인덱스를 입력해주세요. ***");
+                int index = sc.nextInt();
+                if(index < 0 || index >= movieList.size())
+                    System.out.println("잘못된 인덱스입니다.");
+                else
+                {
+                    query = "SELECT * FROM \"knuMovie\".\"MOVIE\" AS M " +
+                            "WHERE M.title = \'" + movieList.get(index) + "\'";
+                    //System.out.println(query);
+                    try {
+                        ResultSet rs = st.executeQuery(query);
+                        boolean flag = true;
+                        while (rs.next()) {
+                            flag = false;
+                            movie.setTitle(rs.getString(1));
+                            movie.setType(rs.getString(2));
+                            movie.setRuntime(rs.getInt(3));
+                            movie.setStart_year(rs.getString(4));
+                            movie.setGenre(rs.getInt(5));
+                            movie.setRating(rs.getDouble(6));
+                            movie.setViewing_class(rs.getString(7));
+                            movie.setAccount_id(rs.getString(8));
+                            printInfo();
+                        }
+                        if(flag)
+                            System.out.println("잘못된 정보를 입력했습니다.");
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            }
+            else if(func == 2)
+                break;
         }
     }
 
@@ -80,26 +119,20 @@ public class Video {
 //        제목으로 영상 검색
         System.out.println("제목을 입력해주세요.");
 
-        String title = new Scanner(System.in).next();
-        String query = "SELECT * " +
+        String title = new Scanner(System.in).nextLine();
+        String query = "SELECT M.title " +
                 "FROM \"knuMovie\".\"MOVIE\" AS M " +
                 "WHERE M.title = " + "\'" + title + "\'";
+        //System.out.println(query);
         boolean flag = true;
         try {
             ResultSet rs = st.executeQuery(query);
 
-            while (rs.next()) {
-                flag = false;
-                movie.setTitle(rs.getString(1));
-                movie.setType(rs.getString(2));
-                movie.setRuntime(rs.getInt(3));
-                movie.setStart_year(rs.getString(4));
-                movie.setGenre(rs.getInt(5));
-                movie.setRating(rs.getDouble(6));
-                movie.setViewing_class(rs.getString(7));
-                movie.setAccount_id(rs.getString(8));
-
-                printInfo();
+            if (rs.next()) {
+                if(!ratedMovie.contains(title)) {
+                    flag = false;
+                    System.out.println(title + " : 해당 영상물이 존재합니다.");
+                }
             }
 
         } catch (SQLException throwables) {
@@ -109,13 +142,47 @@ public class Video {
             System.out.println("이미 평가한 영상물이거나, 해당 검색 결과가 존재하지 않습니다.");
             return -1;
         }
+        System.out.println("--------------------------------");
+        System.out.println("1: 영상물 상세 정보 확인");
+        System.out.println("2: 뒤로 가기");
+        int func = sc.nextInt();
+        if (func == 1) {
+
+            query = "SELECT * FROM \"knuMovie\".\"MOVIE\" AS M " +
+                    "WHERE M.title = \'" + title + "\'";
+            //System.out.println(query);
+            try {
+                ResultSet rs = st.executeQuery(query);
+                flag = true;
+                if (rs.next()) {
+                    if(!ratedMovie.contains(title)) {
+                        flag = false;
+                        movie.setTitle(rs.getString(1));
+                        movie.setType(rs.getString(2));
+                        movie.setRuntime(rs.getInt(3));
+                        movie.setStart_year(rs.getString(4));
+                        movie.setGenre(rs.getInt(5));
+                        movie.setRating(rs.getDouble(6));
+                        movie.setViewing_class(rs.getString(7));
+                        movie.setAccount_id(rs.getString(8));
+                        printInfo();
+                    }
+
+                }
+                if (flag)
+                    System.out.println("잘못된 정보를 입력했습니다.");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
         return 0;
     }
 
     public int conditionSearch(Statement st) {
 //        조건으로 영상 검색
-        String query = "SELECT M.* " +
+        String query = "SELECT M.title " +
                 "FROM \"knuMovie\".\"MOVIE\" AS M ";
+        //System.out.println(query);
         boolean pre = false;
         Scanner sc = new Scanner(System.in);
         System.out.println("검색할 옵션을 선택해 주세요.");
@@ -203,27 +270,66 @@ public class Video {
             query += "account_id = \'" + adminId + "\' ";
         }
         // check
-        System.out.println(query);
+        //System.out.println(query);
         boolean flag = true;
+        ArrayList<String> movieList = new ArrayList<>();
+        int idx = 0;
+
         try {
             ResultSet rs = st.executeQuery(query);
-
             while (rs.next()) {
-                flag = false;
-                movie.setTitle(rs.getString(1));
-                movie.setType(rs.getString(2));
-                movie.setRuntime(rs.getInt(3));
-                movie.setStart_year(rs.getString(4));
-                movie.setGenre(rs.getInt(5));
-                movie.setRating(rs.getDouble(6));
-                movie.setViewing_class(rs.getString(7));
-                movie.setAccount_id(rs.getString(8));
-
-                printInfo();
+                String title = rs.getString(1);
+                if(ratedMovie.contains(title))
+                    continue;
+                System.out.println(idx + ": " +title);
+                movieList.add(title);
+                idx +=1;
             }
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }
+
+        while(true) {
+            System.out.println("--------------------------------");
+            System.out.println("1: 영상물 상세 정보 확인");
+            System.out.println("2: 뒤로 가기");
+
+            int func = sc.nextInt();
+            if (func == 1) {
+                System.out.println("*** 영상물 정보를 확인하려면 인덱스를 입력해주세요. ***");
+                int index = sc.nextInt();
+                if(index < 0 || index >= movieList.size())
+                    System.out.println("잘못된 인덱스입니다.");
+                else
+                {
+                    query = "SELECT * FROM \"knuMovie\".\"MOVIE\" AS M " +
+                            "WHERE M.title = \'" + movieList.get(index) + "\'";
+                    try {
+                        ResultSet rs = st.executeQuery(query);
+                        flag = true;
+                        if (rs.next()) {
+                            if(!ratedMovie.contains(movieList.get(index))) {
+                                flag = false;
+                                movie.setTitle(rs.getString(1));
+                                movie.setType(rs.getString(2));
+                                movie.setRuntime(rs.getInt(3));
+                                movie.setStart_year(rs.getString(4));
+                                movie.setGenre(rs.getInt(5));
+                                movie.setRating(rs.getDouble(6));
+                                movie.setViewing_class(rs.getString(7));
+                                movie.setAccount_id(rs.getString(8));
+                                printInfo();
+                            }
+                        }
+                        if(flag)
+                            System.out.println("이미 평가한 영상물이거나, 해당 검색 결과가 존재하지 않습니다.");
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            }
+            else if (func == 2)
+                break;
         }
         if(flag) return -1;
         return 0;

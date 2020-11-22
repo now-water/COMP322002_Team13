@@ -31,16 +31,18 @@ public class Signin {
     public boolean canLogin(Statement st) {
 
         System.out.println("--- Id와 Pw를 입력하세요 --");
+        System.out.print("ID : ");
         String id = scanner.next();
+        System.out.print("PW : ");
         String pw = scanner.next();
         //를 입력받아서 일단 DB에 id정보가 있는지 싹다 조회하고 있으면 해당 id에 관한 행 정보를 Account instance를 생성하여 저장 후 true반환
-        String isId = "SELECT * " +
+        String query = "SELECT * " +
                 "FROM \"knuMovie\".\"ACCOUNT\"";
         try {
-            ResultSet rs = st.executeQuery(isId);
+            ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
-                if (rs.getString(1).equals(id)) {
+                if (rs.getString(1).equals(id) && rs.getString(2).equals(pw)) {
 //                account instance에 정보 삽입
 
                     acc.setAcc_id(id);
@@ -115,7 +117,8 @@ public class Signin {
                 case 1:
                     System.out.println("현재 user_name : " + acc.getUser_name());
                     System.out.print("변경할 user_name : ");
-                    String user_name = scanner.next();
+                    scanner.nextLine();
+                    String user_name = scanner.nextLine();
 
                     update = "UPDATE \"knuMovie\".\"ACCOUNT\" " +
                             "SET user_name = " + "\'" + user_name + "\' " +
@@ -125,7 +128,8 @@ public class Signin {
                 case 2:
                     System.out.println("현재 phone_num : " + acc.getPhone_num());
                     System.out.print("변경할 phone_num : ");
-                    String phone_num = scanner.next();
+                    scanner.nextLine();
+                    String phone_num = scanner.nextLine();
 
                     update = "UPDATE \"knuMovie\".\"ACCOUNT\" " +
                             "SET phone_num = " + "\'" + phone_num + "\' " +
@@ -135,7 +139,8 @@ public class Signin {
                 case 3:
                     System.out.println("현재 birth_date : " + acc.getBirth_date());
                     System.out.print("변경할 birth_date : ");
-                    String birth_date = scanner.next();
+                    scanner.nextLine();
+                    String birth_date = scanner.nextLine();
 
                     update = "UPDATE \"knuMovie\".\"ACCOUNT\" " +
                             "SET birth_date = " + "\'" + birth_date + "\' " +
@@ -155,7 +160,8 @@ public class Signin {
                 case 5:
                     System.out.println("현재 gender : " + acc.getGender());
                     System.out.print("변경할 gender (M/F) : ");
-                    String gender = scanner.next();
+                    scanner.nextLine();
+                    String gender = scanner.nextLine();
 
                     String sex = gender.equals("M") ? "man" : "woman";
                     update = "UPDATE \"knuMovie\".\"ACCOUNT\" " +
@@ -166,7 +172,8 @@ public class Signin {
                 case 6:
                     System.out.println("현재 address : " + acc.getAddress());
                     System.out.print("변경할 address : ");
-                    String address = scanner.next();
+                    scanner.nextLine();
+                    String address = scanner.nextLine();
 
                     update = "UPDATE \"knuMovie\".\"ACCOUNT\" " +
                             "SET address = " + "\'" + address + "\' " +
@@ -176,7 +183,8 @@ public class Signin {
                 case 7:
                     System.out.println("현재 job : " + acc.getJob());
                     System.out.print("변경할 job : ");
-                    String job = scanner.next();
+                    scanner.nextLine();
+                    String job = scanner.nextLine();
 
                     update = "UPDATE \"knuMovie\".\"ACCOUNT\" " +
                             "SET job = " + "\'" + job + "\' " +
@@ -186,7 +194,8 @@ public class Signin {
                 case 8:
                     System.out.println("현재 mem_type : " + acc.getMem_type());
                     System.out.print("변경할 mem_type (basic | premium | prime) : ");
-                    String mem_type = scanner.next();
+                    scanner.nextLine();
+                    String mem_type = scanner.nextLine();
 
                     update = "UPDATE \"knuMovie\".\"ACCOUNT\" " +
                             "SET mem_type = " + "\'" + mem_type + "\' " +
@@ -215,6 +224,13 @@ public class Signin {
             }
 
         }
+    }
+
+    public void secessionMember(Statement st) throws SQLException {
+        String query = "DELETE FROM \"knuMovie\".\"ACCOUNT\" AS A " +
+                "WHERE A.acc_id = " + "\'" + acc.getAcc_id() + "\'";
+
+        st.executeUpdate(query);
     }
 
     public void printInfo() {

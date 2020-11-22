@@ -19,7 +19,7 @@ public class Rate{
         String query = "SELECT m.title, m.rating, r.num_vote FROM \"knuMovie\".\"MOVIE\" AS m, \"knuMovie\".\"RATING\" AS r " +
         "WHERE m.title = r.m_title " +
         "AND r.account_id = '" + acc.getAcc_id() + "'";
-        System.out.println(query);
+        //System.out.println(query);
         try {
             boolean flag = true;
             ResultSet rs = st.executeQuery(query);
@@ -28,7 +28,7 @@ public class Rate{
                 flag = false;
                 System.out.println("제목 : " + rs.getString(1) +
                         " 평점 : " + rs.getDouble(2) +
-                        " 영상물의 총 평가 수" + rs.getString(3));
+                        " 영상물의 총 평가 수 " + rs.getString(3));
             }
             if(flag){
                 System.out.println("평가한 내역이 존재하지 않습니다.");
@@ -36,6 +36,7 @@ public class Rate{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        System.out.println("------------------------------");
     }
     public void checkAllRatings(Statement st){
         String query = "SELECT m.title, r.account_id, m.rating FROM \"knuMovie\".\"MOVIE\" AS m, \"knuMovie\".\"RATING\" AS r " +
@@ -53,8 +54,8 @@ public class Rate{
             throwables.printStackTrace();
         }
     }
-    public void rateMovie(Account acc, Statement st, String title){
-        Video video = new Video(Movie.getInstance(), st, acc.getAcc_id());
+    public void rateMovie(Account acc, Statement st, String title, Video video){//, Video video){
+        //Video video = new Video(Movie.getInstance(), st, acc.getAcc_id());
         if(video.ratedMovie.contains(title)){
             System.out.println("*** 이미 평가한 영상물입니다. ***");
             return;
@@ -136,7 +137,7 @@ public class Rate{
         /* rating 업데이트 */
         // 소수점 둘째자리에서 반올림.
         double newRating = Math.round((maxNumVote * rating + score)/(maxNumVote + 1) * 10)/10;
-        System.out.println("입력값 : " + score + "원래 값 : "+rating + " 수정 값: " + newRating);
+        //System.out.println("입력값 : " + score + "원래 값 : "+rating + " 수정 값: " + newRating);
         String ratingUpdateQuery = "UPDATE \"knuMovie\".\"MOVIE\" " +
                 "SET rating = " + newRating +
                 " WHERE title = \'" + title + "\' ";
@@ -146,5 +147,8 @@ public class Rate{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        System.out.println("성공적으로 평가하였습니다.");
+        video.ratedMovie.add(title);
     }
 }

@@ -9,6 +9,7 @@ public class Video {
     private static Movie movie;
     public static ArrayList<String> ratedMovie = new ArrayList<String>();
     //private static Map<String, ArrayList<String>> allMovies = new HashMap<>();
+
     public Video(Movie movie, Statement st, String acc_id){
 
         this.movie = movie;
@@ -75,7 +76,7 @@ public class Video {
         System.out.println(list.toString());
     }
 
-    public void titleSearch(Statement st) {
+    public int titleSearch(Statement st) {
 //        제목으로 영상 검색
         System.out.println("제목을 입력해주세요.");
 
@@ -83,11 +84,12 @@ public class Video {
         String query = "SELECT * " +
                 "FROM \"knuMovie\".\"MOVIE\" AS M " +
                 "WHERE M.title = " + "\'" + title + "\'";
-
+        boolean flag = true;
         try {
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
+                flag = false;
                 movie.setTitle(rs.getString(1));
                 movie.setType(rs.getString(2));
                 movie.setRuntime(rs.getInt(3));
@@ -99,66 +101,115 @@ public class Video {
 
                 printInfo();
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
+        if(flag){
+            System.out.println("이미 평가한 영상물이거나, 해당 검색 결과가 존재하지 않습니다.");
+            return -1;
+        }
+        return 0;
     }
 
-    public void conditionSearch(Statement st) {
+    public int conditionSearch(Statement st) {
 //        조건으로 영상 검색
-        System.out.println("조건을 입력해주세요.");
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("1. Type + Genre");
-        System.out.println("2. Genre + Version");
+        String query = "SELECT M.* " +
+                "FROM \"knuMovie\".\"MOVIE\" AS M ";
+        boolean pre = false;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("검색할 옵션을 선택해 주세요.");
 
-        int choose = scanner.nextInt();
-        String type = "";
-        String genre = "";
-        String region = "";
-
-        String query = "";
-        switch (choose) {
-//            type + genre
-            case 1:
-                scanner.nextLine();
-                System.out.print("Type 입력 : ");
-                type = scanner.nextLine();
-
-                System.out.print("Genre 입력 : ");
-                genre = scanner.next();
-
-                query = "SELECT M.* " +
-                        "FROM \"knuMovie\".\"MOVIE\" AS M, \"knuMovie\".\"GENRE\" AS G " +
-                        "WHERE M.genre = G.seq " +
-                        "AND G.category = " + "\'" + genre + "\' " +
-                        "AND M.type = " + "\'" + type + "\'";
-
-                break;
-
-//                genre + region
-            case 2:
-                System.out.print("Genre 입력 : ");
-                genre = scanner.next();
-                System.out.print("Region 입력 : ");
-                region = scanner.next();
-
-                query = "SELECT M.* " +
-                        "FROM \"knuMovie\".\"MOVIE\" AS M, \"knuMovie\".\"GENRE\" AS G,\"knuMovie\".\"VERSION\" AS V " +
-                        "WHERE M.title = V.m_title " +
-                        "AND M.genre = G.seq " +
-                        "AND G.category = " + "\'" + genre + "\'" +
-                        "AND V.region = "  + "\'" + region + "\'";
-
-                break;
-            default:
-
+        System.out.println("*** Type(movie, knumoviedb original, tv series) *** ");
+        String type = sc.nextLine();
+        if(!type.equals(""))
+        {
+            query += "WHERE M.type = \'" + type + "\' ";
+            pre = true;
         }
 
+        System.out.println("*** Runtime (입력값의 -5, +5 범위)*** ");
+        String runtime = sc.nextLine();
+        if(!runtime.equals(""))
+        {
+            double rt = Double.parseDouble(runtime);
+            if(pre) query += "AND ";
+            else {
+                query += "WHERE ";
+                pre = true;
+            }
+            query += "M.runtime >= " + (rt - 5) + " ";
+            query += "AND M.runtime <= " + (rt + 5) + " ";
+        }
+
+        System.out.println("*** Start Year (YYYY) *** ");
+        String startYear = sc.nextLine();
+        if(!startYear.equals(""))
+        {
+            if(pre) query += "AND ";
+            else {
+                query += "WHERE ";
+                pre = true;
+            }
+            query += "extract(YEAR FROM start_year) = " + startYear + " ";
+        }
+
+        System.out.println("*** Genre *** ");
+        System.out.println("1: Action, 2: Sf, 3: Comedy, 4: Thriller, 5: Romance");
+        String genre = sc.nextLine();
+        if(!genre.equals(""))
+        {
+            if(pre) query += "AND ";
+            else {
+                query += "WHERE ";
+                pre = true;
+            }
+            query += "genre = " + genre + " ";
+        }
+
+        System.out.println("*** Rating *** ");
+        String rating = sc.nextLine();
+        if(!rating.equals(""))
+        {
+            if(pre) query += "AND ";
+            else {
+                query += "WHERE ";
+                pre = true;
+            }
+            query += "rating = " + rating + " ";
+        }
+
+        System.out.println("*** Viewing Class (ALL, 12, 15, 19)*** ");
+        String viewClass = sc.nextLine();
+        if(!viewClass.equals(""))
+        {
+            if(pre) query += "AND ";
+            else {
+                query += "WHERE ";
+                pre = true;
+            }
+            query += "viewing_class = \'" + viewClass + "\' ";
+        }
+
+        System.out.println("*** Admin ID *** ");
+        String adminId = sc.nextLine();
+        if(!adminId.equals(""))
+        {
+            if(pre) query += "AND ";
+            else {
+                query += "WHERE ";
+                pre = true;
+            }
+            query += "account_id = \'" + adminId + "\' ";
+        }
+        // check
+        System.out.println(query);
+        boolean flag = true;
         try {
             ResultSet rs = st.executeQuery(query);
 
             while (rs.next()) {
+                flag = false;
                 movie.setTitle(rs.getString(1));
                 movie.setType(rs.getString(2));
                 movie.setRuntime(rs.getInt(3));
@@ -170,8 +221,11 @@ public class Video {
 
                 printInfo();
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        if(flag) return -1;
+        return 0;
     }
 }

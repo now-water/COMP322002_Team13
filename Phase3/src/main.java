@@ -2,6 +2,8 @@ import java.sql.*;
 import java.util.Scanner;
 import member.*;
 import menu.*;
+import video.Movie;
+import video.Video;
 
 
 public class main {
@@ -24,7 +26,6 @@ public class main {
     static String url = "jdbc:postgresql://localhost/phase3";
     static String user = "postgres";
     static String password = "kwon0879";
-    static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) throws SQLException {
         /* Make onnection with Database */
@@ -34,28 +35,12 @@ public class main {
         /* signIn object */
         Signin sin = new Signin(Account.getInstance());
         /* menu interface object */
-        Menu menu = new Menu(Account.getInstance());
-
         Account account = Account.getInstance(); // Singleton pattern
+
+        Menu menu = new Menu(Account.getInstance(), Movie.getInstance(), st);
+
+
         // 가장 처음에 애플리케이션 시작 시 login 실행
         menu.start(st);
-
-
-    // oHm184U1
-
-//        rs = st.executeQuery("SELECT * FROM \"knuMovie\".\"ACCOUNT\"");
-//        while (rs.next())
-//            System.out.println(
-//                    rs.getString(1) + ' ' +
-//                            rs.getString(2) + ' ' +
-//                            rs.getString(3) + ' ' +
-//                            rs.getString(4) + ' ' +
-//                            rs.getDate(5) + ' ' +
-//                            rs.getInt(6) + ' ' +
-//                            rs.getString(7) + ' ' +
-//                            rs.getString(8) + ' ' +
-//                            rs.getString(9) + ' ' +
-//                            rs.getString(10) + ' ' +
-//                            rs.getBoolean(11));
     }
 }

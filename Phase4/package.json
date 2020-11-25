@@ -1,0 +1,16 @@
+{
+  "name": "phase4",
+  "version": "1.0.0",
+  "description": "<h3>Login page</h3>\r <image src=\"https://user-images.githubusercontent.com/51476083/98394486-302b5580-209e-11eb-80b8-da32734aba0c.png\">",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "supervisor": "^0.12.0"
+  }
+}

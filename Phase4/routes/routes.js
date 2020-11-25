@@ -8,9 +8,6 @@ module.exports = function () {
     route.use(bodyParser.urlencoded({ extended: true }));
 
     route.get('/', (req, res) => {
-        // conn.query('SELECT NOW()', (err, res) => {
-        //     console.log(err, res);
-        // })
         res.render("index");
     })
     route.get('/index', (req, res) => {
@@ -20,8 +17,7 @@ module.exports = function () {
                 console.log(err);
                 res.status(500).send("DB Error");
             }
-            console.log(results);
-            res.render('index', { results: results });
+            res.render('index', { results: results.rows });
         });
     })
     route.get('/register', (req, res) => {

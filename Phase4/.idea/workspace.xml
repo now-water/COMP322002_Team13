@@ -7,13 +7,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b7d99ccd-4546-42f7-a9a6-29d46312dd18" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/css/bootstrap-theme.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/css/bootstrap.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/css/loginStyles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/login.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/signUp.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/form.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/index.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/table.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/[2020.11.18]phase4.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql-42.2.18.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/css/bootstrap-theme.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/css/bootstrap.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/css/loginStyles.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/week15-project-presentation-template.pptx" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,7 +52,8 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views/css" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="GitIgnore" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -407,7 +413,9 @@
       <workItem from="1604668281874" duration="407000" />
       <workItem from="1604673332741" duration="2265000" />
       <workItem from="1604676356782" duration="5867000" />
-      <workItem from="1606310806927" duration="1194000" />
+      <workItem from="1606310806927" duration="3183000" />
+      <workItem from="1606316673686" duration="33000" />
+      <workItem from="1606316742098" duration="972000" />
     </task>
     <servers />
   </component>

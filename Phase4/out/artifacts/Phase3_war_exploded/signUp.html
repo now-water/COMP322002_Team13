@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <!--Custom styles-->
-    <link rel="stylesheet" type="text/css" href="../web/css/loginStyles.css">
+    <link rel="stylesheet" type="text/css" href="css/loginStyles.css">
 </head>
 <!--
 
@@ -29,48 +29,47 @@
                 <h3>KNU MOVIE - Join with us </h3>
             </div>
             <div class="card-body">
-
-                <form method="POST" action="http://localhost:3000/signUp">
+                <form>
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"></span>
                         </div>
-                        <input name = "user_id" type="text" class="form-control" placeholder="ID">
+                        <input type="text" class="form-control" placeholder="ID">
 
                     </div>
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"></span>
                         </div>
-                        <input name = "pw" type="password" class="form-control" placeholder="Password">
+                        <input type="password" class="form-control" placeholder="Password">
                     </div>
 
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"></span>
                         </div>
-                        <input name = "name" type="text" class="form-control" placeholder="Name">
+                        <input type="text" class="form-control" placeholder="Name">
                     </div>
 
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"></span>
                         </div>
-                        <input name = "phone_num" type="text" class="form-control" placeholder="Phone Number">
+                        <input type="text" class="form-control" placeholder="Phone Number">
                     </div>
 
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"></span>
                         </div>
-                        <input name = "birth" type="text" class="form-control" placeholder="Birthdate">
+                        <input type="text" class="form-control" placeholder="Birthdate">
                     </div>
                     <div class="input-group form-group" style='float:left'>
                         <div class="input-group-prepend">
                             <span class="input-group-text"></span>
                         </div>
                         <div style='color:white; padding-left: 20px; padding-right: 25px;'>
-                            <input  type="radio" id="male" name="gender" value="male" class="form-control" >
+                            <input type="radio" id="male" name="gender" value="male" class="form-control" >
                             <label for="male" >Male</label>
                         </div>
                         <div>
@@ -83,14 +82,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"></span>
                         </div>
-                        <input  name = "address" type="text" class="form-control" placeholder="Address">
-                    </div>
-
-                    <div class="input-group form-group" style='float:left'>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"></span>
-                        </div>
-                        <input  name = "job" type="text" class="form-control" placeholder="Job">
+                        <input type="text" class="form-control" placeholder="Job">
                     </div>
 
                     <div class="input-group form-group">
@@ -110,7 +102,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"></span>
                         </div>
-                        <input name = "manager" type="checkbox" class="form-control" id="manager">
+                        <input type="checkbox" class="form-control" id="manager">
                         <label for="manager" >Manager</label>
                     </div>
 

@@ -300,6 +300,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <% if(typeof results !== "undefined") { %>
                                     <% var resultCnt=Object.keys(results).length; %>
                                     <%
                                           for(i=0; i<resultCnt;i++) {
@@ -315,7 +316,7 @@
                                             <td style="width:12%"><%- results[i].account_id %></td>
                                           </tr>
                                           <%}%>
-
+                                    <%  } %>
                                     </tbody>
                                 </table>
                             </div>

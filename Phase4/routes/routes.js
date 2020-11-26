@@ -1,4 +1,5 @@
 const e = require('express');
+const session = require('express-session');
 
 module.exports = function () {
     var route = e.Router();
@@ -6,9 +7,11 @@ module.exports = function () {
     var bodyParser = require('body-parser');
     const { response } = require("express");
     route.use(bodyParser.urlencoded({ extended: true }));
+    var user = {
 
+    }
     route.get('/', (req, res) => {
-        res.render("index");
+        res.redirect('/login');
     })
     route.get('/index', (req, res) => {
         var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\"';
@@ -25,6 +28,16 @@ module.exports = function () {
     })
     route.get('/login', (req, res) => {
         res.render("login");
+    })
+    route.post('/login', (req, res) => {
+        var user_id = req.body.user_id;
+        var user_pw = req.body.user_pw;
+        console.log(user_id + " " + user_pw);
+
+        // DB 처리
+        //req.session.user_id = user_id;
+        //console.log(req.session);
+        res.render("index");
     })
     route.get('/form', (req, res) => {
         res.render("form");

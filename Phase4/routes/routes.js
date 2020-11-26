@@ -101,8 +101,13 @@ module.exports = function () {
         res.redirect('login');
     })
     route.get('/form', (req, res) => {
+        if(!req.session.isLogined){
+            res.redirect('/login');
+        }
         console.log(`${req.session.user_id}`);
-        res.render("form");
+        res.render("form", {
+            session: `${req.session.user_id}`
+        });
     })
 
     return route;

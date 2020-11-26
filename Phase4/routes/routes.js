@@ -15,9 +15,11 @@ module.exports = function () {
             res.redirect('login');
         }
 
-        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" M, \"knuMovie\".\"RATING\" R ' +
-            "WHERE M.title =  " +
-            "ACC.acc_id != \'" + `${req.session.user_id}` + "\' ";
+        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ' +
+        'WHERE title NOT IN (SELECT m_title AS title ' +
+        'FROM \"knuMovie\".\"RATING\" '+
+        'WHERE account_id = \'' + `${req.session.user_id}` + "\') ";
+        console.log(sql);
         conn.query(sql, (err, results) => {
             if (err) {
                 console.log(err);

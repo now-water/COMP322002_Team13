@@ -114,9 +114,6 @@ module.exports = function () {
                             req.session.mem_type = row.mem_type;
                             req.session.manager = row.manager;
                             req.session.isLogined = true;
-                            //console.log("Session test : ");
-                            //console.log(req.session);
-
                             res.redirect('index');
                         } else {
                             res.send('<script type="text/javascript">alert("로그인 정보가 없습니다.");' +
@@ -160,6 +157,68 @@ module.exports = function () {
             manager: `${req.session.manager}`
         });
     })
+    route.post('/rate', (req, res) => {
 
+        var score = req.body.score;
+        var title = req.body.title.replace(/"/gi, "");
+        //title = title.substr(1, title.length - 2);
+        console.log(score);
+        console.log(title);
+
+        var id = req.session.user_id;
+        // MAX num_vote
+        var getMaxVoteQuery = "SELECT MAX(R.num_vote) AS num_vote FROM \"knuMovie\".\"RATING\" AS R " +
+            "WHERE R.m_title = \'" + title + "\'";
+        //console.log(getMaxVoteQuery);
+
+        conn.query(getMaxVoteQuery, (err, results) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("DB Error");
+            }
+            console.log("totalScore 원래타입 : " + typeof results.rows[0].num_vote);
+            console.log("num_vote : " + results.rows[0].num_vote);
+            var tatalScore = results.rows[0].num_vote;
+            var total_num_vote = results.rows[0].num_vote;
+            console.log("totalScore 타입 : " + typeof totalScore + " totalScore 값 : " + totalScore);
+            // rating score of a movie
+            var getRatingScoreQuery = "SELECT m.rating AS rating FROM \"knuMovie\".\"MOVIE\" AS m " +
+                "WHERE m.title = \'" + title + "\'";
+            console.log(getRatingScoreQuery);
+            conn.query(getRatingScoreQuery)
+                .then(queryRes => {
+                    const rows = queryRes.rows;
+                    rows.map(row => {
+                        console.log("rating test : " + row.rating);
+                        tatalScore = totalScore * row.rating;
+                        console.log("total score BEFORE : " + totalScore);
+                        totalScore = totalScore + parseFloat(score);
+                        console.log("total score AFTER : " + totalScore);
+                        var updatedRating = totalScore / (total_num_vote + 1);
+                        console.log("updated rating : " + updatedRating);
+                        var updateRatingQuery = "UPDATE \"knuMovie\".\"MOVIE\" " +
+                            "SET RATING = " + updatedRating +
+                            " WHERE title = \'" + title + "\'";
+                        conn.query(updateRatingQuery, (err, results) => {
+                            if(err){
+                                console.log(err);
+                            }
+                        });
+
+                        var insertQuery = "INSERT INTO \"knuMovie\".\"RATING\" " +
+                            "VALUES(\'" + title + "\', \'" + id + "\', " +  parseInt(total_num_vote) + 1 + ") ";
+
+                        console.log("insert query test: " + insertQuery);
+                        conn.query(insertQuery, (err, results) => {
+                            if(err){
+                                console.log(err);
+                            }
+                        });
+                    });
+                });
+        });
+
+
+    })
     return route;
 }

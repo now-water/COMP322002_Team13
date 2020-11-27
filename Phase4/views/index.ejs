@@ -19,7 +19,33 @@
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">
+    <script>
+    /*$(function(){
+        ${"#rateBtn".on("click", function(){
 
+        }
+    }*/
+        function rateBtn(){
+            // var title = $(.waves-effect waves-light btn-large).parent().siblings().('#title').text();
+            var title = event.target.getAttribute('value');
+            console.log(title);
+            var score = prompt("영화의 평점을 입력하세요. (0~12)");
+            if(score < 0 || score > 10)
+            {
+                alert("잘못된 값을 입력하였습니다");
+            }
+            else{
+                var reqUrl = 'http://localhost:3000/rate';
+                var httpRequest = new XMLHttpRequest();
+                var parameter = 'score=' + score + '&title=' + title;
+                httpRequest.open("POST", reqUrl, true);
+                httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                httpRequest.send(parameter);
+                console.log(reqUrl);
+                console.log("전송완료");
+            }
+        }
+    </script>
 </head>
 <body>
     <div><%- session%></div>
@@ -299,6 +325,7 @@
                                             <th>Rating</th>
                                             <th>Viewing Class</th>
                                             <th>Uploader</th>
+                                            <th>Do Rate</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -308,7 +335,7 @@
                                           for(i=0; i<resultCnt;i++) {
                                           var date = results[i].start_year.toString();%>
                                           <tr class="tr-class">
-                                            <td style="width:12%"><%- results[i].title %></td>
+                                            <td style="width:12%" id="title"><%- results[i].title %></td>
                                             <td style="width:12%"><%- results[i].type %></td>
                                             <td style="width:12%"><%- results[i].runtime %></td>
                                             <td style="width:12%"><%- date.substr(3, 7) + "," + date.substr(10, 5) %></td>
@@ -316,6 +343,17 @@
                                             <td style="width:12%"><%- results[i].rating %></td>
                                             <td style="width:12%"><%- results[i].viewing_class %></td>
                                             <td style="width:12%"><%- results[i].account_id %></td>
+                                            <td style="width:1%">
+
+                                                <a id="rateBtn" class="waves-effect waves-light btn-large" value="<%=JSON.stringify(results[i].title)%>" onClick="rateBtn()";>
+                                                    <i class="material-icons center">star</i>
+                                                        Rate
+                                                </a>
+                                            </td>
+                                            <script>
+                                                var title = document.getElementById("rateBtn");
+                                                title.value = JSON.parse(results[i].title);
+                                            </script>
                                           </tr>
                                           <%}%>
                                     <%  } %>

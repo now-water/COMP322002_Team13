@@ -16,9 +16,9 @@ module.exports = function () {
         }
 
         var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ' +
-        'WHERE title NOT IN (SELECT m_title AS title ' +
-        'FROM \"knuMovie\".\"RATING\" '+
-        'WHERE account_id = \'' + `${req.session.user_id}` + "\') ";
+            'WHERE title NOT IN (SELECT m_title AS title ' +
+            'FROM \"knuMovie\".\"RATING\" ' +
+            'WHERE account_id = \'' + `${req.session.user_id}` + "\') ";
         console.log(sql);
 
         conn.query(sql, (err, results) => {
@@ -41,7 +41,7 @@ module.exports = function () {
 
     route.post('/signUp', (req, res) => {
         req.body.age = parseInt("2020" - req.body.birth.substr(0, 4));
-        req.body.manager = req.body.manager == 'on'?"TRUE":"FALSE";
+        req.body.manager = req.body.manager == 'on' ? "TRUE" : "FALSE";
 
         var sql = "INSERT INTO \"knuMovie\".\"ACCOUNT\" (acc_id, acc_pw, user_name, phone_num, birth_date, age, gender, address,job ,mem_type, manager) VALUES(" +
             "\'" + req.body.user_id + "\'" + "," +
@@ -140,10 +140,38 @@ module.exports = function () {
         res.redirect('login');
     })
 
+    route.post('/logout', (req, res) => {
+        var id = req.body.id.replace(" ", "");
+        var sql = "DELETE FROM \"knuMovie\".\"ACCOUNT\" WHERE acc_id = " + "\'" + id + "\'";
+
+        console.log(sql);
+        conn.query(sql, (err) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("DB Error");
+            }
+            // res.send('<script type="text/javascript"> alert("회원탈퇴가 완료되었습니다.");</script>');
+            req.session.destroy();
+            /*
+            res.send('<script type="text/javascript"> ' +
+                'var confirmId = prompt("정말 회원탈퇴 하시겠습니까?","아이디를 입력하세요");' +
+                'if(confirmId === id){' +
+                    'alert("회원 탈퇴가 완료되었습니다.");' +
+                '}' +
+                'else{' +
+                    'alert("아이디를 확인하세요");' +
+                '}' +
+                'window.location.href="http://localhost:3000/logout";</script>');
+                */
+
+            res.redirect('login');
+        });
+    });
+
     route.get('/form', (req, res) => {
 
         // console.log(`${req.session}`);
-        if(!req.session.isLogined){
+        if (!req.session.isLogined) {
             res.redirect('/login');
         }
         res.render("form", {

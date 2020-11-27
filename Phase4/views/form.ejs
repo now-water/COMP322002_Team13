@@ -44,7 +44,7 @@
             <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown2"><i
                     class="fa fa-bell fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>
             <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1"><i
-                    class="fa fa-user fa-fw"></i> <b><%- session %></b> <i
+                    class="fa fa-user fa-fw"></i> <b><%- id %></b> <i
                     class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
     </nav>
@@ -265,11 +265,13 @@
                             <h3>My Page</h3>
                         </div>
                         <div class="card-content">
-                            <form class="col s12">
+
+                            <form class="col s12" method="POST" action="http://localhost:3000/logout">
                                 <div class="row">
                                     <div class=" col s6">
                                         <label for="id">ID</label>
-                                        <input id="id" name = "id" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(id)%> "/>
+                                        <input id="id" name="id" type="text" readonly="readonly"
+                                               value="<%=JSON.stringify(id).replace(/"/gi,"")%> "/>
                                         <script>
                                             var id = document.getElementById("id");
                                             id.style.color = "black";
@@ -281,7 +283,7 @@
 
                                     <div class="col s6">
                                         <label for="pw">PW</label>
-                                        <input id="pw" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(pw)%>" />
+                                        <input id="pw" type="text" readonly="readonly" value="<%=JSON.stringify(pw).replace(/"/gi,"")%>"/>
                                         <script>
                                             var pw = document.getElementById("pw");
                                             pw.style.color = "black";
@@ -297,7 +299,8 @@
                                 <div class="row">
                                     <div class=" col s12">
                                         <label for="name">Name</label>
-                                        <input id="name" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(name)%>" />
+                                        <input id="name" type="text" readonly="readonly"
+                                               value="<%=JSON.stringify(name).replace(/"/gi,"")%>"/>
                                         <script>
                                             var name = document.getElementById("name");
                                             name.style.color = "black";
@@ -312,7 +315,8 @@
                                 <div class="row">
                                     <div class=" col s12">
                                         <label for="phone_num">Phone_number</label>
-                                        <input id="phone_num" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(phone_num)%>" />
+                                        <input id="phone_num" type="text" class="validate" readonly="readonly"
+                                               value="<%=JSON.stringify(phone_num).replace(/"/gi,"")%>"/>
                                         <script>
                                             var phone_num = document.getElementById("phone_num");
                                             phone_num.style.color = "black";
@@ -327,7 +331,8 @@
                                     <div class=" col s12">
                                         <label for="age">Age</label>
 
-                                        <input id="age" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(age)%>" />
+                                        <input id="age" type="text" class="validate" readonly="readonly"
+                                               value="<%=JSON.stringify(age).replace(/"/gi,"")%>"/>
                                         <script>
                                             var age = document.getElementById("age");
                                             age.style.color = "black";
@@ -341,7 +346,8 @@
                                 <div class="row">
                                     <div class=" col s12">
                                         <label for="birth">Birth</label>
-                                        <input id="birth" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(birth).substr(0,11) + "\"" %>" />
+                                        <input id="birth" type="text" class="validate" readonly="readonly"
+                                               value="<%=JSON.stringify(birth).substr(0,11).replace(/"/gi,"") %>" />
                                         <script>
                                             var birth = document.getElementById("birth");
                                             birth.style.color = "black";
@@ -353,12 +359,12 @@
                                 </div>
 
 
-
                                 <div class="row">
                                     <div class=" col s12">
                                         <label for="address">Address</label>
 
-                                        <input id="address" type="text" class="validate" readonly="readonly"  value="<%=JSON.stringify(address)%>" />
+                                        <input id="address" type="text" class="validate" readonly="readonly"
+                                               value="<%=JSON.stringify(address).replace(/"/gi,"")%>"/>
                                         <script>
                                             var address = document.getElementById("address");
                                             address.style.color = "black";
@@ -373,7 +379,8 @@
                                     <div class=" col s12">
                                         <label for="job">Job</label>
 
-                                        <input id="job" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(job)%>" />
+                                        <input id="job" type="text" class="validate" readonly="readonly"
+                                               value="<%=JSON.stringify(job).replace(/"/gi,"")%>"/>
                                         <script>
                                             var job = document.getElementById("job");
                                             job.style.color = "black";
@@ -388,7 +395,8 @@
                                     <div class=" col s12">
                                         <label for="mem_type">Mem_type</label>
 
-                                        <input id="mem_type" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(mem_type)%>" />
+                                        <input id="mem_type" type="text" class="validate" readonly="readonly"
+                                               value="<%=JSON.stringify(mem_type).replace(/"/gi,"")%>"/>
                                         <script>
                                             var mem_type = document.getElementById("mem_type");
                                             mem_type.style.color = "black";
@@ -403,7 +411,8 @@
                                     <div class=" col s12">
                                         <label for="manage">Manage</label>
 
-                                        <input id="manage" type="text" class="validate" readonly="readonly"  value="<%=JSON.stringify(manager)%>" />
+                                        <input id="manage" type="text" class="validate" readonly="readonly"
+                                               value="<%=JSON.stringify(manager).replace(/"/gi,"")%>"/>
                                         <script>
                                             var manager = document.getElementById("manager");
                                             manager.style.color = "black";
@@ -427,6 +436,13 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+
+                                    <div class="form-group" style="margin: 5px">
+                                        <input style="float:right" type="submit" value="Withdrawal"
+                                               class="btn float-right login_btn">
+                                    </div>
                             </form>
                             <div class="clearBoth"></div>
                         </div>

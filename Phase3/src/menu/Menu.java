@@ -39,11 +39,8 @@ public class Menu {
             if (loginStatus == false) {
                 System.out.println("1. 로그인");
                 System.out.println("2. 회원 가입");
-<<<<<<< HEAD
                 System.out.println("3. 프로그램 종료");
-=======
                 System.out.println("3. 종료");
->>>>>>> d8cae3e6152ce7931a6bfe1869c18324671fbff4
                 menu = sc.nextInt();
             }
             if (menu == 1) {
@@ -58,14 +55,11 @@ public class Menu {
             else if (menu == 2) {
                 register(st);
             } else if(menu == 3){
-<<<<<<< HEAD
                 System.out.println("프로그램을 종료합니다");
                 break;
-=======
                 System.out.println("프로그램 종료.");
 
                 return;
->>>>>>> d8cae3e6152ce7931a6bfe1869c18324671fbff4
             }
             else {
                 loginStatus = false;
@@ -73,10 +67,7 @@ public class Menu {
             }
         }
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> d8cae3e6152ce7931a6bfe1869c18324671fbff4
     private static void forAdmin(Statement st, Signin sign) throws SQLException {
         while (true) {
             System.out.println("1. 관리자 기능");
@@ -84,15 +75,12 @@ public class Menu {
             System.out.println("3. 로그아웃");
             int func = sc.nextInt();
             if (func == 2)
-<<<<<<< HEAD
             {
                 forMember(st, sign);
                 loginStatus = false;
                 return;
             }
-=======
                 forMember(st, sign);
->>>>>>> d8cae3e6152ce7931a6bfe1869c18324671fbff4
 
             else if (func == 1) {
                 System.out.println("1. 영상물 등록");
@@ -254,7 +242,6 @@ public class Menu {
                                     "SET genre = " + genre + " " +
                                     "WHERE title = " + "\'" + movie.getTitle() + "\' " +
                                     "AND account_id = " + "\'" + movie.getAccount_id() + "\' ";
-<<<<<<< HEAD
 
 
                         } else if (cond == 6) {
@@ -262,7 +249,6 @@ public class Menu {
                             System.out.print("rating : ");
                             Double rating = sc.nextDouble();
 
-=======
 
 
                         } else if (cond == 6) {
@@ -270,7 +256,6 @@ public class Menu {
                             System.out.print("rating : ");
                             Double rating = sc.nextDouble();
 
->>>>>>> d8cae3e6152ce7931a6bfe1869c18324671fbff4
                             query = "UPDATE \"knuMovie\".\"MOVIE\" " +
                                     "SET rating = " + rating + " " +
                                     "WHERE title = " + "\'" + movie.getTitle() + "\' " +
@@ -397,7 +382,6 @@ public class Menu {
         Rate rate = new Rate(acc);
         if (acc.isManager()) // 관리자
         {
-<<<<<<< HEAD
             System.out.println("1. 모든 영상물 평가 내역 확인");
             System.out.println("2. 나의 영상물 평가 내역");
             int func = sc.nextInt();
@@ -406,14 +390,12 @@ public class Menu {
                 rate.checkAllRatings(st);
                 return;
             }
-=======
             System.out.println("----< 모든 영상물 평가 내역 >----");
             rate.checkAllRatings(st);
         } else // 일반 회원
         {
             System.out.println("----< 나의 영상물 평가 내역 >----");
             rate.checkMyRatings(st);
->>>>>>> d8cae3e6152ce7931a6bfe1869c18324671fbff4
         }
         // 일반 회원
         System.out.println("----< 나의 영상물 평가 내역 >----");
@@ -425,11 +407,8 @@ public class Menu {
         System.out.println("1. 평가하기");
         System.out.println("2. 거절하기");
         int menu = sc.nextInt();
-<<<<<<< HEAD
         if(menu == 1){
-=======
         if (menu == 2) {
->>>>>>> d8cae3e6152ce7931a6bfe1869c18324671fbff4
             Rate r = new Rate(acc);
             sc.nextLine(); // 개행 제거
             System.out.println("평가할 영상물의 이름을 입력하세요");

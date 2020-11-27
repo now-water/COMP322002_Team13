@@ -25,6 +25,7 @@ public class Menu {
         this.acc = acc;
         this.movie = movie;
     }
+
     public static void register(Statement st) throws SQLException {
         Signup up = new Signup(Account.getInstance());
         up.signUp(st);
@@ -35,11 +36,11 @@ public class Menu {
         System.out.println("---knuMOVIE 에 오신걸 환영합니다.---");
         while (true) {
             int menu = 0;
-            if(loginStatus == false)
-            {
+            if (loginStatus == false) {
                 System.out.println("1. 로그인");
                 System.out.println("2. 회원 가입");
                 System.out.println("3. 프로그램 종료");
+                System.out.println("3. 종료");
                 menu = sc.nextInt();
             }
             if (menu == 1) {
@@ -47,7 +48,7 @@ public class Menu {
                 Signin sign = new Signin(Account.getInstance());
                 if (sign.canLogin(st)) {
                     video = new Video(Movie.getInstance(), st, acc.getAcc_id());
-                    if(acc.isManager() == false) forMember(st, sign);
+                    if (acc.isManager() == false) forMember(st, sign);
                     else forAdmin(st, sign);
                 }
             } // sin.canLogin();
@@ -56,6 +57,9 @@ public class Menu {
             } else if(menu == 3){
                 System.out.println("프로그램을 종료합니다");
                 break;
+                System.out.println("프로그램 종료.");
+
+                return;
             }
             else {
                 loginStatus = false;
@@ -63,6 +67,7 @@ public class Menu {
             }
         }
     }
+
     private static void forAdmin(Statement st, Signin sign) throws SQLException {
         while (true) {
             System.out.println("1. 관리자 기능");
@@ -75,6 +80,7 @@ public class Menu {
                 loginStatus = false;
                 return;
             }
+                forMember(st, sign);
 
             else if (func == 1) {
                 System.out.println("1. 영상물 등록");
@@ -243,6 +249,13 @@ public class Menu {
                             System.out.print("rating : ");
                             Double rating = sc.nextDouble();
 
+
+
+                        } else if (cond == 6) {
+                            System.out.println("current rating : " + movie.getRating());
+                            System.out.print("rating : ");
+                            Double rating = sc.nextDouble();
+
                             query = "UPDATE \"knuMovie\".\"MOVIE\" " +
                                     "SET rating = " + rating + " " +
                                     "WHERE title = " + "\'" + movie.getTitle() + "\' " +
@@ -272,8 +285,9 @@ public class Menu {
             }
         }
     }
+
     private static void forMember(Statement st, Signin sign) throws SQLException {
-        while(true) {
+        while (true) {
             System.out.println("1. 회원 관련 기능");
             System.out.println("2. 영상물 관련 기능");
             System.out.println("3. 평가 관련 기능");
@@ -291,13 +305,11 @@ public class Menu {
                     sign.modifyMemberInfo(st);
                 else if (temp == 2)
                     sign.modifyPasswd(st);
-                else if (temp == 3)
-                {
+                else if (temp == 3) {
                     sign.secessionMember(st);
                     loginStatus = false;
                     break;
-                }
-                else if (temp == 4)
+                } else if (temp == 4)
                     continue;
             } else if (cond == 2) {
                 videoMenu(st);
@@ -310,8 +322,9 @@ public class Menu {
             }
         }
     }
+
     public static void videoMenu(Statement st) {
-        while(true) {
+        while (true) {
             System.out.println("메뉴를 선택해 주세요.");
             System.out.println("1. 영상물 전체 출력");
             System.out.println("2. 영상물 제목 검색");
@@ -333,7 +346,7 @@ public class Menu {
                     return;
             }
             // 비정상적인 종료
-            if(result == -1) {
+            if (result == -1) {
                 System.out.println("검색 결과가 존재하지 않습니다.");
                 return;
             }
@@ -377,17 +390,25 @@ public class Menu {
                 rate.checkAllRatings(st);
                 return;
             }
+            System.out.println("----< 모든 영상물 평가 내역 >----");
+            rate.checkAllRatings(st);
+        } else // 일반 회원
+        {
+            System.out.println("----< 나의 영상물 평가 내역 >----");
+            rate.checkMyRatings(st);
         }
         // 일반 회원
         System.out.println("----< 나의 영상물 평가 내역 >----");
         rate.checkMyRatings(st);
     }
+
     public static void rate(Statement st) {
         System.out.println("---< 영상물을 평가하시겠습니까? >---.");
         System.out.println("1. 평가하기");
         System.out.println("2. 거절하기");
         int menu = sc.nextInt();
         if(menu == 1){
+        if (menu == 2) {
             Rate r = new Rate(acc);
             sc.nextLine(); // 개행 제거
             System.out.println("평가할 영상물의 이름을 입력하세요");

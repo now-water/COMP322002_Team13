@@ -15,7 +15,12 @@ module.exports = function () {
             res.redirect('login');
         }
 
-        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\"';
+        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ' +
+        'WHERE title NOT IN (SELECT m_title AS title ' +
+        'FROM \"knuMovie\".\"RATING\" '+
+        'WHERE account_id = \'' + `${req.session.user_id}` + "\') ";
+        console.log(sql);
+
         conn.query(sql, (err, results) => {
             if (err) {
                 console.log(err);
@@ -136,8 +141,11 @@ module.exports = function () {
     })
 
     route.get('/form', (req, res) => {
-        // console.log(`${req.session}`);
 
+        // console.log(`${req.session}`);
+        if(!req.session.isLogined){
+            res.redirect('/login');
+        }
         res.render("form", {
             id: `${req.session.user_id}`,
             pw: `${req.session.pw}`,

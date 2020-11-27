@@ -23,9 +23,9 @@ public class main {
     static Connection conn = null;
     static Statement st = null;
 
-    static String url = "jdbc:postgresql://localhost/phase3";
+    static String url = "jdbc:postgresql://localhost/phase2";
     static String user = "postgres";
-    static String password = "kwon0879";
+    static String password = "dlwjdduf1!";
 
     public static void main(String[] args) throws SQLException {
         /* Make onnection with Database */

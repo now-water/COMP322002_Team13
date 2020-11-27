@@ -265,67 +265,61 @@
                             <h3>My Page</h3>
                         </div>
                         <div class="card-content">
-
-
                             <form class="col s12">
                                 <div class="row">
                                     <div class=" col s6">
                                         <label for="id">ID</label>
-                                        <input id="id" type="text" class="validate" readonly="readonly" value="">
+                                        <input id="id" name = "id" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(id)%> "/>
+                                        <script>
+                                            var id = document.getElementById("id");
+                                            id.style.color = "black";
+                                            id.style.fontWeight = "bold";
+
+                                            id.value(JSON.parse(id));
+                                        </script>
                                     </div>
 
                                     <div class="col s6">
                                         <label for="pw">PW</label>
-                                        <input id="pw" type="text" class="validate" readonly="readonly">
+                                        <input id="pw" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(pw)%>" />
+                                        <script>
+                                            var pw = document.getElementById("pw");
+                                            pw.style.color = "black";
+                                            pw.style.fontWeight = "bold";
+
+                                            pw.value(JSON.parse(pw));
+                                        </script>
                                     </div>
+
 
                                 </div>
 
                                 <div class="row">
                                     <div class=" col s12">
                                         <label for="name">Name</label>
-                                        <input id="name" type="text" class="validate" readonly="readonly">
+                                        <input id="name" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(name)%>" />
+                                        <script>
+                                            var name = document.getElementById("name");
+                                            name.style.color = "black";
+                                            name.style.fontWeight = "bold";
 
+                                            name.value(JSON.parse(name));
+                                        </script>
                                     </div>
                                 </div>
 
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="gender">Gender</label>
-                                        <input id="gender" type="text" class="validate">
+                                        <label for="phone_num">Phone_number</label>
+                                        <input id="phone_num" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(phone_num)%>" />
+                                        <script>
+                                            var phone_num = document.getElementById("phone_num");
+                                            phone_num.style.color = "black";
+                                            phone_num.style.fontWeight = "bold";
 
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class=" col s12">
-                                        <label for="address">Address</label>
-
-                                        <input id="address" type="text" class="validate">
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class=" col s12">
-                                        <label for="job">Job</label>
-
-                                        <input id="job" type="text" class="validate">
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class=" col s12">
-                                        <label for="mem_type">Mem_type</label>
-
-                                        <input id="mem_type" type="text" class="validate">
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class=" col s12">
-                                        <label for="manage">Manage</label>
-
-                                        <input id="manage" type="text" class="validate">
+                                            phone_num.value(JSON.parse(phone_num));
+                                        </script>
                                     </div>
                                 </div>
 
@@ -333,9 +327,93 @@
                                     <div class=" col s12">
                                         <label for="age">Age</label>
 
-                                        <input id="age" type="text" class="validate">
+                                        <input id="age" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(age)%>" />
+                                        <script>
+                                            var age = document.getElementById("age");
+                                            age.style.color = "black";
+                                            age.style.fontWeight = "bold";
+
+                                            age.value(JSON.parse(age));
+                                        </script>
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class=" col s12">
+                                        <label for="birth">Birth</label>
+                                        <input id="birth" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(birth).substr(0,11) + "\"" %>" />
+                                        <script>
+                                            var birth = document.getElementById("birth");
+                                            birth.style.color = "black";
+                                            birth.style.fontWeight = "bold";
+
+                                            birth.value(JSON.parse(birth));
+                                        </script>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class=" col s12">
+                                        <label for="address">Address</label>
+
+                                        <input id="address" type="text" class="validate" readonly="readonly"  value="<%=JSON.stringify(address)%>" />
+                                        <script>
+                                            var address = document.getElementById("address");
+                                            address.style.color = "black";
+                                            address.style.fontWeight = "bold";
+
+                                            address.value(JSON.parse(address));
+                                        </script>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class=" col s12">
+                                        <label for="job">Job</label>
+
+                                        <input id="job" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(job)%>" />
+                                        <script>
+                                            var job = document.getElementById("job");
+                                            job.style.color = "black";
+                                            job.style.fontWeight = "bold";
+
+                                            job.value(JSON.parse(job));
+                                        </script>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class=" col s12">
+                                        <label for="mem_type">Mem_type</label>
+
+                                        <input id="mem_type" type="text" class="validate" readonly="readonly" value="<%=JSON.stringify(mem_type)%>" />
+                                        <script>
+                                            var mem_type = document.getElementById("mem_type");
+                                            mem_type.style.color = "black";
+                                            mem_type.style.fontWeight = "bold";
+
+                                            mem_type.value(JSON.parse(mem_type));
+                                        </script>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class=" col s12">
+                                        <label for="manage">Manage</label>
+
+                                        <input id="manage" type="text" class="validate" readonly="readonly"  value="<%=JSON.stringify(manager)%>" />
+                                        <script>
+                                            var manager = document.getElementById("manager");
+                                            manager.style.color = "black";
+                                            manager.style.fontWeight = "bold";
+
+                                            manager.value(JSON.parse(manager));
+                                        </script>
+                                    </div>
+                                </div>
+
 
                                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                     <button type="button" class="btn btn-primary">Rated</button>

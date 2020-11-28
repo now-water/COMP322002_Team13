@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Track Material Design Bootstrap Admin Template</title>
+    <title>Target Material Design Bootstrap Admin Template</title>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="assets/materialize/css/materialize.min.css" media="screen,projection"/>
@@ -19,34 +19,9 @@
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">
-    <script>
-        /*$(function(){
-            ${"#rateBtn".on("click", function(){
-
-            }
-        }*/
-        function rateBtn() {
-            // var title = $(.waves-effect waves-light btn-large).parent().siblings().('#title').text();
-            var title = event.target.getAttribute('value');
-            console.log(title);
-            var score = prompt("영화의 평점을 입력하세요. (0~12)");
-            if (score < 0 || score > 10) {
-                alert("잘못된 값을 입력하였습니다");
-            } else {
-                var reqUrl = 'http://localhost:3000/rate';
-                var httpRequest = new XMLHttpRequest();
-                var parameter = 'score=' + score + '&title=' + title;
-                httpRequest.open("POST", reqUrl, true);
-                httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                httpRequest.send(parameter);
-                console.log(reqUrl);
-                console.log("전송완료");
-            }
-        }
-    </script>
 </head>
+
 <body>
-<div><%- session%></div>
 <div id="wrapper">
     <nav class="navbar navbar-default top-navbar" role="navigation">
         <div class="navbar-header">
@@ -56,12 +31,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand waves-effect waves-dark" href="index.html"><i class="large material-icons">track_changes</i>
+            <a class="navbar-brand waves-effect waves-dark" href="index.ejs">
                 <strong>KNU_MOVIE</strong></a>
 
             <div id="sideNav" href=""><i class="material-icons dp48">toc</i></div>
         </div>
-
         <ul class="nav navbar-top-links navbar-right">
             <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown4"><i
                     class="fa fa-envelope fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>
@@ -70,7 +44,7 @@
             <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown2"><i
                     class="fa fa-bell fa-fw"></i> <i class="material-icons right">arrow_drop_down</i></a></li>
             <li><a class="dropdown-button waves-effect waves-dark" href="#!" data-activates="dropdown1"><i
-                    class="fa fa-user fa-fw"></i> <b><%- session %></b> <i
+                    class="fa fa-user fa-fw"></i> <b><%- id %></b> <i
                     class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
     </nav>
@@ -259,50 +233,11 @@
                     <a href="index" class="waves-effect waves-dark"><i class="fa fa-dashboard"></i> Dashboard</a>
                 </li>
 
-                <li id="hideForm">
-                    <a href="admin" class="active-menu waves-effect waves-dark"><i class="fa fa-edit" id="hide"></i>
+
+                <li>
+                    <a href="#" class="active-menu waves-effect waves-dark"><i class="fa fa-edit" id="hide"></i>
                         <label for="hide">Forms</label></a>
                 </li>
-                <script>
-                    let Forms = document.getElementById("hideForm");
-
-                    if (<%- ismanager %>)
-                        Forms.style.display = "block";
-                    else
-                        Forms.style.display = "none";
-                </script>
-
-
-                <!--                    <li>-->
-                <!--                        <a href="#" class="waves-effect waves-dark"><i class="fa fa-sitemap"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>-->
-                <!--                        <ul class="nav nav-second-level">-->
-                <!--                            <li>-->
-                <!--                                <a href="#">Second Level Link</a>-->
-                <!--                            </li>-->
-                <!--                            <li>-->
-                <!--                                <a href="#">Second Level Link</a>-->
-                <!--                            </li>-->
-                <!--                            <li>-->
-                <!--                                <a href="#">Second Level Link<span class="fa arrow"></span></a>-->
-                <!--                                <ul class="nav nav-third-level">-->
-                <!--                                    <li>-->
-                <!--                                        <a href="#">Third Level Link</a>-->
-                <!--                                    </li>-->
-                <!--                                    <li>-->
-                <!--                                        <a href="#">Third Level Link</a>-->
-                <!--                                    </li>-->
-                <!--                                    <li>-->
-                <!--                                        <a href="#">Third Level Link</a>-->
-                <!--                                    </li>-->
-
-                <!--                                </ul>-->
-
-                <!--                            </li>-->
-                <!--                        </ul>-->
-                <!--                    </li>-->
-                <!--                    <li>-->
-                <!--                        <a href="empty.html" class="waves-effect waves-dark"><i class="fa fa-fw fa-file"></i> Empty Page</a>-->
-                <!--                    </li>-->
             </ul>
 
         </div>
@@ -312,117 +247,111 @@
     <div id="page-wrapper">
         <div class="header">
             <h1 class="page-header">
-                Welcome to KNU-MOVIE
+                Admin Page
             </h1>
-            <h3 class="page-header"> Made by TEAM-13</h3>
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
-                <li><a href="#">MOVIE</a></li>
-                <li class="active">LIST</li>
+                <li><a href="#">ACCOUNT</a></li>
+                <li class="active">AdminPage</li>
             </ol>
 
         </div>
+
         <div id="page-inner">
             <div class="row">
-                <div class="col-md-12">
-                    <!-- Advanced Tables -->
+                <div class="col-lg-12">
                     <div class="card">
                         <div class="card-action">
-                            Movie List
+                            <h3>Register Movie</h3>
                         </div>
                         <div class="card-content">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                    <thead>
-                                    <tr>
-                                        <th>Title</th>
-                                        <th>Type</th>
-                                        <th>Runtime</th>
-                                        <th>Start Year</th>
-                                        <th>Genre</th>
-                                        <th>Rating</th>
-                                        <th>Viewing Class</th>
-                                        <th>Uploader</th>
-                                        <th>Do Rate</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <% if(typeof results !== "undefined") { %>
-                                    <% var resultCnt=Object.keys(results).length; %>
-                                    <%
-                                    for(i=0; i
-                                    <resultCnt
-                                    ;i++) {
-                                    var date = results[i].start_year.toString();%>
-                                    <tr class="tr-class">
-                                        <td style="width:12%" id="title"><%- results[i].title %></td>
-                                        <td style="width:12%"><%- results[i].type %></td>
-                                        <td style="width:12%"><%- results[i].runtime %></td>
-                                        <td style="width:12%"><%- date.substr(3, 7) + "," + date.substr(10, 5) %></td>
-                                        <td style="width:12%"><%- results[i].genre %></td>
-                                        <td style="width:12%"><%- results[i].rating %></td>
-                                        <td style="width:12%"><%- results[i].viewing_class %></td>
-                                        <td style="width:12%"><%- results[i].account_id %></td>
-                                        <td style="width:1%">
-                                            <a id="rateBtn" class="waves-effect waves-light btn-large"
-                                               value="<%=JSON.stringify(results[i].title)%>" onClick="rateBtn()" ;>
-                                                <i class="material-icons center">star</i>
-                                                Rate
-                                            </a>
-                                        </td>
-                                        <script>
-                                            var title = document.getElementById("rateBtn");
-                                            title.value = JSON.parse(results[i].title);
-                                        </script>
-                                    </tr>
-                                    <%}%>
-                                    <% } %>
-                                    </tbody>
-                                </table>
-                            </div>
+
+                            <form class="col s12" method = "post", action = "http://localhost:3000/registerMovie">
+                                <div class="row">
+                                    <div class=" col s6">
+                                        <label for="title">Title</label>
+                                        <input id="title" name="title" type="text"/>
+                                    </div>
+
+                                    <div class=" col s6">
+                                        <label for="type">Type</label>
+                                        <input id="type" name="type" type="text"/>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class=" col s12">
+                                        <label for="runtime">Runtime</label>
+                                        <input id="runtime" name="runtime" type="text"/>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class=" col s12">
+                                        <label for="start_year">StartYear</label>
+                                        <input id="start_year" name="start_year" type="text"/>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class=" col s12">
+                                        <label for="genre">Genre</label>
+                                        <input id="genre" name="genre" type="text"/>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class=" col s12">
+                                        <label for="rating">Rating</label>
+                                        <input id="rating" name="rating" type="text"/>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class=" col s12">
+                                        <label for="viewing_class">Viewing_class</label>
+                                        <input id="viewing_class" name="viewing_class" type="text"/>
+                                    </div>
+                                </div>
+
+                                <input type="submit" style="float: right">
+                            </form>
+                            <div class="clearBoth"></div>
                         </div>
                     </div>
-                    <!--End Advanced Tables -->
                 </div>
             </div>
-            <footer><p>Shared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">BootstrapThemes</a>
-            </p></footer>
         </div>
-        <!-- /. PAGE INNER  -->
+
     </div>
-    <!-- /. PAGE WRAPPER  -->
-    <!-- /. WRAPPER  -->
-    <!-- JS Scripts-->
+
+</div>
+
+<script src="assets/js/jquery-1.10.2.js"></script>
+
+<!-- Bootstrap Js -->
+<script src="assets/js/bootstrap.min.js"></script>
+
+<script src="assets/materialize/js/materialize.min.js"></script>
+
+<!-- Metis Menu Js -->
+<script src="assets/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script src="assets/js/morris/raphael-2.1.0.min.js"></script>
+<script src="assets/js/morris/morris.js"></script>
 
 
-    <!-- jQuery Js -->
-    <script src="assets/js/jquery-1.10.2.js"></script>
+<script src="assets/js/easypiechart.js"></script>
+<script src="assets/js/easypiechart-data.js"></script>
 
-    <!-- Bootstrap Js -->
-    <script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/Lightweight-Chart/jquery.chart.js"></script>
 
-    <script src="assets/materialize/js/materialize.min.js"></script>
-
-    <!-- Metis Menu Js -->
-    <script src="assets/js/jquery.metisMenu.js"></script>
-    <!-- Morris Chart Js -->
-    <script src="assets/js/morris/raphael-2.1.0.min.js"></script>
-    <script src="assets/js/morris/morris.js"></script>
+<!-- Custom Js -->
+<script src="assets/js/custom-scripts.js"></script>
 
 
-    <script src="assets/js/easypiechart.js"></script>
-    <script src="assets/js/easypiechart-data.js"></script>
-
-    <script src="assets/js/Lightweight-Chart/jquery.chart.js"></script>
-    <!-- DATA TABLE SCRIPTS -->
-    <script src="assets/js/dataTables/jquery.dataTables.js"></script>
-    <script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#dataTables-example').dataTable();
-        });
-    </script>
-    <!-- Custom Js -->
-    <script src="assets/js/custom-scripts.js"></script>
 </body>
+
 </html>

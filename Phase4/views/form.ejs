@@ -44,8 +44,6 @@
                 }
             } else
                 alert("아이디 정보가 올바르지 않습니다.");
-
-
         }
     </script>
 </head>
@@ -79,7 +77,7 @@
     </nav>
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content">
-        <li><a href="#"><i class="fa fa-user fa-fw"></i> My Profile</a>
+        <li><a href="form"><i class="fa fa-user fa-fw"></i> My Profile</a>
         </li>
         <li><a href="form"><i class="fa fa-gear fa-fw"></i> Settings</a>
         </li>
@@ -262,11 +260,18 @@
                     <a href="index" class="waves-effect waves-dark"><i class="fa fa-dashboard"></i> Dashboard</a>
                 </li>
 
-                <li>
-                    <a href="form" class="active-menu waves-effect waves-dark"><i class="fa fa-edit"></i> Forms
-                    </a>
+  <li id="hideForm">
+                    <a href="admin" class="active-menu waves-effect waves-dark"><i class="fa fa-edit" id="hide"></i>
+                        <label for="hide">Forms</label></a>
                 </li>
+                <script>
+                    let Forms = document.getElementById("hideForm");
 
+                    if (<%- manager %>)
+                        Forms.style.display = "block";
+                    else
+                        Forms.style.display = "none";
+                </script>
             </ul>
 
         </div>

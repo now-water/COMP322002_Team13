@@ -51,7 +51,7 @@
     </nav>
     <!-- Dropdown Structure -->
     <ul id="dropdown1" class="dropdown-content">
-        <li><a href="#"><i class="fa fa-user fa-fw"></i> My Profile</a>
+        <li><a href="form"><i class="fa fa-user fa-fw"></i> My Profile</a>
         </li>
         <li><a href="form"><i class="fa fa-gear fa-fw"></i> Settings</a>
         </li>
@@ -236,45 +236,19 @@
                 <li>
                     <a href="search" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">search</i> Search</div> </a>
                 </li>
-                <li>
-                    <a href="form" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">view_list</i> Forms</div> </a>
+                <li id="hideForm">
+                    <a href="admin" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center" id="hide">view_list</i>
+                        <label for="hide">Forms</label></a>
                 </li>
-
-
-                <!--                    <li>-->
-                <!--                        <a href="#" class="waves-effect waves-dark"><i class="fa fa-sitemap"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>-->
-                <!--                        <ul class="nav nav-second-level">-->
-                <!--                            <li>-->
-                <!--                                <a href="#">Second Level Link</a>-->
-                <!--                            </li>-->
-                <!--                            <li>-->
-                <!--                                <a href="#">Second Level Link</a>-->
-                <!--                            </li>-->
-                <!--                            <li>-->
-                <!--                                <a href="#">Second Level Link<span class="fa arrow"></span></a>-->
-                <!--                                <ul class="nav nav-third-level">-->
-                <!--                                    <li>-->
-                <!--                                        <a href="#">Third Level Link</a>-->
-                <!--                                    </li>-->
-                <!--                                    <li>-->
-                <!--                                        <a href="#">Third Level Link</a>-->
-                <!--                                    </li>-->
-                <!--                                    <li>-->
-                <!--                                        <a href="#">Third Level Link</a>-->
-                <!--                                    </li>-->
-
-                <!--                                </ul>-->
-
-                <!--                            </li>-->
-                <!--                        </ul>-->
-                <!--                    </li>-->
-                <!--                    <li>-->
-                <!--                        <a href="empty.html" class="waves-effect waves-dark"><i class="fa fa-fw fa-file"></i> Empty Page</a>-->
-                <!--                    </li>-->
+                <script>
+                    let Forms = document.getElementById("hideForm");
+                     if (<%- ismanager %>)
+                        Forms.style.display = "block";
+                    else
+                        Forms.style.display = "none";
+                </script>
             </ul>
-
         </div>
-
     </nav>
     <!-- /. NAV SIDE  -->
     <div id="page-wrapper">
@@ -288,7 +262,6 @@
                 <li><a href="#">MOVIE</a></li>
                 <li class="active">LIST</li>
             </ol>
-
         </div>
         <div id="page-inner">
             <div class="row">

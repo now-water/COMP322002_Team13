@@ -19,33 +19,6 @@
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">
-
-    <script>
-        function canWithdrawal() {
-            //localhost:3000/logout으로 post로 전달 후..
-            var confirmedID = prompt("아이디를 입력하세요");
-            var id = document.getElementById("id");
-
-            if (confirmedID === id.value.replace(" ", "")) {
-                //localhost:3000/logout으로 post방식으로 routing.
-                var bool = confirm("정말 탈퇴하시겠습니까?");
-                if (bool) {
-                    var url = "http://localhost:3000/withdrawal";
-                    var httpRequest = new XMLHttpRequest();
-                    var parameter = "id=" + confirmedID;
-
-                    httpRequest.open("POST", url, true);
-                    httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    httpRequest.send(parameter);
-
-                    alert("탈퇴가 완료되었습니다.");
-
-                    window.location.href="http://localhost:3000/login";
-                }
-            } else
-                alert("아이디 정보가 올바르지 않습니다.");
-        }
-    </script>
 </head>
 
 <body>
@@ -257,23 +230,14 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a href="index" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center" >theaters</i> Movies</div> </a>
+                    <a href="index" class="waves-effect waves-dark"><i class="fa fa-dashboard"></i> Dashboard</a>
                 </li>
-                <li>
-                    <a href="search" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">search</i> Search</div> </a>
-                </li>
-                <li id="hideForm">
-                    <a href="admin" class="active-menu waves-effect waves-dark"><div style="float: left;"><i class="material-icons center" id="hide">view_list</i></div>
-                    <label for="hide">Forms</label></a>
-                </li>
-                <script>
-                    let Forms = document.getElementById("hideForm");
 
-                    if (<%- manager %>)
-                        Forms.style.display = "block";
-                    else
-                        Forms.style.display = "none";
-                </script>
+
+                <li>
+                    <a href="#" class="active-menu waves-effect waves-dark"><i class="fa fa-edit" id="hide"></i>
+                        <label for="hide">Forms</label></a>
+                </li>
             </ul>
 
         </div>
@@ -283,12 +247,12 @@
     <div id="page-wrapper">
         <div class="header">
             <h1 class="page-header">
-                MY Page
+                Admin Page
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#">Home</a></li>
                 <li><a href="#">ACCOUNT</a></li>
-                <li class="active">MyPage</li>
+                <li class="active">AdminPage</li>
             </ol>
 
         </div>
@@ -298,187 +262,61 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-action">
-                            <h3>My Page</h3>
+                            <h3>Register Movie</h3>
                         </div>
                         <div class="card-content">
 
-                            <form class="col s12">
+                            <form class="col s12" method = "post", action = "http://localhost:3000/registerMovie">
                                 <div class="row">
                                     <div class=" col s6">
-                                        <label for="id">ID</label>
-                                        <input id="id" name="id" type="text" readonly="readonly"
-                                               value="<%=JSON.stringify(id).replace(/"/gi,"")%> "/>
-                                        <script>
-                                            var id = document.getElementById("id");
-                                            id.style.color = "black";
-                                            id.style.fontWeight = "bold";
-
-                                            id.value(JSON.parse(id));
-                                        </script>
+                                        <label for="title">Title</label>
+                                        <input id="title" name="title" type="text"/>
                                     </div>
 
-                                    <div class="col s6">
-                                        <label for="pw">PW</label>
-                                        <input id="pw" type="text" readonly="readonly"
-                                               value="<%=JSON.stringify(pw).replace(/"/gi,"")%>"/>
-                                        <script>
-                                            var pw = document.getElementById("pw");
-                                            pw.style.color = "black";
-                                            pw.style.fontWeight = "bold";
-
-                                            pw.value(JSON.parse(pw));
-                                        </script>
+                                    <div class=" col s6">
+                                        <label for="type">Type</label>
+                                        <input id="type" name="type" type="text"/>
                                     </div>
-
 
                                 </div>
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="name">Name</label>
-                                        <input id="name" type="text" readonly="readonly"
-                                               value="<%=JSON.stringify(name).replace(/"/gi,"")%>"/>
-                                        <script>
-                                            var name = document.getElementById("name");
-                                            name.style.color = "black";
-                                            name.style.fontWeight = "bold";
-
-                                            name.value(JSON.parse(name));
-                                        </script>
+                                        <label for="runtime">Runtime</label>
+                                        <input id="runtime" name="runtime" type="text"/>
                                     </div>
                                 </div>
 
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="phone_num">Phone_number</label>
-                                        <input id="phone_num" type="text" class="validate" readonly="readonly"
-                                               value="<%=JSON.stringify(phone_num).replace(/"/gi,"")%>"/>
-                                        <script>
-                                            var phone_num = document.getElementById("phone_num");
-                                            phone_num.style.color = "black";
-                                            phone_num.style.fontWeight = "bold";
-
-                                            phone_num.value(JSON.parse(phone_num));
-                                        </script>
+                                        <label for="start_year">StartYear</label>
+                                        <input id="start_year" name="start_year" type="text"/>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="age">Age</label>
-
-                                        <input id="age" type="text" class="validate" readonly="readonly"
-                                               value="<%=JSON.stringify(age).replace(/"/gi,"")%>"/>
-                                        <script>
-                                            var age = document.getElementById("age");
-                                            age.style.color = "black";
-                                            age.style.fontWeight = "bold";
-
-                                            age.value(JSON.parse(age));
-                                        </script>
+                                        <label for="genre">Genre</label>
+                                        <input id="genre" name="genre" type="text"/>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="birth">Birth</label>
-                                        <input id="birth" type="text" class="validate" readonly="readonly"
-                                               value="<%=JSON.stringify(birth).substr(0,11).replace(/"/gi,"") %>" />
-                                        <script>
-                                            var birth = document.getElementById("birth");
-                                            birth.style.color = "black";
-                                            birth.style.fontWeight = "bold";
-
-                                            birth.value(JSON.parse(birth));
-                                        </script>
-                                    </div>
-                                </div>
-
-
-                                <div class="row">
-                                    <div class=" col s12">
-                                        <label for="address">Address</label>
-
-                                        <input id="address" type="text" class="validate" readonly="readonly"
-                                               value="<%=JSON.stringify(address).replace(/"/gi,"")%>"/>
-                                        <script>
-                                            var address = document.getElementById("address");
-                                            address.style.color = "black";
-                                            address.style.fontWeight = "bold";
-
-                                            address.value(JSON.parse(address));
-                                        </script>
+                                        <label for="rating">Rating</label>
+                                        <input id="rating" name="rating" type="text"/>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="job">Job</label>
-
-                                        <input id="job" type="text" class="validate" readonly="readonly"
-                                               value="<%=JSON.stringify(job).replace(/"/gi,"")%>"/>
-                                        <script>
-                                            var job = document.getElementById("job");
-                                            job.style.color = "black";
-                                            job.style.fontWeight = "bold";
-
-                                            job.value(JSON.parse(job));
-                                        </script>
+                                        <label for="viewing_class">Viewing_class</label>
+                                        <input id="viewing_class" name="viewing_class" type="text"/>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class=" col s12">
-                                        <label for="mem_type">Mem_type</label>
-
-                                        <input id="mem_type" type="text" class="validate" readonly="readonly"
-                                               value="<%=JSON.stringify(mem_type).replace(/"/gi,"")%>"/>
-                                        <script>
-                                            var mem_type = document.getElementById("mem_type");
-                                            mem_type.style.color = "black";
-                                            mem_type.style.fontWeight = "bold";
-
-                                            mem_type.value(JSON.parse(mem_type));
-                                        </script>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class=" col s12">
-                                        <label for="manage">Manage</label>
-
-                                        <input id="manage" type="text" class="validate" readonly="readonly"
-                                               value="<%=JSON.stringify(manager).replace(/"/gi,"")%>"/>
-                                        <script>
-                                            var manager = document.getElementById("manager");
-                                            manager.style.color = "black";
-                                            manager.style.fontWeight = "bold";
-
-                                            manager.value(JSON.parse(manager));
-                                        </script>
-                                    </div>
-                                </div>
-
-
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <button type="button" class="btn btn-primary">Rated</button>
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false"></button>
-                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <a class="dropdown-item" href="#">Rated..</a>
-                                            <a class="dropdown-item" href="#">Rated..</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="form-group" style="margin: 5px">
-                                    <input style="float:right" type="button" value="Withdrawal"
-                                           class="btn float-right login_btn" onclick="canWithdrawal();">
-                                </div>
+                                <input type="submit" style="float: right">
                             </form>
                             <div class="clearBoth"></div>
                         </div>

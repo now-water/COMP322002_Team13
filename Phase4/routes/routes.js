@@ -10,6 +10,7 @@ module.exports = function () {
     route.get('/', (req, res) => {
         res.redirect('/login');
     })
+
     route.get('/index', (req, res) => {
         if (!req.session.isLogined) {
             res.redirect('login');
@@ -55,7 +56,8 @@ module.exports = function () {
             //console.log(`${req.session.user_id}`);
             res.render('search', {
                 results: results.rows,
-                session: `${req.session.user_id}`
+                session: `${req.session.user_id}`,
+                ismanager: `${req.session.manager}`
             });
         });
     });
@@ -109,6 +111,18 @@ module.exports = function () {
                 results: results.rows,
                 session: `${req.session.user_id}`
             });
+    })
+
+    route.post('/registerMovie', (req, res) => {
+        //account_id는 고정된 값으로 있는 것을 읽어오기.
+        var sql = "INSERT INTO \"knuMovie\".\"MOVIE\" (title, type, runtime, start_year, genre, rating, viewing_class, account_id) VALUES(" +
+            "\'" + req.body.title + "\'," + "\'" + req.body.type + "\'," + req.body.runtime + "," + "TO_DATE(\'" + req.body.start_year + "\'," + "\'yyyy-mm-dd\')," +
+            req.body.genre + "," + req.body.rating + "," + "\'" + req.body.viewing_class + "\'," + "\'" + req.session.user_id + "\')";
+
+        console.log(sql);
+        conn.query(sql, (err) => {
+            res.redirect('index');
+
         });
     });
 
@@ -223,7 +237,6 @@ module.exports = function () {
             .then(queryRes => {
                 console.log(sql);
 
-                //redirect가  왜 안될까..
                 req.session.destroy();
                 res.render('login');
             })
@@ -231,6 +244,12 @@ module.exports = function () {
                 console.log(err);
             });
 
+    });
+
+    route.get('/admin', (req, res) => {
+        res.render('admin', {
+            id: `${req.session.user_id}`
+        });
     });
 
     route.get('/form', (req, res) => {
@@ -256,7 +275,6 @@ module.exports = function () {
 
     //Number랑 String이랑..
     route.post('/rate', (req, res) => {
-
         var score = req.body.score;
         var title = req.body.title.replace(/"/gi, "");
         //title = title.substr(1, title.length - 2);
@@ -267,7 +285,6 @@ module.exports = function () {
         // MAX num_vote
         const getMaxVoteQuery = "SELECT MAX(R.num_vote) AS num_vote FROM \"knuMovie\".\"RATING\" AS R " +
             "WHERE R.m_title = \'" + title + "\'";
-        //console.log(getMaxVoteQuery);
 
         conn.query(getMaxVoteQuery, (err, results) => {
             if (err) {
@@ -295,7 +312,7 @@ module.exports = function () {
                             "SET RATING = " + updatedRating +
                             " WHERE title = \'" + title + "\'";
                         conn.query(updateRatingQuery, (err, results) => {
-                            if(err){
+                            if (err) {
                                 console.log(err);
                             }
                         });
@@ -303,9 +320,10 @@ module.exports = function () {
                         var insertQuery = "INSERT INTO \"knuMovie\".\"RATING\" " +
                             "VALUES(\'" + title + "\', \'" + id + "\', " +  parseInt(parseInt(total_num_vote) + parseInt(1)) + ") ";
 
+
                         console.log("insert query test: " + insertQuery);
                         conn.query(insertQuery, (err, results) => {
-                            if(err){
+                            if (err) {
                                 console.log(err);
                             }
                         });

@@ -1,6 +1,6 @@
 const e = require('express');
 
-module.exports = function () {
+module.exports = () => {
     var route = e.Router();
     var conn = require('../config/db')();
     var bodyParser = require('body-parser');
@@ -16,10 +16,10 @@ module.exports = function () {
             res.redirect('login');
         }
 
-        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ' ;//+
-            // 'WHERE title NOT IN (SELECT m_title AS title ' +
-            // 'FROM \"knuMovie\".\"RATING\" ' +
-            // 'WHERE account_id = \'' + `${req.session.user_id}` + "\') ";
+        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ';//+
+        // 'WHERE title NOT IN (SELECT m_title AS title ' +
+        // 'FROM \"knuMovie\".\"RATING\" ' +
+        // 'WHERE account_id = \'' + `${req.session.user_id}` + "\') ";
         console.log(sql);
 
         conn.query(sql, (err, results) => {
@@ -32,7 +32,8 @@ module.exports = function () {
             //console.log(`${req.session.user_id}`);
             res.render('index', {
                 results: results.rows,
-                session: `${req.session.user_id}`
+                session: `${req.session.user_id}`,
+                ismanager: `${req.session.manager}`
             });
         });
     })
@@ -66,34 +67,33 @@ module.exports = function () {
             res.redirect('login');
         }
         var sql = "SELECT * FROM \"knuMovie\".\"MOVIE\" AS M WHERE title IN (SELECT title FROM \"knuMovie\".\"MOVIE\" " +
-        "WHERE title NOT IN (SELECT m_title AS title " +
-        "FROM \"knuMovie\".\"RATING\" " +
-        "WHERE account_id = \'" + req.session.user_id + "\')) ";
+            "WHERE title NOT IN (SELECT m_title AS title " +
+            "FROM \"knuMovie\".\"RATING\" " +
+            "WHERE account_id = \'" + req.session.user_id + "\')) ";
         var pre = false;
-        if(req.body.title !== "")
+        if (req.body.title !== "")
             sql += "AND M.title = \'" + req.body.title + "\' ";
 
-        if(req.body.type !== "")
+        if (req.body.type !== "")
             sql += "AND M.type = \'" + req.body.type + "\' ";
 
-        if(req.body.runtime !== "")
-        {
+        if (req.body.runtime !== "") {
             sql += "AND M.runtime >= " + (req.body.runtime - 5) + " ";
             sql += "AND M.runtime <= " + parseInt(parseInt(req.body.runtime) + 5) + " ";
         }
-        if(req.body.start_year !== "")
+        if (req.body.start_year !== "")
             sql += "AND extract(YEAR FROM start_year) = " + req.body.start_year + " ";
 
-        if(req.body.genre !== "")
+        if (req.body.genre !== "")
             sql += "AND genre = " + req.body.genre + " ";
 
-        if(req.body.rating !== "")
+        if (req.body.rating !== "")
             sql += "AND rating = " + req.body.rating + " ";
 
-        if(req.body.viewing_class !== "")
+        if (req.body.viewing_class !== "")
             sql += "AND viewing_class = \'" + req.body.viewing_class + "\' ";
 
-        if(req.body.uploader !== "")
+        if (req.body.uploader !== "")
             sql += "AND account_id = \'" + req.body.uploader + "\' ";
 
 
@@ -111,8 +111,8 @@ module.exports = function () {
                 results: results.rows,
                 session: `${req.session.user_id}`
             });
-    })
-
+        })
+    });
     route.post('/registerMovie', (req, res) => {
         //account_id는 고정된 값으로 있는 것을 읽어오기.
         var sql = "INSERT INTO \"knuMovie\".\"MOVIE\" (title, type, runtime, start_year, genre, rating, viewing_class, account_id) VALUES(" +
@@ -318,7 +318,7 @@ module.exports = function () {
                         });
 
                         var insertQuery = "INSERT INTO \"knuMovie\".\"RATING\" " +
-                            "VALUES(\'" + title + "\', \'" + id + "\', " +  parseInt(parseInt(total_num_vote) + parseInt(1)) + ") ";
+                            "VALUES(\'" + title + "\', \'" + id + "\', " + parseInt(parseInt(total_num_vote) + parseInt(1)) + ") ";
 
 
                         console.log("insert query test: " + insertQuery);
@@ -330,10 +330,10 @@ module.exports = function () {
                     });
                 })
                 .catch(err => {
-                  console.log(err);
+                    console.log(err);
                 })
         });
-    })
+    });
 
     return route;
-}
+};

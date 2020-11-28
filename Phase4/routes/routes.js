@@ -137,32 +137,23 @@ module.exports = function () {
         res.redirect('login');
     })
 
-    route.post('/logout', (req, res) => {
-        var id = req.body.id.replace(" ", "");
+
+    route.post('/withdrawal', (req, res) => {
+        var id = req.body.id;
         var sql = "DELETE FROM \"knuMovie\".\"ACCOUNT\" WHERE acc_id = " + "\'" + id + "\'";
 
-        console.log(sql);
-        conn.query(sql, (err) => {
-            if (err) {
-                console.log(err);
-                res.status(500).send("DB Error");
-            }
-            // res.send('<script type="text/javascript"> alert("회원탈퇴가 완료되었습니다.");</script>');
-            req.session.destroy();
-            /*
-            res.send('<script type="text/javascript"> ' +
-                'var confirmId = prompt("정말 회원탈퇴 하시겠습니까?","아이디를 입력하세요");' +
-                'if(confirmId === id){' +
-                    'alert("회원 탈퇴가 완료되었습니다.");' +
-                '}' +
-                'else{' +
-                    'alert("아이디를 확인하세요");' +
-                '}' +
-                'window.location.href="http://localhost:3000/logout";</script>');
-                */
+        conn.query(sql)
+            .then(queryRes => {
+                console.log(sql);
 
-            res.redirect('login');
-        });
+                //redirect가  왜 안될까..
+                req.session.destroy();
+                res.render('login');
+            })
+            .catch(err => {
+                console.log(err);
+            });
+
     });
 
     route.get('/form', (req, res) => {
@@ -185,6 +176,8 @@ module.exports = function () {
             manager: `${req.session.manager}`
         });
     })
+
+    //Number랑 String이랑..
     route.post('/rate', (req, res) => {
 
         var score = req.body.score;

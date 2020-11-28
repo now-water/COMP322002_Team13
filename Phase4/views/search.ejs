@@ -19,6 +19,98 @@
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">
+    <script>
+        function rateBtn() {
+            // var title = $(.waves-effect waves-light btn-large).parent().siblings().('#title').text();
+            var title = event.target.getAttribute('value');
+            console.log(title);
+            var score = prompt("영화의 평점을 입력하세요. (0~10)");
+            if (score < 0 || score > 10) {
+                alert("잘못된 값을 입력하였습니다");
+            } else {
+                var reqUrl = 'http://localhost:3000/rate';
+                var httpRequest = new XMLHttpRequest();
+                var parameter = 'score=' + score + '&title=' + title;
+                httpRequest.open("POST", reqUrl, true);
+                httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                httpRequest.send(parameter);
+                console.log(reqUrl);
+                console.log("전송완료");
+            }
+        }
+    </script>
+    <style>
+        /* add default color for animation start  */
+        /* toggle this class */
+
+        .color-bg-start {
+            background-color: salmon;
+        }
+
+        /* toggle class bg-animate-color */
+
+        .bg-animate-color {
+            animation: random-bg .5s linear infinite;
+        }
+
+        /* add animation to bg color  */
+
+        @keyframes random-bg {
+            from {
+                filter: hue-rotate(0);
+            }
+            to {
+                filter: hue-rotate(360deg);
+            }
+        }
+
+        .mad-btn {
+            /* change bg color to get different hues    */
+            background-color: salmon;
+            color: white;
+            padding: 10px 15px 10px 10px;
+            border: none;
+            transition: all .3s ease;
+            border-radius: 5px;
+            text-transform: uppercase;
+            outline: none;
+            align-self: center;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            width:10%;
+            height:30%;
+        }
+
+        .mad-btn:hover {
+            animation: random-bg .5s linear infinite, grow 1300ms ease infinite;
+        }
+
+        .start-fun {
+            background-color: #fff !important;
+            /* change color of button text when fun is started   */
+            color: salmon !important;
+        }
+
+        /* pulsating effect on button */
+        @keyframes grow {
+            0% {
+                transform: scale(1);
+            }
+            14% {
+                transform: scale(1.3);
+            }
+            28% {
+                transform: scale(1);
+            }
+            42% {
+                transform: scale(1.3);
+            }
+            70% {
+                transform: scale(1);
+            }
+        }
+    </style>
 </head>
 <body>
 <div><%- session%></div>
@@ -299,10 +391,46 @@
                             Movie List
                         </div>
                         <div class="card-content">
-                            <div class="alert alert-info">
-                            	<strong>All Movies &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
-                            	You can look around all movies in KNU_MOVIE
+                            <div class="alert alert-success">
+                                <strong>Search&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>Input searching options you want
                             </div>
+                            <form method="POST" action="http://localhost:3000/search">
+                            <div class="row">
+                                <div class="input-field inline col s1">
+                                    <label for="title">Title</label>
+                                    <input id="title" name="title" type="text" value=""/>
+                                </div>
+                                <div class="input-field inline col s1" style="margin-left: 10px">
+                                    <label for="type">Type</label>
+                                    <input id="type" name="type" type="text" value=""/>
+                                </div>
+                                <div class="input-field inline col s1" style="margin-left: 10px">
+                                    <label for="runtime">Runtime</label>
+                                    <input id="runtime" name="runtime" type="text" value=""/>
+                                </div>
+                                <div class="input-field inline col s1" style="margin-left: 10px">
+                                    <label for="start_year">Start Year</label>
+                                    <input id="start_year" name="start_year" type="text" value=""/>
+                                </div>
+                                <div class="input-field inline col s1" style="margin-left: 10px">
+                                    <label for="genre">Genre</label>
+                                    <input id="genre" name="genre" type="text" value=""/>
+                                </div>
+                                <div class="input-field inline col s1" style="margin-left: 10px">
+                                    <label for="rating">Rating</label>
+                                    <input id="rating" name="rating" type="text" value=""/>
+                                </div>
+                                <div class="input-field inline col s1" style="margin-left: 10px">
+                                    <label for="viewing_class">Viewing Class</label>
+                                    <input id="viewing_class" name="viewing_class" type="text" value=""/>
+                                </div>
+                                <div class="input-field inline col s1" style="margin-left: 10px">
+                                    <label for="uploader">Uploader</label>
+                                    <input id="uploader" name="uploader" type="text" value=""/>
+                                </div>
+                                <button class="mad-btn" style="margin-left: 30px;">Search</button>
+                            </div>
+                            </form>
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
@@ -315,6 +443,7 @@
                                         <th>Rating</th>
                                         <th>Viewing Class</th>
                                         <th>Uploader</th>
+                                        <th>Do Rate</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -334,6 +463,17 @@
                                             <td style="width:12%"><%- results[i].rating %></td>
                                             <td style="width:12%"><%- results[i].viewing_class %></td>
                                             <td style="width:12%"><%- results[i].account_id %></td>
+                                            <td style="width:1%">
+                                                <a id="rateBtn" class="waves-effect waves-light btn-large"
+                                                   value="<%=JSON.stringify(results[i].title)%>" onClick="rateBtn()" ;>
+                                                    <i class="material-icons center">star</i>
+                                                    Rate
+                                                </a>
+                                            </td>
+                                            <script>
+                                                var title = document.getElementById("rateBtn");
+                                                title.value = JSON.parse(results[i].title);
+                                            </script>
                                         </tr>
                                         <%}%>
                                         <% } %>

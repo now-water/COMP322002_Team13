@@ -15,10 +15,10 @@ module.exports = function () {
             res.redirect('login');
         }
 
-        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ' +
-            'WHERE title NOT IN (SELECT m_title AS title ' +
-            'FROM \"knuMovie\".\"RATING\" ' +
-            'WHERE account_id = \'' + `${req.session.user_id}` + "\') ";
+        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ' ;//+
+            // 'WHERE title NOT IN (SELECT m_title AS title ' +
+            // 'FROM \"knuMovie\".\"RATING\" ' +
+            // 'WHERE account_id = \'' + `${req.session.user_id}` + "\') ";
         console.log(sql);
 
         conn.query(sql, (err, results) => {
@@ -35,6 +35,83 @@ module.exports = function () {
             });
         });
     })
+    route.get('/search', (req, res) => {
+        if (!req.session.isLogined) {
+            res.redirect('login');
+        }
+        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ' +
+            'WHERE title NOT IN (SELECT m_title AS title ' +
+            'FROM \"knuMovie\".\"RATING\" ' +
+            'WHERE account_id = \'' + req.session.user_id + "\') ";
+        console.log(sql);
+
+        conn.query(sql, (err, results) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("DB Error");
+            }
+            console.log(req.session);
+            //console.log(`${req.session.num}`);
+            //console.log(`${req.session.user_id}`);
+            res.render('search', {
+                results: results.rows,
+                session: `${req.session.user_id}`
+            });
+        });
+    });
+    route.post('/search', (req, res) => {
+        if (!req.session.isLogined) {
+            res.redirect('login');
+        }
+        var sql = "SELECT * FROM \"knuMovie\".\"MOVIE\" AS M WHERE title IN (SELECT title FROM \"knuMovie\".\"MOVIE\" " +
+        "WHERE title NOT IN (SELECT m_title AS title " +
+        "FROM \"knuMovie\".\"RATING\" " +
+        "WHERE account_id = \'" + req.session.user_id + "\')) ";
+        var pre = false;
+        if(req.body.title !== "")
+            sql += "AND M.title = \'" + req.body.title + "\' ";
+
+        if(req.body.type !== "")
+            sql += "AND M.type = \'" + req.body.type + "\' ";
+
+        if(req.body.runtime !== "")
+        {
+            sql += "AND M.runtime >= " + (req.body.runtime - 5) + " ";
+            sql += "AND M.runtime <= " + parseInt(parseInt(req.body.runtime) + 5) + " ";
+        }
+        if(req.body.start_year !== "")
+            sql += "AND extract(YEAR FROM start_year) = " + req.body.start_year + " ";
+
+        if(req.body.genre !== "")
+            sql += "AND genre = " + req.body.genre + " ";
+
+        if(req.body.rating !== "")
+            sql += "AND rating = " + req.body.rating + " ";
+
+        if(req.body.viewing_class !== "")
+            sql += "AND viewing_class = \'" + req.body.viewing_class + "\' ";
+
+        if(req.body.uploader !== "")
+            sql += "AND account_id = \'" + req.body.uploader + "\' ";
+
+
+        console.log(sql);
+
+        conn.query(sql, (err, results) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("DB Error");
+            }
+            console.log(req.session);
+            //console.log(`${req.session.num}`);
+            //console.log(`${req.session.user_id}`);
+            res.render('search', {
+                results: results.rows,
+                session: `${req.session.user_id}`
+            });
+        });
+    });
+
     route.get('/register', (req, res) => {
         res.render('signUp');
     })
@@ -186,9 +263,9 @@ module.exports = function () {
         console.log(score);
         console.log(title);
 
-        var id = req.session.user_id;
+        const id = req.session.user_id;
         // MAX num_vote
-        var getMaxVoteQuery = "SELECT MAX(R.num_vote) AS num_vote FROM \"knuMovie\".\"RATING\" AS R " +
+        const getMaxVoteQuery = "SELECT MAX(R.num_vote) AS num_vote FROM \"knuMovie\".\"RATING\" AS R " +
             "WHERE R.m_title = \'" + title + "\'";
         //console.log(getMaxVoteQuery);
 
@@ -199,23 +276,20 @@ module.exports = function () {
             }
             console.log("totalScore 원래타입 : " + typeof results.rows[0].num_vote);
             console.log("num_vote : " + results.rows[0].num_vote);
-            var tatalScore = results.rows[0].num_vote;
-            var total_num_vote = results.rows[0].num_vote;
-            console.log("totalScore 타입 : " + typeof totalScore + " totalScore 값 : " + totalScore);
+            var tatalScore = 0;
+            var total_num_vote = 0;
+            var updatedRating = 0;
+            //console.log("totalScore 타입 : " + typeof totalScore + " totalScore 값 : " + totalScore);
             // rating score of a movie
-            var getRatingScoreQuery = "SELECT m.rating AS rating FROM \"knuMovie\".\"MOVIE\" AS m " +
+            let getRatingScoreQuery = "SELECT m.rating AS rating FROM \"knuMovie\".\"MOVIE\" AS m " +
                 "WHERE m.title = \'" + title + "\'";
             console.log(getRatingScoreQuery);
             conn.query(getRatingScoreQuery)
                 .then(queryRes => {
                     const rows = queryRes.rows;
                     rows.map(row => {
-                        console.log("rating test : " + row.rating);
-                        tatalScore = totalScore * row.rating;
-                        console.log("total score BEFORE : " + totalScore);
-                        totalScore = totalScore + parseFloat(score);
-                        console.log("total score AFTER : " + totalScore);
-                        var updatedRating = totalScore / (total_num_vote + 1);
+                        tatalScore = results.rows[0].num_vote * row.rating;
+                        var updatedRating = parseInt(10 * (parseFloat(results.rows[0].num_vote * row.rating) + parseInt(score)) / (parseInt(results.rows[0].num_vote) + parseInt(1))) / 10;
                         console.log("updated rating : " + updatedRating);
                         var updateRatingQuery = "UPDATE \"knuMovie\".\"MOVIE\" " +
                             "SET RATING = " + updatedRating +
@@ -227,7 +301,7 @@ module.exports = function () {
                         });
 
                         var insertQuery = "INSERT INTO \"knuMovie\".\"RATING\" " +
-                            "VALUES(\'" + title + "\', \'" + id + "\', " +  parseInt(total_num_vote) + 1 + ") ";
+                            "VALUES(\'" + title + "\', \'" + id + "\', " +  parseInt(parseInt(total_num_vote) + parseInt(1)) + ") ";
 
                         console.log("insert query test: " + insertQuery);
                         conn.query(insertQuery, (err, results) => {
@@ -236,10 +310,12 @@ module.exports = function () {
                             }
                         });
                     });
-                });
+                })
+                .catch(err => {
+                  console.log(err);
+                })
         });
-
-
     })
+
     return route;
 }

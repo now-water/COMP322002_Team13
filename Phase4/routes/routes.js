@@ -109,7 +109,8 @@ module.exports = () => {
             //console.log(`${req.session.user_id}`);
             res.render('search', {
                 results: results.rows,
-                session: `${req.session.user_id}`
+                session: `${req.session.user_id}`,
+                ismanager: `${req.session.manager}`
             });
         })
     });
@@ -334,6 +335,27 @@ module.exports = () => {
                 })
         });
     });
+    route.get('/rated', (req, res) => {
+        if (!req.session.isLogined) {
+            res.redirect('/login');
+        }
+        var sql = "SELECT * FROM \"knuMovie\".\"MOVIE\" M "+
+            "WHERE M.title IN (SELECT m_title FROM \"knuMovie\".\"RATING\" " +
+            "WHERE account_id = \'" + req.session.user_id + "\') ";
+        console.log(sql);
 
+
+        conn.query(sql, (err, results) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("DB Error");
+            }
+            res.render('rated', {
+                results: results.rows,
+                session: `${req.session.user_id}`,
+                ismanager: `${req.session.manager}`
+            });
+        });
+    });
     return route;
 };

@@ -54,6 +54,22 @@ module.exports = function () {
         res.render('signUp');
     })
 
+    route.post('/modifyMovie', (req, res) => {
+        console.log(req.body.title);
+
+        //render가 왜 안될까..
+        res.render('/modify', {
+            title: req.body.title,
+            id: `${req.session.user_id}`
+        });
+    });
+
+    route.post('/adminModify', (req, res) => {
+        var sql = "";
+
+        //    sql질의로 수정사항 반영하기. 이후 alert?
+    });
+
     route.post('/signUp', (req, res) => {
         req.body.age = parseInt("2020" - req.body.birth.substr(0, 4));
         req.body.manager = req.body.manager == 'on' ? "TRUE" : "FALSE";
@@ -182,6 +198,39 @@ module.exports = function () {
         if (!req.session.isLogined) {
             res.redirect('/login');
         }
+        res.render("form", {
+            id: `${req.session.user_id}`,
+            pw: `${req.session.pw}`,
+            name: `${req.session.name}`,
+            phone_num: `${req.session.phone_num}`,
+            birth: `${req.session.birth}`,
+            age: `${req.session.age}`,
+            gender: `${req.session.gender}`,
+            address: `${req.session.address}`,
+            job: `${req.session.job}`,
+            mem_type: `${req.session.mem_type}`,
+            manager: `${req.session.manager}`
+        });
+    })
+
+    route.post('/updateForm', (req, res) => {
+        var sql = "UPDATE \"knuMovie\".\"ACCOUNT\" " +
+            "SET phone_num = " + "\'" + req.body.phone_num + "\' , " +
+            "address = " + "\'" + req.body.address + "\' , " +
+            "job = " + "\'" + req.body.job + "\'" +
+            "WHERE phone_num = " + "\'" + req.session.phone_num + "\' " +
+            " OR address = " + "\'" + req.session.address + "\' " +
+            " OR job = " + "\'" + req.session.job + "\'";
+
+        conn.query(sql)
+            .catch(err => {
+                console.log(err);
+            });
+
+        req.session.phone_num = req.body.phone_num;
+        req.session.address = req.body.address;
+        req.session.job = req.body.job;
+
         res.render("form", {
             id: `${req.session.user_id}`,
             pw: `${req.session.pw}`,

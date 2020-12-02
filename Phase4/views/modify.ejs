@@ -19,19 +19,6 @@
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" href="assets/js/Lightweight-Chart/cssCharts.css">
-
-    <script>
-        function modifyMovie() {
-            var modifyTitle = prompt("수정할 영화의 제목을 입력하세요");
-            var url = "http://localhost:3000/modifyMovie";
-            var httpRequest = new XMLHttpRequest();
-            var parameter = "title=" + modifyTitle;
-
-            httpRequest.open("POST", url, true);
-            httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            httpRequest.send(parameter);
-        }
-    </script>
 </head>
 
 <body>
@@ -246,7 +233,6 @@
                     <a href="index" class="waves-effect waves-dark"><i class="fa fa-dashboard"></i> Dashboard</a>
                 </li>
 
-
                 <li>
                     <a href="#" class="active-menu waves-effect waves-dark"><i class="fa fa-edit" id="hide"></i>
                         <label for="hide">Forms</label></a>
@@ -275,15 +261,23 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-action">
-                            <h3>Register Movie</h3>
+                            <h3>Modify Movie</h3>
                         </div>
                         <div class="card-content">
 
-                            <form class="col s12" method = "post", action = "http://localhost:3000/registerMovie">
+                            <form class="col s12" method = "post", action = "http://localhost:3000/adminModify">
                                 <div class="row">
                                     <div class=" col s6">
                                         <label for="title">Title</label>
-                                        <input id="title" name="title" type="text"/>
+                                        <!--
+                                        modify를 rendering하면 title text부분은 readonly가 되고, value값에는 rendering할 때 전달해주는 title값을 넣어놓는다.
+                                        그 후, 각 input 태그들을 입력하고 해당 정보들을 adminModify url로 전달하여, routes.js의 res.post('adminModify')에서
+                                        각 input 태그들의 값을 읽어 sql 쿼리문을 짠 뒤 쿼리질의를 하여 디비에 반영한다.
+                                         -->
+                                        <input id="title" name="title" type="text" readonly="readonly"/>
+                                        <script>
+                                            document.getElementById('title').value(<%- title %>);
+                                        </script>
                                     </div>
 
                                     <div class=" col s6">
@@ -329,11 +323,7 @@
                                     </div>
                                 </div>
 
-                                <!-- button css도 바꿔야하고, 영화 수정 버튼을 누르면 modifyMovie 함수로 가서, 함수는 잘 동작하는데, routes.js에서 rendering이 안된다. -->
-                                <input type="submit" style="float: right" value="영화 등록">
-
-                                <input type="button" style="float: left" value="영화 수정" onclick = "modifyMovie()">
-
+                                <input type="submit" style="float: right">
                             </form>
                             <div class="clearBoth"></div>
                         </div>

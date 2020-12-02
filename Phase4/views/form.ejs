@@ -101,7 +101,7 @@
     <ul id="dropdown1" class="dropdown-content">
         <li><a href="form"><i class="fa fa-user fa-fw"></i> My Profile</a>
         </li>
-        <li><a href="form"><i class="fa fa-gear fa-fw"></i> Settings</a>
+        <li><a href="rated"><i class="fa fa-gear fa-fw"></i> Rated </a>
         </li>
         <li><a href="logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
         </li>
@@ -279,12 +279,15 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a href="index" class="waves-effect waves-dark"><i class="fa fa-dashboard"></i> Dashboard</a>
+                    <a href="index" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center" >theaters</i> Movies</div> </a>
                 </li>
 
+                <li>
+                    <a href="search" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">search</i> Search</div> </a>
+                </li>
                 <li id="hideForm">
-                    <a href="admin" class="active-menu waves-effect waves-dark"><i class="fa fa-edit" id="hide"></i>
-                        <label for="hide">Forms</label></a>
+                    <a href="admin" class="active-menu waves-effect waves-dark"><div style="float: left;"><i class="material-icons center" id="hide">view_list</i></div>
+                    <label for="hide">Forms</label></a>
                 </li>
                 <script>
                     let Forms = document.getElementById("hideForm");

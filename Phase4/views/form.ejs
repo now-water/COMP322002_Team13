@@ -40,10 +40,32 @@
 
                     alert("탈퇴가 완료되었습니다.");
 
-                    window.location.href="http://localhost:3000/login";
+                    window.location.href = "http://localhost:3000/login";
                 }
             } else
                 alert("아이디 정보가 올바르지 않습니다.");
+        }
+    </script>
+
+    <script>
+        function updateAccount() {
+            let phone_num = document.getElementById("phone_num").value;
+            let address = document.getElementById("address").value;
+            let job = document.getElementById("job").value;
+
+            var url = "http://localhost:3000/updateForm";
+            var httpRequest = new XMLHttpRequest();
+            var parameter = "phone_num=" + phone_num +
+                "&address=" + address + "&job=" + job;
+
+            httpRequest.open("POST", url, true);
+            httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            httpRequest.send(parameter);
+
+            alert("정보 수정이 완료되었습니다");
+
+            window.location.href = "http://localhost:3000/form";
+
         }
     </script>
 </head>
@@ -259,6 +281,7 @@
                 <li>
                     <a href="index" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center" >theaters</i> Movies</div> </a>
                 </li>
+
                 <li>
                     <a href="search" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">search</i> Search</div> </a>
                 </li>
@@ -268,7 +291,6 @@
                 </li>
                 <script>
                     let Forms = document.getElementById("hideForm");
-
                     if (<%- manager %>)
                         Forms.style.display = "block";
                     else
@@ -305,7 +327,7 @@
                             <form class="col s12">
                                 <div class="row">
                                     <div class=" col s6">
-                                        <label for="id">ID</label>
+                                        <label for="id">*ID</label>
                                         <input id="id" name="id" type="text" readonly="readonly"
                                                value="<%=JSON.stringify(id).replace(/"/gi,"")%> "/>
                                         <script>
@@ -318,7 +340,7 @@
                                     </div>
 
                                     <div class="col s6">
-                                        <label for="pw">PW</label>
+                                        <label for="pw">*PW</label>
                                         <input id="pw" type="text" readonly="readonly"
                                                value="<%=JSON.stringify(pw).replace(/"/gi,"")%>"/>
                                         <script>
@@ -335,7 +357,7 @@
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="name">Name</label>
+                                        <label for="name">*Name</label>
                                         <input id="name" type="text" readonly="readonly"
                                                value="<%=JSON.stringify(name).replace(/"/gi,"")%>"/>
                                         <script>
@@ -352,7 +374,7 @@
                                 <div class="row">
                                     <div class=" col s12">
                                         <label for="phone_num">Phone_number</label>
-                                        <input id="phone_num" type="text" class="validate" readonly="readonly"
+                                        <input id="phone_num" type="text" class="validate"
                                                value="<%=JSON.stringify(phone_num).replace(/"/gi,"")%>"/>
                                         <script>
                                             var phone_num = document.getElementById("phone_num");
@@ -366,7 +388,7 @@
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="age">Age</label>
+                                        <label for="age">*Age</label>
 
                                         <input id="age" type="text" class="validate" readonly="readonly"
                                                value="<%=JSON.stringify(age).replace(/"/gi,"")%>"/>
@@ -382,8 +404,8 @@
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="birth">Birth</label>
-                                        <input id="birth" type="text" class="validate" readonly="readonly"
+                                        <label for="birth">*Birth</label>
+                                        <input id="birth" type="text" class="validate" readonly = "readonly"
                                                value="<%=JSON.stringify(birth).substr(0,11).replace(/"/gi,"") %>" />
                                         <script>
                                             var birth = document.getElementById("birth");
@@ -400,7 +422,7 @@
                                     <div class=" col s12">
                                         <label for="address">Address</label>
 
-                                        <input id="address" type="text" class="validate" readonly="readonly"
+                                        <input id="address" type="text" class="validate"
                                                value="<%=JSON.stringify(address).replace(/"/gi,"")%>"/>
                                         <script>
                                             var address = document.getElementById("address");
@@ -416,7 +438,7 @@
                                     <div class=" col s12">
                                         <label for="job">Job</label>
 
-                                        <input id="job" type="text" class="validate" readonly="readonly"
+                                        <input id="job" type="text" class="validate"
                                                value="<%=JSON.stringify(job).replace(/"/gi,"")%>"/>
                                         <script>
                                             var job = document.getElementById("job");
@@ -430,7 +452,7 @@
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="mem_type">Mem_type</label>
+                                        <label for="mem_type">*Mem_type</label>
 
                                         <input id="mem_type" type="text" class="validate" readonly="readonly"
                                                value="<%=JSON.stringify(mem_type).replace(/"/gi,"")%>"/>
@@ -446,7 +468,7 @@
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="manage">Manage</label>
+                                        <label for="manage">*Manage</label>
 
                                         <input id="manage" type="text" class="validate" readonly="readonly"
                                                value="<%=JSON.stringify(manager).replace(/"/gi,"")%>"/>
@@ -460,23 +482,14 @@
                                     </div>
                                 </div>
 
-
-                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                    <button type="button" class="btn btn-primary">Rated</button>
-                                    <div class="btn-group" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
-                                                data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false"></button>
-                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <a class="dropdown-item" href="#">Rated..</a>
-                                            <a class="dropdown-item" href="#">Rated..</a>
-                                        </div>
-                                    </div>
+                                <div class="form-group" style="margin: 5px">
+                                    <input style="float:left" type="button" value="정보 수정"
+                                           class="btn float-right login_btn" onclick="updateAccount();">
                                 </div>
 
 
                                 <div class="form-group" style="margin: 5px">
-                                    <input style="float:right" type="button" value="Withdrawal"
+                                    <input style="float:right" type="button" value="회원 탈퇴"
                                            class="btn float-right login_btn" onclick="canWithdrawal();">
                                 </div>
                             </form>

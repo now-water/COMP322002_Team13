@@ -16,7 +16,11 @@ module.exports = () => {
             res.redirect('login');
         }
 
-        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ';//+
+        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ' +
+            'WHERE title NOT IN (SELECT m_title AS title ' +
+            'FROM \"knuMovie\".\"RATING\" ' +
+            'WHERE account_id = \'' + req.session.user_id + "\') ";
+        //+
         // 'WHERE title NOT IN (SELECT m_title AS title ' +
         // 'FROM \"knuMovie\".\"RATING\" ' +
         // 'WHERE account_id = \'' + `${req.session.user_id}` + "\') ";
@@ -62,6 +66,7 @@ module.exports = () => {
             });
         });
     });
+
     route.post('/search', (req, res) => {
         if (!req.session.isLogined) {
             res.redirect('login');
@@ -114,6 +119,7 @@ module.exports = () => {
             });
         })
     });
+
     route.post('/registerMovie', (req, res) => {
         //account_id는 고정된 값으로 있는 것을 읽어오기.
         var sql = "INSERT INTO \"knuMovie\".\"MOVIE\" (title, type, runtime, start_year, genre, rating, viewing_class, account_id) VALUES(" +
@@ -123,7 +129,6 @@ module.exports = () => {
         console.log(sql);
         conn.query(sql, (err) => {
             res.redirect('index');
-
         });
     });
 
@@ -131,20 +136,56 @@ module.exports = () => {
         res.render('signUp');
     })
 
-    route.post('/modifyMovie', (req, res) => {
+    route.post('/modify', (req, res) => {
         console.log(req.body.title);
+        req.session.title = req.body.title;
 
-        //render가 왜 안될까..
-        res.render('/modify', {
-            title: req.body.title,
-            id: `${req.session.user_id}`
+        res.redirect('/modify')
+    });
+
+    route.get('/modify', (req, res) => {
+        res.render('modify', {
+            title: `${req.session.title}`,
+            id: `${req.session.user_id}`,
+            ismanager: `${req.session.manager}`
         });
     });
 
-    route.post('/adminModify', (req, res) => {
-        var sql = "";
+    route.post('/')
 
-        //    sql질의로 수정사항 반영하기. 이후 alert?
+    route.post('/updateRegister', (req, res) => {
+        //내가 등록한 영화를 수정하는지에 대한 여부를 확인 -> 영화가 없으면 "수정 가능한 영화가 아닙니다 " alert!
+        var sql = "UPDATE \"knuMovie\".\"MOVIE\" " +
+            "SET type = " + "\'" + req.body.type + "\'";
+
+        if(req.body.runtime.length != 0)
+            sql += " , runtime = " + req.body.runtime;
+
+        if(req.body.start_year.length != 0)
+            sql += " , start_year = " + "TO_DATE(" + "\'" + req.body.start_year + "\',\'" + "yyyy-mm-dd" + "\')";
+
+        if(req.body.genre.length != 0)
+            sql += " , genre = " + req.body.genre;
+
+        if(req.body.rating.length != 0)
+            sql += " , rating = " + req.body.rating;
+        else
+            sql += " , rating = " + 0.0;
+
+        sql += " , viewing_class = " + "\'" + req.body.viewing_class + "\' " +
+        "WHERE title = " + "\'" + req.session.title + "\' " +
+        "AND account_id = " + "\'" + req.session.user_id + "\'";
+
+        console.log(sql);
+
+        conn.query(sql, (err) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("DB Error");
+            }
+        });
+
+        res.redirect('admin');
     });
 
     route.post('/signUp', (req, res) => {
@@ -245,7 +286,6 @@ module.exports = () => {
         res.redirect('login');
     })
 
-
     route.post('/withdrawal', (req, res) => {
         var id = req.body.id;
         var sql = "DELETE FROM \"knuMovie\".\"ACCOUNT\" WHERE acc_id = " + "\'" + id + "\'";
@@ -265,7 +305,8 @@ module.exports = () => {
 
     route.get('/admin', (req, res) => {
         res.render('admin', {
-            id: `${req.session.user_id}`
+            id: `${req.session.user_id}`,
+            manager: `${req.session.manager}`
         });
     });
 

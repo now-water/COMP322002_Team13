@@ -136,7 +136,12 @@ module.exports = () => {
             .then(queryRes => {
                 const rows = queryRes.rows;
                 console.log(rows);
+                if(rows.length === 0) {
+                    res.send('<script type="text/javascript">alert("내가 등록한 영화정보가 아닙니다.");' +
+                        'window.location.href="http://localhost:3000/admin";</script>');
 
+                    res.reditect('admin');
+                }
                 rows.map(row => {
                     // console.log(`Read: ${JSON.stringify(row)}`);
                     if (row.account_id == req.session.user_id) {
@@ -148,6 +153,7 @@ module.exports = () => {
                             genre: row.genre,
                             rating: row.rating,
                             viewing_class: row.viewing_class,
+                            isNewB: `${req.session.isNewB}`,
                             id: `${req.session.user_id}`,
                             ismanager: `${req.session.manager}`
                         });
@@ -477,6 +483,7 @@ module.exports = () => {
             });
         });
     });
+
     route.get('/recommend', (req, res) => {
         if(!req.session.isLogined) {
             res.redirect('http://localhost:3000/login');

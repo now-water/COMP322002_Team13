@@ -356,19 +356,29 @@
                         <div style="float: left;"><i class="material-icons center">search</i> Search</div>
                     </a>
                 </li>
-                <li id="hideForm">
-                    <a href="admin" class="waves-effect waves-dark">
-                        <div style="float: left;"><i class="material-icons center" id="hide">view_list</i>
-                            <label for="hide">Forms</label>
-                    </a>
+                <li id="hideRegister">
+                    <a href="admin" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">movie</i>
+                        <label for="hideRegister">register</label></div></a>
                 </li>
 
+                <li id="hideModify">
+                    <a href="javascript:void(0);" onclick="modifyMovie()" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">mode_edit</i>
+                        <label for="hideModify">modify</label></div></a>
+                </li>
+
+
                 <script>
-                    let Forms = document.getElementById("hideForm");
-                    if (<% manager %>)
-                        Forms.style.display = "block";
-                    else
-                        Forms.style.display = "none";
+                    let register = document.getElementById("hideRegister");
+                    let modify = document.getElementById("hideModify");
+
+                    if (<%- manager %>){
+                        register.style.display = "block";
+                        modify.style.display = "block";
+                    }
+                    else{
+                        register.style.display = "none";
+                        modify.style.display = "none";
+                    }
                 </script>
             </ul>
 

@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -140,8 +141,8 @@
     <ul id="dropdown1" class="dropdown-content">
         <li><a href="form"><i class="fa fa-user fa-fw"></i> My Profile</a>
         </li>
-        <li><a href="form"><i class="fa fa-gear fa-fw"></i> Settings</a>
-        </li>
+        <li><a href="http://localhost:3000/rated"><i class="fa fa-gear fa-fw"></i> Rated </a>
+                </li>
         <li><a href="logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
         </li>
     </ul>
@@ -323,16 +324,29 @@
                 <li>
                     <a href="search" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">search</i> Search</div> </a>
                 </li>
-                <li id="hideForm">
-                    <a href="admin" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center" id="hide">view_list</i>
-                        <label for="hide">Forms</label></a>
+                <li id="hideRegister">
+                    <a href="admin" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">movie</i>
+                        <label for="hideRegister">register</label></div></a>
                 </li>
+
+                <li id="hideModify">
+                    <a href="javascript:void(0);" onclick="modifyMovie()" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">mode_edit</i>
+                        <label for="hideModify">modify</label></div></a>
+                </li>
+
+
                 <script>
-                    let Forms = document.getElementById("hideForm");
-                    if (<% manager %>)
-                    Forms.style.display = "block";
-                    else
-                    Forms.style.display = "none";
+                    let register = document.getElementById("hideRegister");
+                    let modify = document.getElementById("hideModify");
+
+                    if (<%- manager %>){
+                        register.style.display = "block";
+                        modify.style.display = "block";
+                    }
+                    else{
+                        register.style.display = "none";
+                        modify.style.display = "none";
+                    }
                 </script>
             </ul>
 
@@ -415,8 +429,6 @@
                                 <!-- button css도 바꿔야하고, 영화 수정 버튼을 누르면 modifyMovie 함수로 가서, 함수는 잘 동작하는데, routes.js에서 rendering이 안된다. -->
                                 <input class="mad-btn" type="submit" style="float: right" value="영화 등록">
 
-                                <input class="mad-btn" type="button" style="float: left" value="영화 수정" onclick = "modifyMovie()">
-
                             </form>
                             <div class="clearBoth"></div>
                         </div>
@@ -454,4 +466,15 @@
 
 </body>
 
+</html>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
 </html>

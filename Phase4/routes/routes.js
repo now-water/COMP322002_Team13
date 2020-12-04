@@ -1,4 +1,5 @@
 const e = require('express');
+const url = require('url');
 
 module.exports = () => {
     var route = e.Router();
@@ -20,24 +21,17 @@ module.exports = () => {
             'WHERE title NOT IN (SELECT m_title AS title ' +
             'FROM \"knuMovie\".\"RATING\" ' +
             'WHERE account_id = \'' + req.session.user_id + "\') ";
-        //+
-        // 'WHERE title NOT IN (SELECT m_title AS title ' +
-        // 'FROM \"knuMovie\".\"RATING\" ' +
-        // 'WHERE account_id = \'' + `${req.session.user_id}` + "\') ";
-        console.log(sql);
 
         conn.query(sql, (err, results) => {
             if (err) {
                 console.log(err);
                 res.status(500).send("DB Error");
             }
-            console.log(req.session);
-            //console.log(`${req.session.num}`);
-            //console.log(`${req.session.user_id}`);
             res.render('index', {
                 results: results.rows,
                 session: `${req.session.user_id}`,
-                ismanager: `${req.session.manager}`
+                ismanager: `${req.session.manager}`,
+                isNewB: `${req.session.isNewB}`
             });
         });
     })
@@ -49,7 +43,6 @@ module.exports = () => {
             'WHERE title NOT IN (SELECT m_title AS title ' +
             'FROM \"knuMovie\".\"RATING\" ' +
             'WHERE account_id = \'' + req.session.user_id + "\') ";
-        console.log(sql);
 
         conn.query(sql, (err, results) => {
             if (err) {
@@ -57,12 +50,11 @@ module.exports = () => {
                 res.status(500).send("DB Error");
             }
             console.log(req.session);
-            //console.log(`${req.session.num}`);
-            //console.log(`${req.session.user_id}`);
             res.render('search', {
                 results: results.rows,
                 session: `${req.session.user_id}`,
-                ismanager: `${req.session.manager}`
+                ismanager: `${req.session.manager}`,
+                isNewB: `${req.session.isNewB}`
             });
         });
     });
@@ -75,7 +67,6 @@ module.exports = () => {
             "WHERE title NOT IN (SELECT m_title AS title " +
             "FROM \"knuMovie\".\"RATING\" " +
             "WHERE account_id = \'" + req.session.user_id + "\')) ";
-        var pre = false;
         if (req.body.title !== "")
             sql += "AND M.title = \'" + req.body.title + "\' ";
 
@@ -100,22 +91,17 @@ module.exports = () => {
 
         if (req.body.uploader !== "")
             sql += "AND account_id = \'" + req.body.uploader + "\' ";
-
-
-        console.log(sql);
-
         conn.query(sql, (err, results) => {
             if (err) {
                 console.log(err);
                 res.status(500).send("DB Error");
             }
             console.log(req.session);
-            //console.log(`${req.session.num}`);
-            //console.log(`${req.session.user_id}`);
             res.render('search', {
                 results: results.rows,
                 session: `${req.session.user_id}`,
-                ismanager: `${req.session.manager}`
+                ismanager: `${req.session.manager}`,
+                isNewB: `${req.session.isNewB}`
             });
         })
     });
@@ -137,9 +123,7 @@ module.exports = () => {
     })
 
     route.post('/modify', (req, res) => {
-        console.log(req.body.title);
         req.session.title = req.body.title;
-
         res.redirect('/modify')
     });
 
@@ -147,11 +131,10 @@ module.exports = () => {
         res.render('modify', {
             title: `${req.session.title}`,
             id: `${req.session.user_id}`,
-            ismanager: `${req.session.manager}`
+            ismanager: `${req.session.manager}`,
+            isNewB: `${req.session.isNewB}`
         });
     });
-
-    route.post('/')
 
     route.post('/updateRegister', (req, res) => {
         //내가 등록한 영화를 수정하는지에 대한 여부를 확인 -> 영화가 없으면 "수정 가능한 영화가 아닙니다 " alert!
@@ -230,7 +213,6 @@ module.exports = () => {
     route.post('/login', (req, res) => {
         var user_id = req.body.user_id;
         var user_pw = req.body.user_pw;
-        // console.log(user_id + " " + user_pw);
         var sql = "SELECT * " +
             "FROM \"knuMovie\".\"ACCOUNT\" AS A " +
             "WHERE A.acc_id = " + "\'" + user_id + "\' ";
@@ -240,14 +222,17 @@ module.exports = () => {
         // DB 처리
         var canLogin = false;
 
-        //sql결과가 아무것도 안나오면.. 안넘어간다. -> undefined로 비교해줘야하나?
         conn.query(sql)
             .then(queryRes => {
                 const rows = queryRes.rows;
                 console.log(rows);
-
+                if(rows.length === 0){
+                    res.send('<script type="text/javascript">alert("로그인 정보가 없습니다.");' +
+                        'window.location.href="http://localhost:3000/login";</script>');
+                    console.log("로그인 실패");
+                    res.reditect('login');
+                }
                 rows.map(row => {
-                    // console.log(`Read: ${JSON.stringify(row)}`);
                     if (user_id == row.acc_id) {
                         if (user_pw == row.acc_pw) {
                             // 유저의 모든 정보 저장하기
@@ -263,7 +248,23 @@ module.exports = () => {
                             req.session.mem_type = row.mem_type;
                             req.session.manager = row.manager;
                             req.session.isLogined = true;
-                            res.redirect('index');
+
+                            // 신입 고객인지 확인
+                            var sql = "SELECT COUNT(account_id) FROM \"knuMovie\".\"RATING\" WHERE account_id = " + "\'" + user_id + "\'";
+
+                            console.log(sql);
+                            conn.query(sql, (err, results) => {
+                                if (err) {
+                                    console.log(err);
+                                    res.status(500).send("DB Error");
+                                }
+                                else{
+                                    if(parseInt(results.rows[0].count) == 0) req.session.isNewB = true;
+                                    else req.session.isNewB = false;
+                                    res.redirect('index');
+                                }
+                            });
+                            while(req.session.isNewB === "undefined");
                         } else {
                             res.send('<script type="text/javascript">alert("로그인 정보가 없습니다.");' +
                                 'window.location.href="http://localhost:3000/login";</script>');
@@ -304,15 +305,15 @@ module.exports = () => {
     });
 
     route.get('/admin', (req, res) => {
+        if(!req.session.isLogined) res.redirect("/login");
         res.render('admin', {
             id: `${req.session.user_id}`,
-            manager: `${req.session.manager}`
+            manager: `${req.session.manager}`,
+            isNewB: `${req.session.isNewB}`
         });
     });
 
     route.get('/form', (req, res) => {
-
-        // console.log(`${req.session}`);
         if (!req.session.isLogined) {
             res.redirect('/login');
         }
@@ -327,7 +328,8 @@ module.exports = () => {
             address: `${req.session.address}`,
             job: `${req.session.job}`,
             mem_type: `${req.session.mem_type}`,
-            manager: `${req.session.manager}`
+            manager: `${req.session.manager}`,
+            isNewB: `${req.session.isNewB}`
         });
     })
 
@@ -360,15 +362,15 @@ module.exports = () => {
             address: `${req.session.address}`,
             job: `${req.session.job}`,
             mem_type: `${req.session.mem_type}`,
-            manager: `${req.session.manager}`
+            manager: `${req.session.manager}`,
+            isNewB: `${req.session.isNewB}`
         });
     })
 
-    //Number랑 String이랑..
     route.post('/rate', (req, res) => {
         var score = req.body.score;
         var title = req.body.title.replace(/"/gi, "");
-        //title = title.substr(1, title.length - 2);
+
         console.log(score);
         console.log(title);
 
@@ -387,18 +389,16 @@ module.exports = () => {
             var tatalScore = 0;
             var total_num_vote = 0;
             var updatedRating = 0;
-            //console.log("totalScore 타입 : " + typeof totalScore + " totalScore 값 : " + totalScore);
+
             // rating score of a movie
             let getRatingScoreQuery = "SELECT m.rating AS rating FROM \"knuMovie\".\"MOVIE\" AS m " +
                 "WHERE m.title = \'" + title + "\'";
-            console.log(getRatingScoreQuery);
             conn.query(getRatingScoreQuery)
                 .then(queryRes => {
                     const rows = queryRes.rows;
                     rows.map(row => {
                         tatalScore = results.rows[0].num_vote * row.rating;
                         var updatedRating = parseInt(10 * (parseFloat(results.rows[0].num_vote * row.rating) + parseInt(score)) / (parseInt(results.rows[0].num_vote) + parseInt(1))) / 10;
-                        console.log("updated rating : " + updatedRating);
                         var updateRatingQuery = "UPDATE \"knuMovie\".\"MOVIE\" " +
                             "SET RATING = " + updatedRating +
                             " WHERE title = \'" + title + "\'";
@@ -409,14 +409,14 @@ module.exports = () => {
                         });
 
                         var insertQuery = "INSERT INTO \"knuMovie\".\"RATING\" " +
-                            "VALUES(\'" + title + "\', \'" + id + "\', " + parseInt(parseInt(total_num_vote) + parseInt(1)) + ") ";
+                            "VALUES(\'" + title + "\', \'" + id + "\', " + parseInt(parseInt(results.rows[0].num_vote) + parseInt(1)) + ") ";
 
-
-                        console.log("insert query test: " + insertQuery);
                         conn.query(insertQuery, (err, results) => {
                             if (err) {
                                 console.log(err);
                             }
+                            req.session.isNewB = false;
+                            res.send('<script type="text/javascript">window.location.href="http://localhost:3000/search";</script>');
                         });
                     });
                 })
@@ -432,8 +432,6 @@ module.exports = () => {
         var sql = "SELECT * FROM \"knuMovie\".\"MOVIE\" M "+
             "WHERE M.title IN (SELECT m_title FROM \"knuMovie\".\"RATING\" " +
             "WHERE account_id = \'" + req.session.user_id + "\') ";
-        console.log(sql);
-
 
         conn.query(sql, (err, results) => {
             if (err) {
@@ -443,7 +441,37 @@ module.exports = () => {
             res.render('rated', {
                 results: results.rows,
                 session: `${req.session.user_id}`,
-                ismanager: `${req.session.manager}`
+                ismanager: `${req.session.manager}`,
+                isNewB: `${req.session.isNewB}`
+            });
+        });
+    });
+    route.get('/recommend', (req, res) => {
+        if(!req.session.isLogined) {
+            res.redirect('http://localhost:3000/login');
+        }
+        var urlParse = url.parse(req.url, true);
+        var queryString = urlParse.query;
+        let genreNumber = queryString.genre;
+        let genreName="";
+        if(genreNumber == '1') genreName = "Action";
+        else if(genreNumber == '2') genreName = "Sf";
+        else if(genreNumber == '3') genreName = "Comedy";
+        else if(genreNumber == '4') genreName = "Thriller";
+        else if(genreNumber == '5') genreName = "Romance";
+        let sql = "select * from \"knuMovie\".\"MOVIE\" where genre = " + genreNumber + " order by rating DESC ";
+
+        conn.query(sql, (err, results) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("DB Error");
+            }
+            res.render('recommend', {
+                results: results.rows,
+                session: `${req.session.user_id}`,
+                ismanager: `${req.session.manager}`,
+                isNewB: `${req.session.isNewB}`,
+                genre: genreName
             });
         });
     });

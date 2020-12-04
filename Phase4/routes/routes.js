@@ -124,40 +124,76 @@ module.exports = () => {
 
     route.post('/modify', (req, res) => {
         req.session.title = req.body.title;
-        res.redirect('/modify')
+        console.log("REDIRECT TO MODIFY /GET");
+        res.redirect('/modify');
     });
 
     route.get('/modify', (req, res) => {
-        res.render('modify', {
-            title: `${req.session.title}`,
-            id: `${req.session.user_id}`,
-            ismanager: `${req.session.manager}`,
-            isNewB: `${req.session.isNewB}`
-        });
+        var sql = "SELECT * FROM \"knuMovie\".\"MOVIE\" WHERE title = " + "\'" + req.session.title + "\'";
+
+        console.log(sql);
+        conn.query(sql)
+            .then(queryRes => {
+                const rows = queryRes.rows;
+                console.log(rows);
+                if(rows.length === 0) {
+                    res.send('<script type="text/javascript">alert("내가 등록한 영화정보가 아닙니다.");' +
+                        'window.location.href="http://localhost:3000/admin";</script>');
+
+                    res.reditect('admin');
+                }
+                rows.map(row => {
+                    // console.log(`Read: ${JSON.stringify(row)}`);
+                    if (row.account_id == req.session.user_id) {
+                        res.render('modify', {
+                            title: row.title,
+                            type: row.type,
+                            runtime: row.runtime,
+                            start_year: row.start_year,
+                            genre: row.genre,
+                            rating: row.rating,
+                            viewing_class: row.viewing_class,
+                            isNewB: `${req.session.isNewB}`,
+                            id: `${req.session.user_id}`,
+                            ismanager: `${req.session.manager}`
+                        });
+                    } else {
+                        res.send('<script type="text/javascript">alert("내가 등록한 영화정보가 아닙니다.");' +
+                            'window.location.href="http://localhost:3000/admin";</script>');
+                    }
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            });
     });
 
     route.post('/updateRegister', (req, res) => {
-        //내가 등록한 영화를 수정하는지에 대한 여부를 확인 -> 영화가 없으면 "수정 가능한 영화가 아닙니다 " alert!
         var sql = "UPDATE \"knuMovie\".\"MOVIE\" " +
-            "SET type = " + "\'" + req.body.type + "\'";
+            "SET ";
 
-        if(req.body.runtime.length != 0)
-            sql += " , runtime = " + req.body.runtime;
+        if (req.body.type.length != 0)
+            sql += "type = " + "\'" + req.body.type + "\'" + " , ";
 
-        if(req.body.start_year.length != 0)
-            sql += " , start_year = " + "TO_DATE(" + "\'" + req.body.start_year + "\',\'" + "yyyy-mm-dd" + "\')";
+        if (req.body.runtime.length != 0)
+            sql += "runtime = " + req.body.runtime + " , ";
 
-        if(req.body.genre.length != 0)
-            sql += " , genre = " + req.body.genre;
+        if (req.body.start_year.length != 0)
+            sql += "start_year = " + "TO_DATE(" + "\'" + req.body.start_year + "\',\'" + "yyyy-mm-dd" + "\') , ";
 
-        if(req.body.rating.length != 0)
-            sql += " , rating = " + req.body.rating;
+        if (req.body.genre.length != 0)
+            sql += "genre = " + req.body.genre + " , ";
+
+        if (req.body.rating.length != 0)
+            sql += "rating = " + req.body.rating;
         else
-            sql += " , rating = " + 0.0;
+            sql += "rating = " + 0.0;
 
-        sql += " , viewing_class = " + "\'" + req.body.viewing_class + "\' " +
-        "WHERE title = " + "\'" + req.session.title + "\' " +
-        "AND account_id = " + "\'" + req.session.user_id + "\'";
+        if (req.body.viewing_class.length != 0)
+            sql += " , viewing_class = " + req.body.viewing_class;
+
+        sql += " WHERE title = " + "\'" + req.session.title + "\' " +
+            "AND account_id = " + "\'" + req.session.user_id + "\'";
 
         console.log(sql);
 
@@ -166,8 +202,8 @@ module.exports = () => {
                 console.log(err);
                 res.status(500).send("DB Error");
             }
-        });
 
+        });
         res.redirect('admin');
     });
 
@@ -376,7 +412,7 @@ module.exports = () => {
 
         const id = req.session.user_id;
         // MAX num_vote
-        const getMaxVoteQuery = "SELECT MAX(R.num_vote) AS num_vote FROM \"knuMovie\".\"RATING\" AS R " +
+        const getMaxVoteQuery = "SELECT MAX(R.num_vote) AS num_vote FROM 1 \"knuMovie\".\"RATING\" AS R " +
             "WHERE R.m_title = \'" + title + "\'";
 
         conn.query(getMaxVoteQuery, (err, results) => {
@@ -425,11 +461,12 @@ module.exports = () => {
                 })
         });
     });
+
     route.get('/rated', (req, res) => {
         if (!req.session.isLogined) {
             res.redirect('/login');
         }
-        var sql = "SELECT * FROM \"knuMovie\".\"MOVIE\" M "+
+        var sql = "SELECT * FROM \"knuMovie\".\"MOVIE\" M " +
             "WHERE M.title IN (SELECT m_title FROM \"knuMovie\".\"RATING\" " +
             "WHERE account_id = \'" + req.session.user_id + "\') ";
 
@@ -446,6 +483,7 @@ module.exports = () => {
             });
         });
     });
+
     route.get('/recommend', (req, res) => {
         if(!req.session.isLogined) {
             res.redirect('http://localhost:3000/login');
@@ -475,5 +513,6 @@ module.exports = () => {
             });
         });
     });
+
     return route;
-};
+}

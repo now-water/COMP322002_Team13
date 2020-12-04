@@ -121,6 +121,24 @@
             window.location.href = "http://localhost:3000/admin";
         }
     </script>
+
+    <script>
+        function modifyMovie() {
+            var modifyTitle = prompt("수정할 영화의 제목을 입력하세요");
+            var url = "http://localhost:3000/modify";
+            var httpRequest = new XMLHttpRequest();
+            var parameter = "title=" + modifyTitle;
+
+            httpRequest.open("POST", url, true);
+            httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            httpRequest.send(parameter);
+
+            if(modifyTitle == null)
+                alert("올바른 영화 제목을 입력해주세요");
+            else
+                window.location.href = "http://localhost:3000/modify";
+        }
+    </script>
 </head>
 
 <body>
@@ -201,7 +219,25 @@
 
                                 </script>
 
+                <li id="hideModify">
+                    <a href="http://localhost:3000/modify" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">mode_edit</i>
+                        <label for="hideModify">modify</label></div></a>
+                </li>
 
+
+                <script>
+                    let register = document.getElementById("hideRegister");
+                    let modify = document.getElementById("hideModify");
+
+                    if (<%- ismanager %>){
+                        register.style.display = "block";
+                        modify.style.display = "block";
+                    }
+                    else{
+                        register.style.display = "none";
+                        modify.style.display = "none";
+                    }
+                </script>
             </ul>
 
         </div>
@@ -233,7 +269,7 @@
                                 <div class="row">
                                     <div class=" col s6">
                                         <label for="title">*Title</label>
-                                        <input id="title" name="title" type="text" readonly="readonly"
+                                        <input id="title" name="title" type="text"
                                                value="<%=JSON.stringify(title).replace(/"/gi,"")%> "/>
                                         <script>
                                             var title = document.getElementById("title");
@@ -246,7 +282,15 @@
 
                                     <div class=" col s6">
                                         <label for="type">*Type</label>
-                                        <input id="type" name="type" type="text"/>
+                                        <input id="type" name="type" type="text"
+                                               value="<%=JSON.stringify(type).replace(/"/gi,"")%> "/>
+                                        <script>
+                                            var type = document.getElementById("type");
+                                            type.style.color = "black";
+                                            type.style.fontWeight = "bold";
+
+                                            type.value(JSON.parse(type));
+                                        </script>
                                     </div>
 
                                 </div>
@@ -254,36 +298,76 @@
                                 <div class="row">
                                     <div class=" col s12">
                                         <label for="runtime">*Runtime</label>
-                                        <input id="runtime" name="runtime" type="text"/>
+                                        <input id="runtime" name="runtime" type="text"
+                                               value="<%=JSON.stringify(runtime).replace(/"/gi,"")%> "/>
+                                        <script>
+                                            var runtime = document.getElementById("runtime");
+                                            runtime.style.color = "black";
+                                            runtime.style.fontWeight = "bold";
+
+                                            runtime.value(JSON.parse(runtime));
+                                        </script>
                                     </div>
                                 </div>
 
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="start_year">*StartYear</label>
-                                        <input id="start_year" name="start_year" type="text"/>
+                                        <label for="start_year">*Start_year</label>
+                                        <input id="start_year" name="start_year" type="text"
+                                               value="<%=JSON.stringify(start_year).replace(/"/gi,"").substr(0,10)%> "/>
+                                        <script>
+                                            var start_year = document.getElementById("start_year");
+                                            start_year.style.color = "black";
+                                            start_year.style.fontWeight = "bold";
+
+                                            start_year.value(JSON.parse(start_year));
+                                        </script>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class=" col s12">
                                         <label for="genre">*Genre</label>
-                                        <input id="genre" name="genre" type="text"/>
+                                        <input id="genre" name="genre" type="text"
+                                               value="<%=JSON.stringify(genre).replace(/"/gi,"")%> "/>
+                                        <script>
+                                            var genre = document.getElementById("genre");
+                                            genre.style.color = "black";
+                                            genre.style.fontWeight = "bold";
+
+                                            genre.value(JSON.parse(genre));
+                                        </script>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="rating">Rating</label>
-                                        <input id="rating" name="rating" type="text"/>
+                                        <label for="rating">*Rating</label>
+                                        <input id="rating" name="rating" type="text"
+                                               value="<%=JSON.stringify(rating).replace(/"/gi,"")%> "/>
+                                        <script>
+                                            var rating = document.getElementById("rating");
+                                            rating.style.color = "black";
+                                            rating.style.fontWeight = "bold";
+
+                                            rating.value(JSON.parse(rating));
+                                        </script>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class=" col s12">
                                         <label for="viewing_class">*Viewing_class</label>
-                                        <input id="viewing_class" name="viewing_class" type="text"/>
+                                        <input id="viewing_class" name="viewing_class" type="text"
+                                               value="<%=JSON.stringify(viewing_class).replace(/"/gi,"")%> "/>
+                                        <script>
+                                            var viewing_class = document.getElementById("viewing_class");
+                                            viewing_class.style.color = "black";
+                                            viewing_class.style.fontWeight = "bold";
+
+                                            viewing_class.value(JSON.parse(viewing_class));
+                                        </script>
                                     </div>
                                 </div>
 

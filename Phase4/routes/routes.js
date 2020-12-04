@@ -16,10 +16,7 @@ module.exports = () => {
             res.redirect('login');
         }
 
-        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ' +
-            'WHERE title NOT IN (SELECT m_title AS title ' +
-            'FROM \"knuMovie\".\"RATING\" ' +
-            'WHERE account_id = \'' + req.session.user_id + "\') ";
+        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ';
         //+
         // 'WHERE title NOT IN (SELECT m_title AS title ' +
         // 'FROM \"knuMovie\".\"RATING\" ' +
@@ -404,7 +401,7 @@ module.exports = () => {
 
         const id = req.session.user_id;
         // MAX num_vote
-        const getMaxVoteQuery = "SELECT MAX(R.num_vote) AS num_vote FROM \"knuMovie\".\"RATING\" AS R " +
+        const getMaxVoteQuery = "SELECT MAX(R.num_vote) AS num_vote FROM 1 \"knuMovie\".\"RATING\" AS R " +
             "WHERE R.m_title = \'" + title + "\'";
 
         conn.query(getMaxVoteQuery, (err, results) => {

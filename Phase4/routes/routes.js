@@ -412,7 +412,7 @@ module.exports = () => {
 
         const id = req.session.user_id;
         // MAX num_vote
-        const getMaxVoteQuery = "SELECT MAX(R.num_vote) AS num_vote FROM 1 \"knuMovie\".\"RATING\" AS R " +
+        const getMaxVoteQuery = "SELECT MAX(R.num_vote) AS num_vote FROM \"knuMovie\".\"RATING\" AS R " +
             "WHERE R.m_title = \'" + title + "\'";
 
         conn.query(getMaxVoteQuery, (err, results) => {
@@ -420,8 +420,8 @@ module.exports = () => {
                 console.log(err);
                 res.status(500).send("DB Error");
             }
-            console.log("totalScore 원래타입 : " + typeof results.rows[0].num_vote);
-            console.log("num_vote : " + results.rows[0].num_vote);
+            //console.log("totalScore 원래타입 : " + typeof results.rows[0].num_vote);
+            //console.log("num_vote : " + results.rows[0].num_vote);
             var tatalScore = 0;
             var total_num_vote = 0;
             var updatedRating = 0;
@@ -429,12 +429,15 @@ module.exports = () => {
             // rating score of a movie
             let getRatingScoreQuery = "SELECT m.rating AS rating FROM \"knuMovie\".\"MOVIE\" AS m " +
                 "WHERE m.title = \'" + title + "\'";
+            console.log(getRatingScoreQuery);
             conn.query(getRatingScoreQuery)
                 .then(queryRes => {
                     const rows = queryRes.rows;
                     rows.map(row => {
+                        console.log("row : " + row);
+                        console.log("results : " + results);
                         tatalScore = results.rows[0].num_vote * row.rating;
-                        var updatedRating = parseInt(10 * (parseFloat(results.rows[0].num_vote * row.rating) + parseInt(score)) / (parseInt(results.rows[0].num_vote) + parseInt(1))) / 10;
+                        var updatedRating = 10 * parseInt((parseFloat(results.rows[0].num_vote * row.rating) + parseInt(score)) / (parseInt(results.rows[0].num_vote) + parseInt(1))) / 10;
                         var updateRatingQuery = "UPDATE \"knuMovie\".\"MOVIE\" " +
                             "SET RATING = " + updatedRating +
                             " WHERE title = \'" + title + "\'";
@@ -446,7 +449,7 @@ module.exports = () => {
 
                         var insertQuery = "INSERT INTO \"knuMovie\".\"RATING\" " +
                             "VALUES(\'" + title + "\', \'" + id + "\', " + parseInt(parseInt(results.rows[0].num_vote) + parseInt(1)) + ") ";
-
+                        console.log(insertQuery);
                         conn.query(insertQuery, (err, results) => {
                             if (err) {
                                 console.log(err);

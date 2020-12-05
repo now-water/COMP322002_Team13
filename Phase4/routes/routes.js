@@ -144,8 +144,11 @@ module.exports = () => {
             .then(queryRes => {
                 const rows = queryRes.rows;
                 console.log(rows);
-                if(rows.length === 0) {
-                    res.send('<script type="text/javascript">window.location.href="http://localhost:3000/index";</script>');
+                if (rows.length === 0) {
+                    res.send('<script type="text/javascript">alert("내가 등록한 영화정보가 아닙니다.");' +
+                        'window.location.href="http://localhost:3000/admin";</script>');
+
+                    res.redirect('admin');
                 }
                 rows.map(row => {
                     // console.log(`Read: ${JSON.stringify(row)}`);
@@ -281,7 +284,7 @@ module.exports = () => {
             .then(queryRes => {
                 const rows = queryRes.rows;
                 console.log(rows);
-                if(rows.length === 0){
+                if (rows.length === 0) {
                     res.send('<script type="text/javascript">alert("로그인 정보가 없습니다.");' +
                         'window.location.href="http://localhost:3000/login";</script>');
                     console.log("로그인 실패");
@@ -312,14 +315,13 @@ module.exports = () => {
                                 if (err) {
                                     console.log(err);
                                     res.status(500).send("DB Error");
-                                }
-                                else{
-                                    if(parseInt(results.rows[0].count) == 0) req.session.isNewB = true;
+                                } else {
+                                    if (parseInt(results.rows[0].count) == 0) req.session.isNewB = true;
                                     else req.session.isNewB = false;
                                     res.redirect('index');
                                 }
                             });
-                            while(req.session.isNewB === "undefined");
+                            while (req.session.isNewB === "undefined") ;
                         } else {
                             res.send('<script type="text/javascript">alert("로그인 정보가 없습니다.");' +
                                 'window.location.href="http://localhost:3000/login";</script>');
@@ -365,7 +367,8 @@ module.exports = () => {
     });
 
     route.get('/admin', (req, res) => {
-        if(!req.session.isLogined) res.redirect("/login");
+        if (!req.session.isLogined) res.redirect("/login");
+
         res.render('admin', {
             id: `${req.session.user_id}`,
             manager: `${req.session.manager}`,
@@ -539,18 +542,18 @@ module.exports = () => {
     });
 
     route.get('/recommend', (req, res) => {
-        if(!req.session.isLogined) {
+        if (!req.session.isLogined) {
             res.redirect('http://localhost:3000/login');
         }
         var urlParse = url.parse(req.url, true);
         var queryString = urlParse.query;
         let genreNumber = queryString.genre;
-        let genreName="";
-        if(genreNumber == '1') genreName = "Action";
-        else if(genreNumber == '2') genreName = "Sf";
-        else if(genreNumber == '3') genreName = "Comedy";
-        else if(genreNumber == '4') genreName = "Thriller";
-        else if(genreNumber == '5') genreName = "Romance";
+        let genreName = "";
+        if (genreNumber == '1') genreName = "Action";
+        else if (genreNumber == '2') genreName = "Sf";
+        else if (genreNumber == '3') genreName = "Comedy";
+        else if (genreNumber == '4') genreName = "Thriller";
+        else if (genreNumber == '5') genreName = "Romance";
         let sql = "select * from \"knuMovie\".\"MOVIE\" where genre = " + genreNumber + " order by rating DESC ";
 
         conn.query(sql, (err, results) => {

@@ -2,7 +2,7 @@ const e = require('express');
 const url = require('url');
 const conn = require('../config/db')();
 const pgp = require('pg-promise')();
-const db = pgp("postgres://postgres:kwon0879@localhost:5432/phase3");
+const db = pgp("postgres://postgres:dlwjdduf1!@localhost:5432/phase2");
 module.exports = () => {
     var route = e.Router();
     var bodyParser = require('body-parser');

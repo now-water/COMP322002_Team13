@@ -143,10 +143,11 @@ module.exports = () => {
                 console.log(rows);
                 if (rows.length === 0) {
                     res.send('<script type="text/javascript">alert("내가 등록한 영화정보가 아닙니다.");' +
-                        'window.location.href="http://localhost:3000/admin";</script>');
+                        'window.location.href="http://localhost:3000/index";</script>');
 
-                    res.redirect('admin');
+                    res.redirect('index');
                 }
+
                 rows.map(row => {
                     // console.log(`Read: ${JSON.stringify(row)}`);
                     if (row.account_id == req.session.user_id) {
@@ -164,7 +165,7 @@ module.exports = () => {
                         });
                     } else {
                         res.send('<script type="text/javascript">alert("내가 등록한 영화정보가 아닙니다.");' +
-                            'window.location.href="http://localhost:3000/admin";</script>');
+                            'window.location.href="http://localhost:3000/index";</script>');
                     }
                 })
             })
@@ -209,7 +210,7 @@ module.exports = () => {
             }
 
         });
-        res.redirect('admin');
+        res.redirect('index');
     });
 
     route.post('/signUp', (req, res) => {

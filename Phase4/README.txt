@@ -2,7 +2,7 @@
  - IntelliJ IDE환경에서 제작하였으며 node.JS express Server를 구축하고 postgreSQL 드라이버를 통해 postgreSQL과 연동하여 진행.
 
 <실행 및 사용 방법.>
- - 첨부한 Phase4 프로젝트 파일을 열고 express, ejs, express, express-session, pg, pg-promise ,supervisor를 npm install 한 뒤  'node main'을 입력 후 Server와 Database가 연동이 되면 브라우저를 열어 localhost:3000 으로 접속한다.
+ - 첨부한 Phase4 프로젝트 파일을 열고 npm install 한 뒤  'node main'을 입력 후 Server와 Database가 연동이 되면 브라우저를 열어 localhost:3000 으로 접속한다.
  - 아래는 package.json의 dependencies정보이다.
  "dependencies": {
     "body-parser": "^1.19.0",
@@ -11,7 +11,6 @@
     "express-session": "^1.17.1",
     "pg": "^8.5.1",
     "pg-promise": "^10.8.1",
-    "pip": "0.0.1",
     "supervisor": "^0.12.0"
   } 
 

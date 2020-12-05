@@ -101,7 +101,7 @@
             var runtime = document.getElementById("runtime").value;
             var start_year = document.getElementById("start_year").value;
             var genre = document.getElementById("genre").value;
-            var rating = document.getElementById("rating").value;
+
             var viewing_class = document.getElementById("viewing_class").value;
 
             var parameter = "title=" + title +
@@ -123,7 +123,7 @@
 
             parameter += "&genre=" + parseIntGenre;
             if (rating.length != 0)
-                parameter += "&rating=" + rating;
+                parameter += "&rating=" + 0;
             parameter += "&viewing_class=" + viewing_class;
 
 
@@ -137,22 +137,22 @@
     </script>
 
     <script>
-            function modifyMovie() {
-                var modifyTitle = prompt("수정할 영화의 제목을 입력하세요");
-                var url = "http://localhost:3000/modify";
-                var httpRequest = new XMLHttpRequest();
-                var parameter = "title=" + modifyTitle;
+        function modifyMovie() {
+            var modifyTitle = prompt("수정할 영화의 제목을 입력하세요");
+            var url = "http://localhost:3000/modify";
+            var httpRequest = new XMLHttpRequest();
+            var parameter = "title=" + modifyTitle;
 
-                httpRequest.open("POST", url, true);
-                httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                httpRequest.send(parameter);
+            httpRequest.open("POST", url, true);
+            httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            httpRequest.send(parameter);
 
-                if(modifyTitle == null)
-                    alert("올바른 영화 제목을 입력해주세요");
-                else
-                    window.location.href = "http://localhost:3000/modify";
-            }
-        </script>
+            if(modifyTitle == null)
+                alert("올바른 영화 제목을 입력해주세요");
+            else
+                window.location.href = "http://localhost:3000/modify";
+        }
+    </script>
 </head>
 
 <body>
@@ -223,9 +223,9 @@
                 <script>
                     let Recommend = document.getElementById("hideRecomForm");
                     if (<%- isNewB %>)
-                        Recommend.style.display = "block";
+                    Recommend.style.display = "block";
                     else
-                        Recommend.style.display = "none";
+                    Recommend.style.display = "none";
 
                     let register = document.getElementById("hideRegister");
                     let modify = document.getElementById("hideModify");
@@ -306,12 +306,6 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class=" col s12">
-                                        <label for="rating">Rating</label>
-                                        <input id="rating" name="rating" type="text"/>
-                                    </div>
-                                </div>
 
                                 <div class="row">
                                     <div class=" col s12">

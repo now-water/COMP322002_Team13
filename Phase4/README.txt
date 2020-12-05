@@ -47,7 +47,9 @@
 			- 장르별 평점이 높은 순으로 10개의 영상물을 보여준다. 드랍다운 버튼을 통해서 장르를 선택하면, 해당 장르에 대해 추천 영상물 리스트가 테이블에 나타난다.
 
 <유의 사항>
-
+ 관리자 기능 영상 수정 및 등록 시 genre에 대한 내용을 Action은 1, SF는 2, Comedy는 3, Thriller는 4, Romance는 5라는 숫자로 입력해야 함.
+ 이는 phase2 당시 table schema설계 때 GENRE 테이블과 MOVIE 테이블을 설계할 때 GENRE 테이블의 PK를 sequence를 갖게하는 surrogate key로 구현한 뒤 GENRE테이블의 sequence의 숫자에 따라
+ category(Action, SF, Comedy, Thriller, Romance)를 mapping해줬기 때문.
 
 <추가 과제 수행 여부>
 DML(INSERT, UPDATE, DELETE) Transaction 기능 적용하였음. 

@@ -18,10 +18,7 @@ module.exports = () => {
             res.redirect('login');
         }
 
-        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ' +
-            'WHERE title NOT IN (SELECT m_title AS title ' +
-            'FROM \"knuMovie\".\"RATING\" ' +
-            'WHERE account_id = \'' + req.session.user_id + "\') ";
+        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ';
 
         conn.query(sql, (err, results) => {
             if (err) {
@@ -504,11 +501,14 @@ module.exports = () => {
                         })
                             .then(data => {
                                 console.log("Insertion COMMIT Complete !!");
+                                req.session.isNewB = false;
+                                //res.send('<script>window.location.reload();</script>');
                                 res.redirect('rate');
                             })
                             .catch(err => {
                                 console.log(err);
                                 console.log("Error happened. ROLLBACK execute");
+                                //res.send('<script>window.location.reload();</script>');
                                 res.redirect('rate');
                             })
                     });

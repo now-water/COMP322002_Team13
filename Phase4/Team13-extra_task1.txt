@@ -4,4 +4,5 @@ Initialization Option을 충족시켜 초기화해준 다음, database 질의 �
 Database Context로 얻어온 후 task를 수행한다.
 
  - task수행 방법은 얻어온 Database Context에 대해 Transaction method tx에 대한 callback 함수를 정의하여 CRUD에 관한
-	쿼리에 대해 automatically commit을 허용하지 않고 transaction support를 허용하게 한다.
+	쿼리에 대해 automatically commit을 허용하지 않고 만약 Transaction ACID condition에 위반할 경우에는 rollback을 해주는 등의
+	transaction support를 허용하게 한다.

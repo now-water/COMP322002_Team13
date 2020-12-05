@@ -1,3 +1,6 @@
+// const pgp = require('pg-promise')();
+// const db = pgp("postgres://postgres:kwon0879@localhost:5432/phase3");
+// module.exports = db;
 module.exports = function() {
     const {Client} = require('pg');
 

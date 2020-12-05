@@ -148,12 +148,12 @@ module.exports = () => {
                     res.send('<script type="text/javascript">alert("내가 등록한 영화정보가 아닙니다.");' +
                         'window.location.href="http://localhost:3000/index";</script>');
 
-                    res.redirect('index');
+                    //res.redirect('index');
                 }
 
                 rows.map(row => {
                     // console.log(`Read: ${JSON.stringify(row)}`);
-                    if (row.account_id == req.session.user_id) {
+                    if (row.account_id === req.session.user_id) {
                         res.render('modify', {
                             title: row.title,
                             type: row.type,
@@ -405,7 +405,7 @@ module.exports = () => {
             "WHERE phone_num = " + "\'" + req.session.phone_num + "\' " +
             " OR address = " + "\'" + req.session.address + "\' " +
             " OR job = " + "\'" + req.session.job + "\'";
-
+        console.log(sql);
         db.tx(async t =>{ // automatic BEGIN
             // creating a sequence of transaction queries:
             await t.none(sql);
@@ -417,25 +417,26 @@ module.exports = () => {
                 req.session.phone_num = req.body.phone_num;
                 req.session.address = req.body.address;
                 req.session.job = req.body.job;
+                res.render("form", {
+                    id: `${req.session.user_id}`,
+                    pw: `${req.session.pw}`,
+                    name: `${req.session.name}`,
+                    phone_num: `${req.session.phone_num}`,
+                    birth: `${req.session.birth}`,
+                    age: `${req.session.age}`,
+                    gender: `${req.session.gender}`,
+                    address: `${req.session.address}`,
+                    job: `${req.session.job}`,
+                    mem_type: `${req.session.mem_type}`,
+                    manager: `${req.session.manager}`,
+                    isNewB: `${req.session.isNewB}`
+                });
             })
             .catch(err => {
                 console.log(err);
                 console.log("Error happened. ROLLBACK execute");
             })
-        res.render("form", {
-            id: `${req.session.user_id}`,
-            pw: `${req.session.pw}`,
-            name: `${req.session.name}`,
-            phone_num: `${req.session.phone_num}`,
-            birth: `${req.session.birth}`,
-            age: `${req.session.age}`,
-            gender: `${req.session.gender}`,
-            address: `${req.session.address}`,
-            job: `${req.session.job}`,
-            mem_type: `${req.session.mem_type}`,
-            manager: `${req.session.manager}`,
-            isNewB: `${req.session.isNewB}`
-        });
+
     })
 
     route.post('/rate', (req, res) => {
@@ -503,14 +504,14 @@ module.exports = () => {
                             .then(data => {
                                 console.log("Insertion COMMIT Complete !!");
                                 req.session.isNewB = false;
-                                //res.send('<script>window.location.reload();</script>');
-                                res.redirect('rate');
+                                res.send('<script>window.location.href="http://localhost:3000/search";</script>');
+                                //res.redirect('rate');
                             })
                             .catch(err => {
                                 console.log(err);
                                 console.log("Error happened. ROLLBACK execute");
-                                //res.send('<script>window.location.reload();</script>');
-                                res.redirect('rate');
+                                res.send('<script>window.location.href="http://localhost:3000/search"</script>');
+                                //res.redirect('rate');
                             })
                     });
                 })

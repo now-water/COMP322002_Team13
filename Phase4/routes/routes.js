@@ -1,9 +1,10 @@
 const e = require('express');
 const url = require('url');
-
+const conn = require('../config/db')();
+const pgp = require('pg-promise')();
+const db = pgp("postgres://postgres:kwon0879@localhost:5432/phase3");
 module.exports = () => {
     var route = e.Router();
-    var conn = require('../config/db')();
     var bodyParser = require('body-parser');
     const {response} = require("express");
     route.use(bodyParser.urlencoded({extended: true}));
@@ -17,10 +18,7 @@ module.exports = () => {
             res.redirect('login');
         }
 
-        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ' +
-            'WHERE title NOT IN (SELECT m_title AS title ' +
-            'FROM \"knuMovie\".\"RATING\" ' +
-            'WHERE account_id = \'' + req.session.user_id + "\') ";
+        var sql = 'SELECT * FROM \"knuMovie\".\"MOVIE\" ';
 
         conn.query(sql, (err, results) => {
             if (err) {
@@ -108,19 +106,24 @@ module.exports = () => {
 
     route.post('/registerMovie', (req, res) => {
         //account_id는 고정된 값으로 있는 것을 읽어오기.
-        var sql = "INSERT INTO \"knuMovie\".\"MOVIE\" (title, type, runtime, start_year, genre, rating, viewing_class, account_id) VALUES(" +
-            "\'" + req.body.title + "\'," + "\'" + req.body.type + "\'," + req.body.runtime + "," + "TO_DATE(\'" + req.body.start_year + "\'," + "\'yyyy-mm-dd\') " + "," + req.body.genre;
-        if (req.body.rating.length != 0)
-            sql += " , " + req.body.rating;
-        else
-            sql += " , " + 0;
+        let sql = "INSERT INTO \"knuMovie\".\"MOVIE\" (title, type, runtime, start_year, genre, rating, viewing_class, account_id) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING title";
+        let params = [req.body.title, req.body.type, req.body.runtime, req.body.start_year, req.body.genre, req.body.rating, req.body.viewing_class, req.session.user_id];
+        db.tx(async t =>{ // automatic BEGIN
+            // creating a sequence of transaction queries:
+            await t.one(sql, params);
 
-        sql += ", \'" + req.body.viewing_class + "\'," + "\'" + req.session.user_id + "\')";
-
-        console.log(sql);
-        conn.query(sql, (err) => {
-            res.redirect('index');
-        });
+            // returning a promise that determines a successful transaction:
+            //return t.batch([qeury1]);
+        })
+            .then(data => {
+                console.log("Insertion COMMIT Complete !!");
+                res.redirect('admin');
+            })
+            .catch(err => {
+                console.log(err);
+                console.log("Error happened. ROLLBACK execute");
+                res.redirect('admin');
+            })
     });
 
     route.get('/register', (req, res) => {
@@ -203,14 +206,21 @@ module.exports = () => {
 
         console.log(sql);
 
-        conn.query(sql, (err) => {
-            if (err) {
-                console.log(err);
-                res.status(500).send("DB Error");
-            }
+        db.tx(async t =>{ // automatic BEGIN
+            // creating a sequence of transaction queries:
+            await t.none(sql);
 
-        });
-        res.redirect('index');
+            // returning a promise that determines a successful transaction:
+        })
+            .then(data => {
+                console.log("Update COMMIT Complete !!");
+                res.redirect('admin')
+            })
+            .catch(err => {
+                console.log(err);
+                console.log("Error happened. ROLLBACK execute");
+                res.redirect('admin')
+            })
     });
 
     route.post('/signUp', (req, res) => {
@@ -230,13 +240,20 @@ module.exports = () => {
             "\'" + req.body.mem_type + "\'" + "," +
             req.body.manager + ")";
 
-        conn.query(sql, (err) => {
-            if (err) {
+        db.tx(async t =>{ // automatic BEGIN
+            // creating a sequence of transaction queries:
+            await t.none(sql);
+            // returning a promise that determines a successful transaction:
+        })
+            .then(data => {
+                console.log("Insertion COMMIT Complete !!");
+                res.redirect('login');
+            })
+            .catch(err => {
                 console.log(err);
-                res.status(500).send("DB Error");
-            }
-            res.redirect('login');
-        });
+                console.log("Error happened. ROLLBACK execute");
+                res.redirect('login');
+            })
     })
 
     route.get('/login', (req, res) => {
@@ -332,17 +349,22 @@ module.exports = () => {
         var id = req.body.id;
         var sql = "DELETE FROM \"knuMovie\".\"ACCOUNT\" WHERE acc_id = " + "\'" + id + "\'";
 
-        conn.query(sql)
-            .then(queryRes => {
-                console.log(sql);
+        db.tx(async t =>{ // automatic BEGIN
+            // creating a sequence of transaction queries:
+            await t.none(sql);
 
+            // returning a promise that determines a successful transaction:
+        })
+            .then(data => {
+                console.log("Delete COMMIT Complete !!");
                 req.session.destroy();
-                res.render('login');
+                res.redirect('login');
             })
             .catch(err => {
                 console.log(err);
-            });
-
+                console.log("Error happened. ROLLBACK execute");
+                res.redirect('login');
+            })
     });
 
     route.get('/admin', (req, res) => {
@@ -384,15 +406,22 @@ module.exports = () => {
             " OR address = " + "\'" + req.session.address + "\' " +
             " OR job = " + "\'" + req.session.job + "\'";
 
-        conn.query(sql)
+        db.tx(async t =>{ // automatic BEGIN
+            // creating a sequence of transaction queries:
+            await t.none(sql);
+
+            // returning a promise that determines a successful transaction:
+        })
+            .then(data => {
+                console.log("Update COMMIT Complete !!");
+                req.session.phone_num = req.body.phone_num;
+                req.session.address = req.body.address;
+                req.session.job = req.body.job;
+            })
             .catch(err => {
                 console.log(err);
-            });
-
-        req.session.phone_num = req.body.phone_num;
-        req.session.address = req.body.address;
-        req.session.job = req.body.job;
-
+                console.log("Error happened. ROLLBACK execute");
+            })
         res.render("form", {
             id: `${req.session.user_id}`,
             pw: `${req.session.pw}`,
@@ -418,7 +447,7 @@ module.exports = () => {
 
         const id = req.session.user_id;
         // MAX num_vote
-        const getMaxVoteQuery = "SELECT MAX(R.num_vote) AS num_vote FROM 1 \"knuMovie\".\"RATING\" AS R " +
+        const getMaxVoteQuery = "SELECT MAX(R.num_vote) AS num_vote FROM \"knuMovie\".\"RATING\" AS R " +
             "WHERE R.m_title = \'" + title + "\'";
 
         conn.query(getMaxVoteQuery, (err, results) => {
@@ -426,8 +455,8 @@ module.exports = () => {
                 console.log(err);
                 res.status(500).send("DB Error");
             }
-            console.log("totalScore 원래타입 : " + typeof results.rows[0].num_vote);
-            console.log("num_vote : " + results.rows[0].num_vote);
+            //console.log("totalScore 원래타입 : " + typeof results.rows[0].num_vote);
+            //console.log("num_vote : " + results.rows[0].num_vote);
             var tatalScore = 0;
             var total_num_vote = 0;
             var updatedRating = 0;
@@ -435,31 +464,54 @@ module.exports = () => {
             // rating score of a movie
             let getRatingScoreQuery = "SELECT m.rating AS rating FROM \"knuMovie\".\"MOVIE\" AS m " +
                 "WHERE m.title = \'" + title + "\'";
+            console.log(getRatingScoreQuery);
             conn.query(getRatingScoreQuery)
                 .then(queryRes => {
                     const rows = queryRes.rows;
                     rows.map(row => {
+                        console.log("row : " + row);
+                        console.log("results : " + results);
                         tatalScore = results.rows[0].num_vote * row.rating;
-                        var updatedRating = parseInt(10 * (parseFloat(results.rows[0].num_vote * row.rating) + parseInt(score)) / (parseInt(results.rows[0].num_vote) + parseInt(1))) / 10;
+                        var updatedRating = 10 * parseInt((parseFloat(results.rows[0].num_vote * row.rating) + parseInt(score)) / (parseInt(results.rows[0].num_vote) + parseInt(1))) / 10;
                         var updateRatingQuery = "UPDATE \"knuMovie\".\"MOVIE\" " +
                             "SET RATING = " + updatedRating +
                             " WHERE title = \'" + title + "\'";
-                        conn.query(updateRatingQuery, (err, results) => {
-                            if (err) {
+
+                        db.tx(async t =>{ // automatic BEGIN
+                            // creating a sequence of transaction queries:
+                            await t.none(updateRatingQuery);
+
+                            // returning a promise that determines a successful transaction:
+                        })
+                            .then(data => {
+                                console.log("Update COMMIT Complete !!");
+                            })
+                            .catch(err => {
                                 console.log(err);
-                            }
-                        });
+                                console.log("Error happened. ROLLBACK execute");
+                            })
 
                         var insertQuery = "INSERT INTO \"knuMovie\".\"RATING\" " +
                             "VALUES(\'" + title + "\', \'" + id + "\', " + parseInt(parseInt(results.rows[0].num_vote) + parseInt(1)) + ") ";
+                        console.log(insertQuery);
+                        db.tx(async t =>{ // automatic BEGIN
+                            // creating a sequence of transaction queries:
+                            await t.none(insertQuery);
 
-                        conn.query(insertQuery, (err, results) => {
-                            if (err) {
+                            // returning a promise that determines a successful transaction:
+                        })
+                            .then(data => {
+                                console.log("Insertion COMMIT Complete !!");
+                                req.session.isNewB = false;
+                                //res.send('<script>window.location.reload();</script>');
+                                res.redirect('rate');
+                            })
+                            .catch(err => {
                                 console.log(err);
-                            }
-                            req.session.isNewB = false;
-                            res.send('<script type="text/javascript">window.location.href="http://localhost:3000/search";</script>');
-                        });
+                                console.log("Error happened. ROLLBACK execute");
+                                //res.send('<script>window.location.reload();</script>');
+                                res.redirect('rate');
+                            })
                     });
                 })
                 .catch(err => {

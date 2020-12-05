@@ -117,6 +117,29 @@ module.exports = () => {
         })
             .then(data => {
                 console.log("Insertion COMMIT Complete !!");
+                res.redirect('registerRate');
+            })
+            .catch(err => {
+                console.log(err);
+                console.log("Error happened. ROLLBACK execute");
+                res.redirect('admin');
+            })
+
+        req.session.title = req.body.title;
+    });
+
+    route.get('/registerRate', (req, res) => {
+        let rateSQL = "INSERT INTO \"knuMovie\".\"RATING\" (m_title,account_id,num_vote) VALUES($1, $2, $3) RETURNING m_title";
+        let rateParams = [req.session.title, req.session.user_id,0];
+        db.tx(async t =>{ // automatic BEGIN
+            // creating a sequence of transaction queries:
+            await t.one(rateSQL, rateParams);
+
+            // returning a promise that determines a successful transaction:
+            //return t.batch([qeury1]);
+        })
+            .then(data => {
+                console.log("Insertion COMMIT Complete !!");
                 res.redirect('admin');
             })
             .catch(err => {
@@ -137,7 +160,8 @@ module.exports = () => {
     });
 
     route.get('/modify', (req, res) => {
-        var sql = "SELECT * FROM \"knuMovie\".\"MOVIE\" WHERE title = " + "\'" + req.session.title + "\'";
+
+        var sql = "SELECT * FROM \"knuMovie\".\"MOVIE\" WHERE title = " + "\'" + req.session.title.trim() + "\'";
 
         console.log(sql);
         conn.query(sql)
@@ -193,11 +217,7 @@ module.exports = () => {
         if (req.body.genre.length != 0)
             sql += "genre = " + req.body.genre + " , ";
 
-        if (req.body.rating.length != 0)
-            sql += "rating = " + req.body.rating;
-        else
             sql += "rating = " + 0.0;
-
         if (req.body.viewing_class.length != 0)
             sql += " , viewing_class = " + req.body.viewing_class;
 

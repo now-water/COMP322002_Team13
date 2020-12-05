@@ -99,7 +99,6 @@
             var runtime = document.getElementById("runtime").value;
             var start_year = document.getElementById("start_year").value;
             var genre = document.getElementById("genre").value;
-            var rating = document.getElementById("rating").value;
             var viewing_class = document.getElementById("viewing_class").value;
 
             var url = "http://localhost:3000/updateRegister";
@@ -109,7 +108,6 @@
                 "&runtime=" + runtime +
                 "&start_year=" + start_year +
                 "&genre=" + genre +
-                "&rating=" + rating +
                 "&viewing_class=" + viewing_class;
 
             httpRequest.open("POST", url, true);
@@ -187,37 +185,37 @@
                     </a>
                 </li>
                 <li id="hideRecomForm">
-                                    <a href="http://localhost:3000/recommend?genre=1" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center" id="hide">view_list</i>
-                                        <label for="hide">Recommend</label></div></a>
-                                </li>
-                                <li id="hideRegister">
-                                    <a href="admin" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">movie</i>
-                                        <label for="hideRegister">register</label></div></a>
-                                </li>
+                    <a href="http://localhost:3000/recommend?genre=1" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center" id="hide">view_list</i>
+                        <label for="hide">Recommend</label></div></a>
+                </li>
+                <li id="hideRegister">
+                    <a href="admin" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">movie</i>
+                        <label for="hideRegister">register</label></div></a>
+                </li>
 
-                                <li id="hideModify">
-                                    <a href="javascript:void(0);" onclick="modifyMovie()" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">mode_edit</i>
-                                        <label for="hideModify">modify</label></div></a>
-                                </li>
+                <li id="hideModify">
+                    <a href="javascript:void(0);" onclick="modifyMovie()" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">mode_edit</i>
+                        <label for="hideModify">modify</label></div></a>
+                </li>
 
-                                <script>
-                                    let Recommend = document.getElementById("hideRecomForm");
-                                    if (<%- isNewB %>) {Recommend.style.display = "block";}
-                                    else {Recommend.style.display = "none";}
+                <script>
+                    let Recommend = document.getElementById("hideRecomForm");
+                    if (<%- isNewB %>) {Recommend.style.display = "block";}
+                    else {Recommend.style.display = "none";}
 
-                                    let register = document.getElementById("hideRegister");
-                                    let modify = document.getElementById("hideModify");
+                    let register = document.getElementById("hideRegister");
+                    let modify = document.getElementById("hideModify");
 
-                                    if (<%- ismanager %>){
-                                        register.style.display = "block";
-                                        modify.style.display = "block";
-                                    }
-                                    else{
-                                        register.style.display = "none";
-                                        modify.style.display = "none";
-                                    }
+                    if (<%- ismanager %>){
+                        register.style.display = "block";
+                        modify.style.display = "block";
+                    }
+                    else{
+                        register.style.display = "none";
+                        modify.style.display = "none";
+                    }
 
-                                </script>
+                </script>
                 <script>
                     let register = document.getElementById("hideRegister");
                     let modify = document.getElementById("hideModify");
@@ -330,21 +328,6 @@
                                             genre.style.fontWeight = "bold";
 
                                             genre.value(JSON.parse(genre));
-                                        </script>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class=" col s12">
-                                        <label for="rating">*Rating</label>
-                                        <input id="rating" name="rating" type="text"
-                                               value="<%=JSON.stringify(rating).replace(/"/gi,"")%> "/>
-                                        <script>
-                                            var rating = document.getElementById("rating");
-                                            rating.style.color = "black";
-                                            rating.style.fontWeight = "bold";
-
-                                            rating.value(JSON.parse(rating));
                                         </script>
                                     </div>
                                 </div>

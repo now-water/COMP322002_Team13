@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns=" http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="utf-8"/>
@@ -92,20 +92,47 @@
         }
     </style>
     <script>
-        function modifyMovie() {
-            var modifyTitle = prompt("수정할 영화의 제목을 입력하세요");
-            var url = "http://localhost:3000/modify";
+        function movieRegister() {
+            var url = "http://localhost:3000/registerMovie";
             var httpRequest = new XMLHttpRequest();
-            var parameter = "title=" + modifyTitle;
+
+            var title = document.getElementById("title").value;
+            var type = document.getElementById("type").value;
+            var runtime = document.getElementById("runtime").value;
+            var start_year = document.getElementById("start_year").value;
+            var genre = document.getElementById("genre").value;
+            var rating = document.getElementById("rating").value;
+            var viewing_class = document.getElementById("viewing_class").value;
+
+            var parameter = "title=" + title +
+                "&type=" + type +
+                "&runtime=" + runtime +
+                "&start_year=" + start_year;
+
+            if (title.length == 0 || type.length == 0 || runtime.length == 0 || start_year.length == 0 || viewing_class.length == 0 || genre.length == 0) {
+                alert("필수정보를 모두 입력하세요");
+                return;
+            }
+
+            var parseIntGenre = parseInt(genre);
+            if (isNaN(parseIntGenre)) {
+                alert("Genre를 숫자로 다시 입력해주세요. \n1.Action\n2.SF\n3.Comedy\n4.Thriller\n5.Romance");
+
+                return;
+            }
+
+            parameter += "&genre=" + parseIntGenre;
+            if (rating.length != 0)
+                parameter += "&rating=" + rating;
+            parameter += "&viewing_class=" + viewing_class;
+
 
             httpRequest.open("POST", url, true);
             httpRequest.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             httpRequest.send(parameter);
 
-            if(modifyTitle == null)
-                alert("올바른 영화 제목을 입력해주세요");
-            else
-                window.location.href = "http://localhost:3000/modify";
+            window.location.href = "http://localhost:3000/index";
+
         }
     </script>
 </head>
@@ -142,7 +169,7 @@
         <li><a href="form"><i class="fa fa-user fa-fw"></i> My Profile</a>
         </li>
         <li><a href="http://localhost:3000/rated"><i class="fa fa-gear fa-fw"></i> Rated </a>
-                </li>
+        </li>
         <li><a href="logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
         </li>
     </ul>
@@ -319,43 +346,55 @@
             <ul class="nav" id="main-menu">
 
                 <li>
-                    <a href="index" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center" >theaters</i> Movies</div> </a>
+                    <a href="index" class="waves-effect waves-dark">
+                        <div style="float: left;"><i class="material-icons center">theaters</i> Movies</div>
+                    </a>
                 </li>
                 <li>
-                    <a href="search" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">search</i> Search</div> </a>
+                    <a href="search" class="waves-effect waves-dark">
+                        <div style="float: left;"><i class="material-icons center">search</i> Search</div>
+                    </a>
                 </li>
                 <li id="hideRecomForm">
-                                    <a href="http://localhost:3000/recommend?genre=1" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center" id="hide">view_list</i>
-                                        <label for="hide">Recommend</label></div></a>
-                                </li>
-                                <li id="hideRegister">
-                                    <a href="admin" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">movie</i>
-                                        <label for="hideRegister">register</label></div></a>
-                                </li>
+                    <a href="http://localhost:3000/recommend?genre=1" class="waves-effect waves-dark">
+                        <div style="float: left;"><i class="material-icons center" id="hide">view_list</i>
+                            <label for="hide">Recommend</label></div>
+                    </a>
+                </li>
+                <li id="hideRegister">
+                    <a href="admin" class="waves-effect waves-dark">
+                        <div style="float: left;"><i class="material-icons center">movie</i>
+                            <label for="hideRegister">register</label></div>
+                    </a>
+                </li>
 
-                                <li id="hideModify">
-                                    <a href="javascript:void(0);" onclick="modifyMovie()" class="waves-effect waves-dark"><div style="float: left;"><i class="material-icons center">mode_edit</i>
-                                        <label for="hideModify">modify</label></div></a>
-                                </li>
+                <li id="hideModify">
+                    <a href="javascript:void(0);" onclick="modifyMovie()" class="waves-effect waves-dark">
+                        <div style="float: left;"><i class="material-icons center">mode_edit</i>
+                            <label for="hideModify">modify</label></div>
+                    </a>
+                </li>
 
-                                <script>
-                                    let Recommend = document.getElementById("hideRecomForm");
-                                    if (<%- isNewB %>) {Recommend.style.display = "block";}
-                                    else {Recommend.style.display = "none";}
+                <script>
+                    let Recommend = document.getElementById("hideRecomForm");
+                    if (<%- isNewB %>)
+                        Recommend.style.display = "block";
+                    else
+                        Recommend.style.display = "none";
 
-                                    let register = document.getElementById("hideRegister");
-                                    let modify = document.getElementById("hideModify");
+                    let register = document.getElementById("hideRegister");
+                    let modify = document.getElementById("hideModify");
 
-                                    if (<%- manager %>){
-                                        register.style.display = "block";
-                                        modify.style.display = "block";
-                                    }
-                                    else{
-                                        register.style.display = "none";
-                                        modify.style.display = "none";
-                                    }
+                    if (<%- manager %>){
+                        register.style.display = "block";
+                        modify.style.display = "block";
+                    }
+                    else{
+                        register.style.display = "none";
+                        modify.style.display = "none";
+                    }
 
-                                </script>
+                </script>
             </ul>
 
         </div>
@@ -384,39 +423,41 @@
                         </div>
                         <div class="card-content">
 
-                            <form class="col s12" method = "post", action = "http://localhost:3000/registerMovie">
+                            <form class="col s12" method="POST" action="http://localhost:3000/registerMovie">
                                 <div class="row">
                                     <div class=" col s6">
-                                        <label for="title">Title</label>
-                                        <input id="title" name="title" type="text"/>
+                                        <label for="title">*Title</label>
+                                        <input id="title" name="title" type="text" required/>
                                     </div>
 
                                     <div class=" col s6">
-                                        <label for="type">Type</label>
-                                        <input id="type" name="type" type="text"/>
+                                        <label for="type">*Type</label>
+                                        <input id="type" name="type" type="text" required/>
                                     </div>
 
                                 </div>
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="runtime">Runtime</label>
-                                        <input id="runtime" name="runtime" type="text"/>
+                                        <label for="runtime">*Runtime</label>
+                                        <input id="runtime" name="runtime" type="text" required/>
                                     </div>
                                 </div>
 
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="start_year">StartYear</label>
-                                        <input id="start_year" name="start_year" type="text"/>
+                                        <label for="start_year">*StartYear</label>
+                                        <input id="start_year" name="start_year" type="text" required/>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="genre">Genre</label>
-                                        <input id="genre" name="genre" type="text"/>
+                                        <label for="genre">*Genre</label>
+                                        <input id="genre" name="genre" type="text" required
+                                               onvalid="this.setCustonValidity(" 번호로 입력해주세요. \n 1. Action\n 2. SF \n 3.
+                                               Comedy \n 4. Thriller \n 5. Romance")"/>
                                     </div>
                                 </div>
 
@@ -429,13 +470,12 @@
 
                                 <div class="row">
                                     <div class=" col s12">
-                                        <label for="viewing_class">Viewing_class</label>
-                                        <input id="viewing_class" name="viewing_class" type="text"/>
+                                        <label for="viewing_class">*Viewing_class</label>
+                                        <input id="viewing_class" name="viewing_class" type="text" required/>
                                     </div>
                                 </div>
 
-                                <!-- button css도 바꿔야하고, 영화 수정 버튼을 누르면 modifyMovie 함수로 가서, 함수는 잘 동작하는데, routes.js에서 rendering이 안된다. -->
-                                <input class="mad-btn" type="submit" style="float: right" value="영화 등록">
+                                <input class="mad-btn" type="submit" style="float: right" value="영화 등록"">
 
                             </form>
                             <div class="clearBoth"></div>

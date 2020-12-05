@@ -1,0 +1,7 @@
+트랜잭션 수행
+node.js 에서 postgreSQL 연동에 필요한 라이브러리인 pg 중 pg-promise를 노드에 설치(npm install pg-promise)하여
+Initialization Option을 충족시켜 초기화해준 다음, database 질의 시 Configuration Object의 connection parameter등을 
+Database Context로 얻어온 후 task를 수행한다.
+
+ - task수행 방법은 얻어온 Database Context에 대해 Transaction method tx에 대한 callback 함수를 정의하여 CRUD에 관한
+	쿼리에 대해 automatically commit을 허용하지 않고 transaction support를 허용하게 한다.

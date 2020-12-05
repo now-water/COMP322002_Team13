@@ -562,8 +562,15 @@ module.exports = () => {
                 console.log(err);
                 res.status(500).send("DB Error");
             }
+            var top10 = [];
+            for(var i =0; i<10; ++i)
+            {
+                console.log(results.rows[i]);
+                top10.push(results.rows[i]);
+            }
+
             res.render('recommend', {
-                results: results.rows,
+                results: top10,
                 session: `${req.session.user_id}`,
                 ismanager: `${req.session.manager}`,
                 isNewB: `${req.session.isNewB}`,

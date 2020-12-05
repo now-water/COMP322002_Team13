@@ -158,6 +158,9 @@
                                     <% if(typeof results !== "undefined") { %>
                                     <% var resultCnt=Object.keys(results).length; %>
                                     <%
+                                    results.sort(function(a, b){
+                                        return b.rating - a.rating;
+                                    });
                                     for(i=0; i
                                     <10
                                     ;i++) {

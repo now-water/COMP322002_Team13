@@ -2,13 +2,28 @@
  - IntelliJ IDE환경에서 제작하였으며 node.JS express Server를 구축하고 postgreSQL 드라이버를 통해 postgreSQL과 연동하여 진행.
 
 <실행 및 사용 방법.>
- - 첨부한 Phase4 프로젝트 파일을 열고 터미널 환경에서 'node main'을 입력 후 Server와 Database가 연동이 되면 브라우저를 열어 localhost:3000 으로 접속.
+ - 첨부한 Phase4 프로젝트 파일을 열고 express, ejs, express, express-session, pg, pg-promise ,supervisor를 npm install 한 뒤  'node main'을 입력 후 Server와 Database가 연동이 되면 브라우저를 열어 localhost:3000 으로 접속한다.
+ - 아래는 package.json의 dependencies정보이다.
+ "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "pg": "^8.5.1",
+    "pg-promise": "^10.8.1",
+    "pip": "0.0.1",
+    "supervisor": "^0.12.0"
+  } 
+
+postgreSQL 정보 - Phase4 프로젝트 파일의 config/db.js의 client객체에 해당 내용과 동일한 지 확인한다.
  - user : postgres,
  - password : kwon0879,
  - database : phase3,
  - schema : knuMovie
  - host : localhost
  - port : 5432
+
+postgreSQL의 DB는 phase2당시 제출한 DB정보와 동일하다.
 
  - 서버는 localhost:3000
 
@@ -51,7 +66,9 @@
 <유의 사항>
  관리자 기능 영상 수정 및 등록 시 genre에 대한 내용을 Action은 1, SF는 2, Comedy는 3, Thriller는 4, Romance는 5라는 숫자로 입력해야 함.
  이는 phase2 당시 table schema설계 때 GENRE 테이블과 MOVIE 테이블을 설계할 때 GENRE 테이블의 PK를 sequence를 갖게하는 surrogate key로 구현한 뒤 GENRE테이블의 sequence의 숫자에 따라
- category(Action, SF, Comedy, Thriller, Romance)를 mapping해줬기 때문.
+ category(Action, SF, Comedy, Thriller, Romance)를 mapping해줬기 때문이다.
+  
+ phase4 프로젝트의 routes/routes.js의 db객체 (const db = pgp("postgres://postgres:kwon0879@localhost:5432/phase3");)에 password와 database에 대한 정보는 postgreSQL정보를 참조한다.
 
 <추가 과제 수행 여부>
 DML(INSERT, UPDATE, DELETE) Transaction 기능 적용하였음. 
